@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">yourRPG</string>
+    <string name="title_home">Character</string>
+    <string name="title_dashboard">Spellbook</string>
+    <string name="title_notifications">Quests</string>
+
+    <string-array name="ranks_array">
+        <item>S</item>
+        <item>A</item>
+        <item>B</item>
+        <item>C</item>
+        <item>D</item>
+    </string-array>
+</resources>
