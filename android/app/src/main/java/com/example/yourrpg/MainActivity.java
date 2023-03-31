@@ -36,12 +36,13 @@ public class MainActivity extends AppCompatActivity {
 
     public static final int NEW_CHARACTER = 111;
     private ActivityMainBinding binding;
-    public ArrayList<Character> characters;
+    private ArrayList<Character> characterList;
+    private TextView strengthPoints;
+    private Character character;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         BottomNavigationView navView = findViewById(R.id.nav_view);
@@ -51,34 +52,56 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
+        initViews();
         initCharacterList();
 
-        if (characters.isEmpty())
-        {
+        if (characterList.isEmpty()) {
             Intent intent = new Intent(MainActivity.this, NewCharacterActivity.class);
             startActivityForResult(intent, NEW_CHARACTER);
         }
-
     }
 
-    private void initCharacterList()
-    {
+    private void obtainExtras() {
+        character = (Character) getIntent().getExtras().getSerializable(NewCharacterActivity.NEW_CHARACTER);
+    }
+
+    private void initViews() {
+        strengthPoints = (TextView) findViewById(R.id.strengthPoints);
+    }
+
+
+    private void initCharacterList() {
         ArrayList<Character> newCharacterList = SharedPreferencesSaver.loadFrom(getPreferences(MODE_PRIVATE));
-        if (newCharacterList != null)
-        {
-            characters = newCharacterList;
-        } else
-        {
-            characters = new ArrayList<>();
+        if (newCharacterList != null) {
+            characterList = newCharacterList;
+        } else {
+            characterList = new ArrayList<>();
         }
     }
 
     @Override
-    protected void onResume()
-    {
+    protected void onResume() {
         super.onResume();
-
+        SharedPreferencesSaver.saveTo(characterList, getPreferences(MODE_PRIVATE));
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        SharedPreferencesSaver.saveTo(characterList, getPreferences(MODE_PRIVATE));
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == NEW_CHARACTER) {
+            if (resultCode == Activity.RESULT_OK) {
+                if (data != null) {
+                    Character newCharacter = (Character) data.getExtras().get(NewCharacterActivity.NEW_CHARACTER);
+                    characterList.add(newCharacter);
+                }
+            }
+        }
+    }
 }
+

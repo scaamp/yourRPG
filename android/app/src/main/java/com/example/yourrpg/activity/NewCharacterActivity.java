@@ -33,7 +33,9 @@ public class NewCharacterActivity extends AppCompatActivity {
     private Button doneCharacterButton;
     private Button addStrengthButton;
     private TextView strengthPoints;
+    private Character character;
     public static final String NEW_CHARACTER = "NEW_CHARACTER";
+    public static final String SPECIAL_DATA = "SPECIAL_DATA";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,20 +49,23 @@ public class NewCharacterActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 int strengthPointsInt = Integer.parseInt(strengthPoints.getText().toString());
-                strengthPointsInt++;
-                strengthPoints.setText(String.valueOf(strengthPointsInt));
+                if (strengthPointsInt < 5 ) {
+                    strengthPointsInt++;
+                    strengthPoints.setText(String.valueOf(strengthPointsInt));
+                }
             }
         });
         doneCharacterButton = (Button) findViewById(R.id.doneCreationCharacterButton);
         doneCharacterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Character character = new Character(1, "XD", 15);
-                postData(1, "XD", 15);
+                Character character = new Character(1, "XD", Integer.parseInt(strengthPoints.getText().toString()));
+                postData(character);
                 Intent intent = new Intent();
                 intent.putExtra(NEW_CHARACTER, character);
                 setResult(Activity.RESULT_OK, intent);
                 Toast.makeText(NewCharacterActivity.this,"Character created!", Toast.LENGTH_LONG).show();
+                //goToMainActivity();
                 finish();
             }
         });
@@ -88,17 +93,45 @@ public class NewCharacterActivity extends AppCompatActivity {
         });
     }
 
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        SharedPreferences sharedpreferences = getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE);
-//        if (!sharedpreferences.getBoolean(prevStarted, false)) {
-//            SharedPreferences.Editor editor = sharedpreferences.edit();
-//            editor.putBoolean(prevStarted, Boolean.TRUE);
-//            editor.apply();
-//        } else {
-//            finish();
-//        }
+    private void postData(Character character) {
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://172.23.240.3:8090/characters/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);;
+        Call<Character> call = retrofitAPI.createPost(character);
+        call.enqueue(new Callback<Character>() {
+
+            @Override
+            public void onResponse(Call<Character> call, Response<Character> response) {
+                Character responseFromAPI = response.body();
+            }
+            @Override
+            public void onFailure(Call<Character> call, Throwable t) {
+                t.getMessage();
+            }
+        });
+    }
+
+    @Nullable
+    private Character getCurrentAuto()
+    {
+        return (Character) new Character(1, "XD", 3);
+    }
+
+//    private View.OnClickListener goToMainActivity()
+//    {
+//        return new View.OnClickListener()
+//        {
+//            @Override
+//            public void onClick(View v)
+//            {
+//                Intent intent = new Intent(NewCharacterActivity.this, MainActivity.class);
+//                intent.putExtra(SPECIAL_DATA, getCurrentAuto());
+//                startActivity(intent);
+//            }
+//        };
 //    }
 
 }
