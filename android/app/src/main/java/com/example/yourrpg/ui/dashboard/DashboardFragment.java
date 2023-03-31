@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.yourrpg.NewSpellbookActivity;
+import com.example.yourrpg.activity.NewSpellbookActivity;
 import com.example.yourrpg.R;
 import com.example.yourrpg.databinding.FragmentDashboardBinding;
 

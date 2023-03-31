@@ -8,14 +8,14 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserResponse
+public class CharacterResponse
 {
-    private long userId;
+    private long characterId;
     private String name;
     private int strength;
     private List<Spellbook> spellbooks = new ArrayList<Spellbook>();
 
-    public UserResponse(long id) {
+    public CharacterResponse(long id) {
     }
 }
 

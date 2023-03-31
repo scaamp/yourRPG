@@ -17,7 +17,6 @@ import org.json.JSONObject;
 public class DashboardViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
-    private EditText textSpellbook;
     public DashboardViewModel() {
         mText = new MutableLiveData<>();
         mText.setValue("This is dashboard fragment");

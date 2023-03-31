@@ -11,9 +11,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class UserRequest
+public class CharacterRequest
 {
-    private long userId;
+    private long characterId;
     private String name;
     private int strength;
     private List<Spellbook> spellbooks = new ArrayList<Spellbook>();

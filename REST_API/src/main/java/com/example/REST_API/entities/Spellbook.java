@@ -18,6 +18,6 @@ public class Spellbook {
     private String rank;
     @ManyToOne //(cascade = { CascadeType.PERSIST, CascadeType.MERGE})
     @JsonBackReference
-    @JoinColumn(name = "userId")
-    private User userId;
+    @JoinColumn(name = "characterId")
+    private Character characterId;
 }

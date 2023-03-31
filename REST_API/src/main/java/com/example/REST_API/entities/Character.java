@@ -8,19 +8,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "users")
+@Table(name = "characters")
 @Data
-public class User {
+public class Character {
     @Id
     @GeneratedValue
     @Column(unique = true, nullable = false)
-    private long userId;
+    private long characterId;
     private String name;
     private int strength;
 //    private int power;
 //    private int intelligence;
 //    private int influence;
     @JsonManagedReference
-    @OneToMany(mappedBy = "userId", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE })
+    @OneToMany(mappedBy = "characterId", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE })
     private List<Spellbook> spellbooks = new ArrayList<Spellbook>();
 }

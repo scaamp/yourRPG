@@ -1,4 +1,4 @@
-package com.example.yourrpg;
+package com.example.yourrpg.activity;
 
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -7,11 +7,16 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.yourrpg.MainActivity;
+import com.example.yourrpg.R;
+import com.example.yourrpg.RetrofitAPI;
 import com.example.yourrpg.model.Spellbook;
+import com.google.android.material.snackbar.Snackbar;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -48,6 +53,7 @@ public class NewSpellbookActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Spellbook spellbook = new Spellbook(1, textSpellbook.getText().toString(), trainerSpellbook.getText().toString(), spinnerSpellbookRank.getSelectedItem().toString());
                 postData(1, textSpellbook.getText().toString(), trainerSpellbook.getText().toString(), spinnerSpellbookRank.getSelectedItem().toString());
+                Toast.makeText(NewSpellbookActivity.this,"Spell added!", Toast.LENGTH_LONG).show();
                 finish();
             }
         });
@@ -68,7 +74,7 @@ public class NewSpellbookActivity extends AppCompatActivity {
     private void postData(long id, String text, String trainer, String rank) {
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://172.23.240.3:8090/spellbooks/")
+                .baseUrl("http://172.23.240.3:8090/api/spellbooks/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);

@@ -3,7 +3,7 @@ package com.example.REST_API.services;
 import com.example.REST_API.dtos.SpellbookRequest;
 import com.example.REST_API.dtos.SpellbookResponse;
 import com.example.REST_API.entities.Spellbook;
-import com.example.REST_API.repositories.UserRepository;
+import com.example.REST_API.repositories.CharacterRepository;
 import com.example.REST_API.repositories.SpellbookRepository;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
@@ -17,8 +17,8 @@ import java.util.List;
 @Service
 public class SpellbookServiceImpl implements SpellbookService {
     private final SpellbookRepository spellbookRepository;
-    private UserRepository userRepository;
-    private final Logger LOG = LoggerFactory.getLogger(UserServiceImpl.class);
+    private CharacterRepository characterRepository;
+    private final Logger LOG = LoggerFactory.getLogger(CharacterServiceImpl.class);
 
     @Autowired
     public SpellbookServiceImpl(SpellbookRepository spellbookRepository) {
@@ -35,7 +35,7 @@ public class SpellbookServiceImpl implements SpellbookService {
         List<SpellbookResponse> spellbookResponses = new ArrayList<>(spellbooks.size());
 
         for (Spellbook w : spellbooks) {
-            SpellbookResponse spellbookResponse = new SpellbookResponse(w.getSpellbookId(), w.getText(), w.getTrainer(), w.getRank(), w.getUserId()); //, a.getMovie());
+            SpellbookResponse spellbookResponse = new SpellbookResponse(w.getSpellbookId(), w.getText(), w.getTrainer(), w.getRank(), w.getCharacterId()); //, a.getMovie());
             spellbookResponses.add(spellbookResponse);
         }
 
@@ -51,7 +51,7 @@ public class SpellbookServiceImpl implements SpellbookService {
         spellbook.setText(spellbookRequest.getText());
         spellbook.setTrainer(spellbookRequest.getTrainer());
         spellbook.setRank(spellbookRequest.getRank());
-        spellbook.setUserId(spellbookRequest.getUser());
+        spellbook.setCharacterId(spellbookRequest.getCharacter());
 
         spellbookRepository.save(spellbook);
 
@@ -70,7 +70,7 @@ public class SpellbookServiceImpl implements SpellbookService {
         spellbook.setText(spellbookArg.getText());
         spellbook.setTrainer(spellbookArg.getTrainer());
         spellbook.setSpellbookId(spellbookArg.getSpellbookId());
-        spellbook.setUserId(spellbookArg.getUserId());
+        spellbook.setCharacterId(spellbookArg.getCharacterId());
         spellbookRepository.save(spellbook);
     }
 
