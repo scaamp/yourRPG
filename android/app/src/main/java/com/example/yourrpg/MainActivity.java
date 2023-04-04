@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<Character> newCharacterList = SharedPreferencesSaver.loadFrom(getPreferences(MODE_PRIVATE));
         if (newCharacterList != null) {
             characterList = newCharacterList;
+            strengthPoints.setText(String.valueOf(characterList.get(0).getStrength()));
         } else {
             characterList = new ArrayList<>();
         }
@@ -92,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
             if (resultCode == Activity.RESULT_OK) {
                 if (data != null) {
                     Character newCharacter = (Character) data.getExtras().get(NewCharacterActivity.NEW_CHARACTER);
-                    strengthPoints.setText(String.valueOf(newCharacter.getStrength())); //TODO
+                    strengthPoints.setText(String.valueOf(newCharacter.getStrength()));
                     characterList.add(newCharacter);
                 }
             }

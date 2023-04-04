@@ -32,7 +32,9 @@ public class DashboardFragment extends Fragment {
     private Button goToAddSpell;
     private ArrayList<Spellbook> spellList;
     private TextView spellTextView;
+    private String spellText;
     public static final int NEW_SPELL = 222;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -41,7 +43,10 @@ public class DashboardFragment extends Fragment {
 
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
+        spellList = new ArrayList<>();
         spellTextView = (TextView) root.findViewById(R.id.spellTextView);
+        //spellTextView.setText(spellList.get(0).getText());
         goToAddSpell = (Button) root.findViewById(R.id.goToAddSpellButton);
         goToAddSpell.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,10 +56,8 @@ public class DashboardFragment extends Fragment {
             }
         });
 
-
         return root;
     }
-
 
     @Override
     public void onDestroyView() {
@@ -72,8 +75,9 @@ public class DashboardFragment extends Fragment {
             if (resultCode == Activity.RESULT_OK) {
                 if (data != null) {
                     Spellbook newSpell = (Spellbook) data.getExtras().get(NewSpellbookActivity.NEW_SPELL);
-                    spellTextView.setText(String.valueOf(newSpell.getText()));
-                    //spellList.add(newSpell);
+                    spellText = String.valueOf(newSpell.getText());
+                    spellTextView.setText(spellText);
+                    spellList.add(newSpell);
                 }
             }
         }

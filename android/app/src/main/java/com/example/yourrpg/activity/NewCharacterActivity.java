@@ -42,7 +42,11 @@ public class NewCharacterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_character);
         setTitle("Create your character");
+        init();
+    }
 
+    public void init()
+    {
         strengthPoints = (TextView) findViewById(R.id.strengthPoints);
         addStrengthButton = (Button) findViewById(R.id.addStrengthButton);
         addStrengthButton.setOnClickListener(new View.OnClickListener() {
@@ -65,7 +69,6 @@ public class NewCharacterActivity extends AppCompatActivity {
                 intent.putExtra(NEW_CHARACTER, character);
                 setResult(Activity.RESULT_OK, intent);
                 Toast.makeText(NewCharacterActivity.this,"Character created!", Toast.LENGTH_LONG).show();
-                //goToMainActivity();
                 finish();
             }
         });
