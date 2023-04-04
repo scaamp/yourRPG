@@ -2,6 +2,7 @@ package com.example.yourrpg;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +13,7 @@ import com.example.yourrpg.activity.NewSpellbookActivity;
 import com.example.yourrpg.model.Character;
 import com.example.yourrpg.model.Spellbook;
 import com.example.yourrpg.persistency.SharedPreferencesSaver;
+import com.example.yourrpg.ui.dashboard.DashboardFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,15 +38,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-        BottomNavigationView navView = findViewById(R.id.nav_view);
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
-                .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        NavigationUI.setupWithNavController(binding.navView, navController);
         initViews();
         initCharacterList();
         //characterList.clear();
@@ -55,11 +48,16 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void obtainExtras() {
-        character = (Character) getIntent().getExtras().getSerializable(NewCharacterActivity.SPECIAL_DATA);
-    }
-
     private void initViews() {
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        BottomNavigationView navView = findViewById(R.id.nav_view);
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
+                .build();
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
+        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        NavigationUI.setupWithNavController(binding.navView, navController);
         strengthPoints = (TextView) findViewById(R.id.strengthPointsHome);
     }
 
@@ -75,18 +73,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        SharedPreferencesSaver.saveTo(characterList, getPreferences(MODE_PRIVATE));
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        SharedPreferencesSaver.saveTo(characterList, getPreferences(MODE_PRIVATE));
-    }
-
-    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == NEW_CHARACTER) {
@@ -98,6 +84,20 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        SharedPreferencesSaver.saveTo(characterList, getPreferences(MODE_PRIVATE));
+        SharedPreferencesSaver.saveSpellbookTo(DashboardFragment.getSpellList(), getPreferences(MODE_PRIVATE));
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        SharedPreferencesSaver.saveTo(characterList, getPreferences(MODE_PRIVATE));
+        SharedPreferencesSaver.saveSpellbookTo(DashboardFragment.getSpellList(), getPreferences(MODE_PRIVATE));
     }
 }
 

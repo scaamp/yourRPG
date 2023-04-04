@@ -3,6 +3,7 @@ package com.example.yourrpg.ui.dashboard;
 import static android.content.Context.MODE_PRIVATE;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -27,10 +28,11 @@ import java.util.ArrayList;
 
 public class DashboardFragment extends Fragment {
 
+    private static ArrayList<Spellbook> spellList;
     private DashboardViewModel dashboardViewModel;
     private FragmentDashboardBinding binding;
     private Button goToAddSpell;
-    private ArrayList<Spellbook> spellList;
+    //public ArrayList<Spellbook> spellList;
     private TextView spellTextView;
     private String spellText;
     public static final int NEW_SPELL = 222;
@@ -43,10 +45,9 @@ public class DashboardFragment extends Fragment {
 
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-
-        spellList = new ArrayList<>();
+        //spellList = new ArrayList<>();
         spellTextView = (TextView) root.findViewById(R.id.spellTextView);
-        //spellTextView.setText(spellList.get(0).getText());
+        //
         goToAddSpell = (Button) root.findViewById(R.id.goToAddSpellButton);
         goToAddSpell.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,8 +56,25 @@ public class DashboardFragment extends Fragment {
                 startActivityForResult(new Intent(getContext(), NewSpellbookActivity.class), NEW_SPELL);
             }
         });
-
+        initSpellList();
         return root;
+    }
+
+
+    private void initSpellList() {
+        ArrayList<Spellbook> newSpellList = SharedPreferencesSaver.loadSpellbookFrom(getActivity().getSharedPreferences("SPELLBOOK_PREF", MODE_PRIVATE));
+        if (newSpellList != null) {
+            spellList = newSpellList;
+            spellTextView.setText(spellList.get(0).getText());
+        } else {
+            spellList = new ArrayList<>();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        SharedPreferencesSaver.saveSpellbookTo(spellList, getActivity().getSharedPreferences("SPELLBOOK_PREF", MODE_PRIVATE));
     }
 
     @Override
@@ -81,5 +99,13 @@ public class DashboardFragment extends Fragment {
                 }
             }
         }
+    }
+
+    public static ArrayList<Spellbook> getSpellList() {
+        return spellList;
+    }
+
+    public void setSpellList(ArrayList<Spellbook> spellList) {
+        this.spellList = spellList;
     }
 }
