@@ -10,19 +10,25 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.yourrpg.MainActivity;
 import com.example.yourrpg.activity.NewSpellbookActivity;
 import com.example.yourrpg.R;
 import com.example.yourrpg.databinding.FragmentDashboardBinding;
-import com.example.yourrpg.model.Character;
 import com.example.yourrpg.model.Spellbook;
+import com.example.yourrpg.model.ViewHolderAdaptable;
 import com.example.yourrpg.persistency.SharedPreferencesSaver;
+import com.example.yourrpg.spellbook.SpellbookAdapter;
 
 import java.util.ArrayList;
 
@@ -37,6 +43,12 @@ public class DashboardFragment extends Fragment {
     private String spellText;
     public static final int NEW_SPELL = 222;
 
+    private ArrayAdapter<Spellbook> spellbookArrayAdapter;
+    private RecyclerView.LayoutManager historyLayoutManager;
+    private ArrayList<ViewHolderAdaptable> allItems;
+    private RecyclerView historyRecyclerView;
+    private RecyclerView.Adapter historyAdapter;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -47,7 +59,8 @@ public class DashboardFragment extends Fragment {
         View root = binding.getRoot();
         //spellList = new ArrayList<>();
         spellTextView = (TextView) root.findViewById(R.id.spellTextView);
-        //
+        historyRecyclerView = (RecyclerView) root.findViewById(R.id.recyclerView);
+
         goToAddSpell = (Button) root.findViewById(R.id.goToAddSpellButton);
         goToAddSpell.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,6 +70,7 @@ public class DashboardFragment extends Fragment {
             }
         });
         initSpellList();
+        initRecyclerView();
         return root;
     }
 
@@ -70,6 +84,30 @@ public class DashboardFragment extends Fragment {
             spellList = new ArrayList<>();
         }
     }
+
+    private void initRecyclerView() {
+        historyLayoutManager = new LinearLayoutManager(getContext());
+        historyRecyclerView.setLayoutManager(historyLayoutManager);
+
+        historyRecyclerView.setHasFixedSize(true);
+
+        updateAllHistoryItems();
+        historyAdapter = new SpellbookAdapter(allItems, getContext());
+        historyRecyclerView.setAdapter(historyAdapter);
+    }
+
+    private ArrayList<ViewHolderAdaptable> updateAllHistoryItems() {
+        allItems = new ArrayList<>();
+        allItems.addAll(spellList);
+        return allItems;
+    }
+
+//    private void initSpellListSpinner()
+//    {
+//        spellbookArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, spellList);
+//        spellbookArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        autoChooseSpinner.setAdapter(spinnerAdapter);
+//    }
 
     @Override
     public void onResume() {

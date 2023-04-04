@@ -1,7 +1,8 @@
 # Real Life RPG App
-This is a Real Life RPG App that helps you to develop your character, improve your physical, mental, character, and intellectual skills. You can create your own character, save ideas and quotes to your spellbook, and add tasks to your quest log.
+## This is a Real Life RPG App that helps you to develop your character, improve your physical, mental, character, and intellectual skills. You can create your own character, save ideas and quotes to your spellbook, and add tasks to your quest log.
 
-## The app is built using Java programming language and Spring framework on the server-side. The database used for storing user data is SQLServer. For the front-end development, we have used Android Studio. And finally, for building and managing the project, we have used Maven.
+## Stack technology
+The app is built using Java programming language and Spring framework on the server-side. The database used for storing user data is SQLServer. For the front-end development, we have used Android Studio. And finally, for building and managing the project, we have used Maven.
 
 ## Features
 * Create and customize your own character

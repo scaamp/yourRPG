@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 
-public class Spellbook implements Serializable {
+public class Spellbook implements Serializable, ViewHolderAdaptable {
 
     @JsonProperty("spellbookId")
     private long spellbookId;
@@ -43,6 +43,11 @@ public class Spellbook implements Serializable {
 
     public String getTrainer() {
         return trainer;
+    }
+
+    @Override
+    public Integer getCategoryDrawable() {
+        return null;
     }
 
     public void setTrainer(String trainer) {
