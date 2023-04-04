@@ -5,8 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 
 public class Character implements Serializable {
-    @JsonProperty("userId")
-    private long userId;
+    @JsonProperty("characterId")
+    private long characterId;
 
     @JsonProperty("name")
     private String name;
@@ -14,14 +14,14 @@ public class Character implements Serializable {
     @JsonProperty("strength")
     private int strength;
 
-    public Character(long userId, String name, int strength) {
-        this.userId = userId;
+    public Character(long characterId, String name, int strength) {
+        this.characterId = characterId;
         this.name = name;
         this.strength = strength;
     }
 
     public long getUserId() {
-        return userId;
+        return characterId;
     }
 
     public String getName() {
@@ -40,13 +40,13 @@ public class Character implements Serializable {
         this.strength = strength;
     }
 
-    public void setUserId(long userId) {
-        this.userId = userId;
+    public void setUserId(long characterId) {
+        this.characterId = characterId;
     }
 
     @Override
     public String toString()
     {
-        return userId + " " + name + " " + strength;
+        return characterId + " " + name + " " + strength;
     }
 }

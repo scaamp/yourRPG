@@ -99,7 +99,7 @@
             tools:ignore="SpeakableTextPresentCheck" />
 
         <Button
-            android:id="@+id/addSpellbookButton"
+            android:id="@+id/addSpellButton"
             android:layout_width="111dp"
             android:layout_height="48dp"
             android:layout_marginTop="24dp"

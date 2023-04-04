@@ -1,5 +1,6 @@
 package com.example.yourrpg.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -28,10 +29,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class NewSpellbookActivity extends AppCompatActivity {
     private EditText textSpellbook;
     private EditText trainerSpellbook;
-    private Button sendSpellbookButton;
+    private Button addSpellButton;
     private Spinner spinnerSpellbookRank;
     private ArrayAdapter<String> spinnerAdapterRank;
-    
+    public static final String NEW_SPELL = "NEW_SPELL";
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState)
     {
@@ -46,13 +48,16 @@ public class NewSpellbookActivity extends AppCompatActivity {
                 R.array.ranks_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerSpellbookRank.setAdapter(adapter);
-        sendSpellbookButton = (Button) findViewById(R.id.addSpellbookButton);
+        addSpellButton = (Button) findViewById(R.id.addSpellButton);
 
-        sendSpellbookButton.setOnClickListener(new View.OnClickListener() {
+        addSpellButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Spellbook spellbook = new Spellbook(1, textSpellbook.getText().toString(), trainerSpellbook.getText().toString(), spinnerSpellbookRank.getSelectedItem().toString());
-                postData(1, textSpellbook.getText().toString(), trainerSpellbook.getText().toString(), spinnerSpellbookRank.getSelectedItem().toString());
+                //postData(1, textSpellbook.getText().toString(), trainerSpellbook.getText().toString(), spinnerSpellbookRank.getSelectedItem().toString());
+                Intent intent = new Intent();
+                intent.putExtra(NEW_SPELL, spellbook);
+                setResult(Activity.RESULT_OK, intent);
                 Toast.makeText(NewSpellbookActivity.this,"Spell added!", Toast.LENGTH_LONG).show();
                 finish();
             }
