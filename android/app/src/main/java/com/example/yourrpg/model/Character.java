@@ -24,6 +24,22 @@ public class Character implements Serializable {
         return userId;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getStrength() {
+        return strength;
+    }
+
+    public void setStrength(int strength) {
+        this.strength = strength;
+    }
+
     public void setUserId(long userId) {
         this.userId = userId;
     }

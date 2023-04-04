@@ -83,7 +83,8 @@ public class NewCharacterActivity extends AppCompatActivity {
         call.enqueue(new Callback<Character>() {
 
             @Override
-            public void onResponse(Call<Character> call, Response<Character> response) {
+            public void onResponse(Call<Character> call, Response<
+                    Character> response) {
                 Character responseFromAPI = response.body();
             }
             @Override

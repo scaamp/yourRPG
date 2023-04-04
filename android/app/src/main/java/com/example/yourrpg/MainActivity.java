@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(binding.navView, navController);
         initViews();
         initCharacterList();
+        //obtainExtras();
 
         if (characterList.isEmpty()) {
             Intent intent = new Intent(MainActivity.this, NewCharacterActivity.class);
@@ -62,11 +63,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void obtainExtras() {
-        character = (Character) getIntent().getExtras().getSerializable(NewCharacterActivity.NEW_CHARACTER);
+        character = (Character) getIntent().getExtras().getSerializable(NewCharacterActivity.SPECIAL_DATA);
     }
 
     private void initViews() {
-        strengthPoints = (TextView) findViewById(R.id.strengthPoints);
+        strengthPoints = (TextView) findViewById(R.id.strengthPointsHome);
     }
 
 
@@ -98,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
             if (resultCode == Activity.RESULT_OK) {
                 if (data != null) {
                     Character newCharacter = (Character) data.getExtras().get(NewCharacterActivity.NEW_CHARACTER);
+                    strengthPoints.setText(String.valueOf(newCharacter.getStrength())); //TODO
                     characterList.add(newCharacter);
                 }
             }

@@ -31,8 +31,7 @@ public class NewSpellbookActivity extends AppCompatActivity {
     private Button sendSpellbookButton;
     private Spinner spinnerSpellbookRank;
     private ArrayAdapter<String> spinnerAdapterRank;
-
-
+    
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState)
     {
