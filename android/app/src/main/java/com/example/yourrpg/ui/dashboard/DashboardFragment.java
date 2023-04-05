@@ -34,21 +34,19 @@ import java.util.ArrayList;
 
 public class DashboardFragment extends Fragment {
 
+    public static final int NEW_SPELL = 222;
     private static ArrayList<Spellbook> spellList;
+
     private DashboardViewModel dashboardViewModel;
     private FragmentDashboardBinding binding;
     private Button goToAddSpell;
-    //public ArrayList<Spellbook> spellList;
-    private TextView spellTextView;
+    private TextView nullSpellListTextView;
     private String spellText;
-    public static final int NEW_SPELL = 222;
 
-    private ArrayAdapter<Spellbook> spellbookArrayAdapter;
     private RecyclerView.LayoutManager historyLayoutManager;
     private ArrayList<ViewHolderAdaptable> allItems;
     private RecyclerView historyRecyclerView;
-    private RecyclerView.Adapter historyAdapter;
-
+    private RecyclerView.Adapter spellbookAdapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -57,8 +55,7 @@ public class DashboardFragment extends Fragment {
 
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-        //spellList = new ArrayList<>();
-        spellTextView = (TextView) root.findViewById(R.id.spellTextView);
+        //nullSpellListTextView = (TextView) root.findViewById(R.id.nullSpellListTextView);
         historyRecyclerView = (RecyclerView) root.findViewById(R.id.recyclerView);
 
         goToAddSpell = (Button) root.findViewById(R.id.goToAddSpellButton);
@@ -74,14 +71,15 @@ public class DashboardFragment extends Fragment {
         return root;
     }
 
-
     private void initSpellList() {
         ArrayList<Spellbook> newSpellList = SharedPreferencesSaver.loadSpellbookFrom(getActivity().getSharedPreferences("SPELLBOOK_PREF", MODE_PRIVATE));
         if (newSpellList != null) {
             spellList = newSpellList;
-            spellTextView.setText(spellList.get(0).getText());
+            //spellList.clear();
+            //spellTextView.setText(spellList.get(0).getText());
         } else {
             spellList = new ArrayList<>();
+            //nullSpellListTextView.setText("Your spellbook is empty... \nPlease add your first spell");
         }
     }
 
@@ -92,8 +90,8 @@ public class DashboardFragment extends Fragment {
         historyRecyclerView.setHasFixedSize(true);
 
         updateAllHistoryItems();
-        historyAdapter = new SpellbookAdapter(allItems, getContext());
-        historyRecyclerView.setAdapter(historyAdapter);
+        spellbookAdapter = new SpellbookAdapter(allItems, getContext());
+        historyRecyclerView.setAdapter(spellbookAdapter);
     }
 
     private ArrayList<ViewHolderAdaptable> updateAllHistoryItems() {
@@ -113,6 +111,7 @@ public class DashboardFragment extends Fragment {
     public void onResume() {
         super.onResume();
         SharedPreferencesSaver.saveSpellbookTo(spellList, getActivity().getSharedPreferences("SPELLBOOK_PREF", MODE_PRIVATE));
+        initRecyclerView();
     }
 
     @Override
@@ -132,7 +131,7 @@ public class DashboardFragment extends Fragment {
                 if (data != null) {
                     Spellbook newSpell = (Spellbook) data.getExtras().get(NewSpellbookActivity.NEW_SPELL);
                     spellText = String.valueOf(newSpell.getText());
-                    spellTextView.setText(spellText);
+                    //spellTextView.setText(spellText);
                     spellList.add(newSpell);
                 }
             }

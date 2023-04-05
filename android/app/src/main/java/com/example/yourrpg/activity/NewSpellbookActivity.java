@@ -31,7 +31,6 @@ public class NewSpellbookActivity extends AppCompatActivity {
     private EditText trainerSpellbook;
     private Button addSpellButton;
     private Spinner spinnerSpellbookRank;
-    private ArrayAdapter<String> spinnerAdapterRank;
     public static final String NEW_SPELL = "NEW_SPELL";
 
     @Override

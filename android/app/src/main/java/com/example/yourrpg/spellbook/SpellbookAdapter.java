@@ -94,6 +94,7 @@ public class SpellbookAdapter extends RecyclerView.Adapter<SpellbookAdapter.View
         {
             super(itemView);
             this.activityImageView = (ImageView) itemView.findViewById(R.id.activity_imageview);
+            this.activityImageView.setImageResource(R.drawable.spell);
             this.trashImageView = (ImageView) itemView.findViewById(R.id.trash_image_view);
             this.leftLabelBottomTextView = (TextView) itemView.findViewById(R.id.left_label_bottom);
             this.leftLabelTopTextView = (TextView) itemView.findViewById(R.id.left_label_top);
