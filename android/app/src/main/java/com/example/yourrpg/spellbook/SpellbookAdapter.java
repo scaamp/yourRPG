@@ -16,7 +16,6 @@ import com.example.yourrpg.model.ViewHolderAdaptable;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class SpellbookAdapter extends RecyclerView.Adapter<SpellbookAdapter.ViewHolder> {
     private Context context;
@@ -55,13 +54,14 @@ public class SpellbookAdapter extends RecyclerView.Adapter<SpellbookAdapter.View
         //holder.activityImageView.setImageDrawable(drawable);
         DateFormat dateFormat = DateFormat.getDateInstance();
         //holder.leftLabelTopTextView.setText(dateFormat.format(item.getDate()));
-        holder.rightLabelTopTextView.setText(item.getRank());
-        holder.leftLabelBottomTextView.setText(item.getText());
-        holder.rightLabelBottomTextView.setText(item.getTrainer());
+        holder.spellTextView.setText("\"" + item.getText() + "\"");
+        holder.spellDateTextView.setText("05.04.2023");
+        holder.spellTrainerTextView.setText(item.getTrainer());
+        holder.spellRankTextView.setText("Rank: " + item.getRank());
         holder.trashImageView.setOnClickListener(v ->
         {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            builder.setMessage("Na pewno usuwamy " + holder.leftLabelBottomTextView.getText() + "?");
+            builder.setMessage("Na pewno usuwamy " + holder.spellTextView.getText() + "?");
             builder.setPositiveButton("Usuń", (dialog, which) -> historyRemover.remove(list.remove(position)));
             builder.setNeutralButton("Zostaw", null);
             builder.create().show();
@@ -83,10 +83,10 @@ public class SpellbookAdapter extends RecyclerView.Adapter<SpellbookAdapter.View
     public class ViewHolder extends RecyclerView.ViewHolder
     {
 
-        protected TextView leftLabelBottomTextView;
-        protected TextView rightLabelBottomTextView;
-        protected TextView leftLabelTopTextView;
-        protected TextView rightLabelTopTextView;
+        protected TextView spellTextView;
+        protected TextView spellDateTextView;
+        protected TextView spellTrainerTextView;
+        protected TextView spellRankTextView;
         protected ImageView trashImageView;
         protected ImageView activityImageView;
 
@@ -96,10 +96,10 @@ public class SpellbookAdapter extends RecyclerView.Adapter<SpellbookAdapter.View
             this.activityImageView = (ImageView) itemView.findViewById(R.id.activity_imageview);
             this.activityImageView.setImageResource(R.drawable.spell);
             this.trashImageView = (ImageView) itemView.findViewById(R.id.trash_image_view);
-            this.leftLabelBottomTextView = (TextView) itemView.findViewById(R.id.left_label_bottom);
-            this.leftLabelTopTextView = (TextView) itemView.findViewById(R.id.left_label_top);
-            this.rightLabelBottomTextView = (TextView) itemView.findViewById(R.id.right_label_bottom);
-            this.rightLabelTopTextView = (TextView) itemView.findViewById(R.id.right_label_top);
+            this.spellTextView = (TextView) itemView.findViewById(R.id.spellTextView);
+            this.spellDateTextView = (TextView) itemView.findViewById(R.id.spellDateTextView);
+            this.spellTrainerTextView = (TextView) itemView.findViewById(R.id.spellTrainerTextView);
+            this.spellRankTextView = (TextView) itemView.findViewById(R.id.spellRankTextView);
         }
     }
 }

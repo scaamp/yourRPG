@@ -75,7 +75,7 @@ public class DashboardFragment extends Fragment {
         ArrayList<Spellbook> newSpellList = SharedPreferencesSaver.loadSpellbookFrom(getActivity().getSharedPreferences("SPELLBOOK_PREF", MODE_PRIVATE));
         if (newSpellList != null) {
             spellList = newSpellList;
-            //spellList.clear();
+            //spellList.remove(4);
             //spellTextView.setText(spellList.get(0).getText());
         } else {
             spellList = new ArrayList<>();
