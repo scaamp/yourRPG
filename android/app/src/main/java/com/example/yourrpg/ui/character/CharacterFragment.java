@@ -1,27 +1,25 @@
-package com.example.yourrpg.ui.home;
+package com.example.yourrpg.ui.character;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import com.example.yourrpg.R;
+
 import com.example.yourrpg.databinding.FragmentHomeBinding;
 
-public class HomeFragment extends Fragment {
+public class CharacterFragment extends Fragment {
 
-    private HomeViewModel homeViewModel;
+    private CharacterViewModel homeViewModel;
 private FragmentHomeBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
             ViewGroup container, Bundle savedInstanceState) {
         homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
+                new ViewModelProvider(this).get(CharacterViewModel.class);
 
     binding = FragmentHomeBinding.inflate(inflater, container, false);
     View root = binding.getRoot();

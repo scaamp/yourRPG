@@ -2,22 +2,16 @@ package com.example.yourrpg;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.yourrpg.activity.NewCharacterActivity;
-import com.example.yourrpg.activity.NewSpellbookActivity;
 import com.example.yourrpg.model.Character;
-import com.example.yourrpg.model.Spellbook;
 import com.example.yourrpg.persistency.SharedPreferencesSaver;
-import com.example.yourrpg.ui.dashboard.DashboardFragment;
+import com.example.yourrpg.ui.spellbook.SpellbookFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -90,14 +84,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         SharedPreferencesSaver.saveTo(characterList, getPreferences(MODE_PRIVATE));
-        SharedPreferencesSaver.saveSpellbookTo(DashboardFragment.getSpellList(), getPreferences(MODE_PRIVATE));
+        SharedPreferencesSaver.saveSpellbookTo(SpellbookFragment.getSpellList(), getPreferences(MODE_PRIVATE));
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         SharedPreferencesSaver.saveTo(characterList, getPreferences(MODE_PRIVATE));
-        SharedPreferencesSaver.saveSpellbookTo(DashboardFragment.getSpellList(), getPreferences(MODE_PRIVATE));
+        SharedPreferencesSaver.saveSpellbookTo(SpellbookFragment.getSpellList(), getPreferences(MODE_PRIVATE));
     }
 }
 

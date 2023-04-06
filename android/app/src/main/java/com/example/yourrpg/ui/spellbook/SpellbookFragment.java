@@ -1,18 +1,14 @@
-package com.example.yourrpg.ui.dashboard;
+package com.example.yourrpg.ui.spellbook;
 
 import static android.content.Context.MODE_PRIVATE;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,23 +17,22 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.yourrpg.MainActivity;
 import com.example.yourrpg.activity.NewSpellbookActivity;
 import com.example.yourrpg.R;
 import com.example.yourrpg.databinding.FragmentDashboardBinding;
 import com.example.yourrpg.model.Spellbook;
 import com.example.yourrpg.model.ViewHolderAdaptable;
 import com.example.yourrpg.persistency.SharedPreferencesSaver;
-import com.example.yourrpg.spellbook.SpellbookAdapter;
+import com.example.yourrpg.adapter.SpellbookAdapter;
 
 import java.util.ArrayList;
 
-public class DashboardFragment extends Fragment {
+public class SpellbookFragment extends Fragment {
 
     public static final int NEW_SPELL = 222;
     private static ArrayList<Spellbook> spellList;
 
-    private DashboardViewModel dashboardViewModel;
+    private SpellbookViewModel dashboardViewModel;
     private FragmentDashboardBinding binding;
     private Button goToAddSpell;
     private TextView nullSpellListTextView;
@@ -51,7 +46,7 @@ public class DashboardFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         dashboardViewModel =
-                new ViewModelProvider(this).get(DashboardViewModel.class);
+                new ViewModelProvider(this).get(SpellbookViewModel.class);
 
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
@@ -75,7 +70,6 @@ public class DashboardFragment extends Fragment {
         ArrayList<Spellbook> newSpellList = SharedPreferencesSaver.loadSpellbookFrom(getActivity().getSharedPreferences("SPELLBOOK_PREF", MODE_PRIVATE));
         if (newSpellList != null) {
             spellList = newSpellList;
-            //spellList.remove(4);
             //spellTextView.setText(spellList.get(0).getText());
         } else {
             spellList = new ArrayList<>();
