@@ -19,7 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.yourrpg.activity.NewSpellbookActivity;
 import com.example.yourrpg.R;
-import com.example.yourrpg.databinding.FragmentDashboardBinding;
+import com.example.yourrpg.databinding.FragmentSpellbookBinding;
 import com.example.yourrpg.model.Spellbook;
 import com.example.yourrpg.model.ViewHolderAdaptable;
 import com.example.yourrpg.persistency.SharedPreferencesSaver;
@@ -33,7 +33,7 @@ public class SpellbookFragment extends Fragment {
     private static ArrayList<Spellbook> spellList;
 
     private SpellbookViewModel dashboardViewModel;
-    private FragmentDashboardBinding binding;
+    private FragmentSpellbookBinding binding;
     private Button goToAddSpell;
     private TextView nullSpellListTextView;
     private String spellText;
@@ -48,7 +48,7 @@ public class SpellbookFragment extends Fragment {
         dashboardViewModel =
                 new ViewModelProvider(this).get(SpellbookViewModel.class);
 
-        binding = FragmentDashboardBinding.inflate(inflater, container, false);
+        binding = FragmentSpellbookBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         //nullSpellListTextView = (TextView) root.findViewById(R.id.nullSpellListTextView);
         historyRecyclerView = (RecyclerView) root.findViewById(R.id.recyclerView);

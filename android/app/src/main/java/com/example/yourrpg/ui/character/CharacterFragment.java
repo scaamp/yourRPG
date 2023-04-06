@@ -9,19 +9,20 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.yourrpg.databinding.FragmentHomeBinding;
+import com.example.yourrpg.databinding.FragmentCharacterBinding;
+
 
 public class CharacterFragment extends Fragment {
 
     private CharacterViewModel homeViewModel;
-private FragmentHomeBinding binding;
+private FragmentCharacterBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
             ViewGroup container, Bundle savedInstanceState) {
         homeViewModel =
                 new ViewModelProvider(this).get(CharacterViewModel.class);
 
-    binding = FragmentHomeBinding.inflate(inflater, container, false);
+    binding = FragmentCharacterBinding.inflate(inflater, container, false);
     View root = binding.getRoot();
 
 //        final TextView textView = binding.textHome;

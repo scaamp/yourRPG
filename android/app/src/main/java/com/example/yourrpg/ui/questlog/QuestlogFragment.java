@@ -11,19 +11,19 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.yourrpg.databinding.FragmentNotificationsBinding;
+import com.example.yourrpg.databinding.FragmentQuestlogBinding;
 
 public class QuestlogFragment extends Fragment {
 
     private QuestlogViewModel notificationsViewModel;
-private FragmentNotificationsBinding binding;
+private FragmentQuestlogBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
             ViewGroup container, Bundle savedInstanceState) {
         notificationsViewModel =
                 new ViewModelProvider(this).get(QuestlogViewModel.class);
 
-    binding = FragmentNotificationsBinding.inflate(inflater, container, false);
+    binding = FragmentQuestlogBinding.inflate(inflater, container, false);
     View root = binding.getRoot();
 
         final TextView textView = binding.textNotifications;
