@@ -20,6 +20,11 @@ public class Character implements Serializable {
         this.strength = strength;
     }
 
+    public Character getCharacter()
+    {
+        return this;
+    }
+
     public long getUserId() {
         return characterId;
     }

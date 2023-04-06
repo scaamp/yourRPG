@@ -35,7 +35,6 @@ public class NewCharacterActivity extends AppCompatActivity {
     private TextView strengthPoints;
     private Character character;
     public static final String NEW_CHARACTER = "NEW_CHARACTER";
-    public static final String SPECIAL_DATA = "SPECIAL_DATA";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

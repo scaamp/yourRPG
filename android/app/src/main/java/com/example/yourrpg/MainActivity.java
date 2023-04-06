@@ -3,6 +3,7 @@ package com.example.yourrpg;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.example.yourrpg.activity.NewCharacterActivity;
@@ -27,14 +28,15 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private ArrayList<Character> characterList;
     private TextView strengthPoints;
-    private Character character;
+    private CheckBox questCheckBox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initViews();
         initCharacterList();
-        //characterList.clear();
+        characterList.clear();
+        //characterList.add(new Character(1,"Xd", 15));
 
         if (characterList.isEmpty()) {
             Intent intent = new Intent(MainActivity.this, NewCharacterActivity.class);
@@ -55,6 +57,10 @@ public class MainActivity extends AppCompatActivity {
         strengthPoints = (TextView) findViewById(R.id.strengthPointsHome);
     }
 
+    public Character getCurrentCharacter()
+    {
+        return (Character) characterList.get(0);
+    }
 
     private void initCharacterList() {
         ArrayList<Character> newCharacterList = SharedPreferencesSaver.loadFrom(getPreferences(MODE_PRIVATE));
