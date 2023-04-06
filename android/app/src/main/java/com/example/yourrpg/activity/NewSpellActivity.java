@@ -14,11 +14,9 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.yourrpg.MainActivity;
 import com.example.yourrpg.R;
 import com.example.yourrpg.RetrofitAPI;
 import com.example.yourrpg.model.Spellbook;
-import com.google.android.material.snackbar.Snackbar;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -26,7 +24,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class NewSpellbookActivity extends AppCompatActivity {
+public class NewSpellActivity extends AppCompatActivity {
     private EditText textSpellbook;
     private EditText trainerSpellbook;
     private Button addSpellButton;
@@ -57,7 +55,7 @@ public class NewSpellbookActivity extends AppCompatActivity {
                 Intent intent = new Intent();
                 intent.putExtra(NEW_SPELL, spellbook);
                 setResult(Activity.RESULT_OK, intent);
-                Toast.makeText(NewSpellbookActivity.this,"Spell added!", Toast.LENGTH_LONG).show();
+                Toast.makeText(NewSpellActivity.this,"Spell added!", Toast.LENGTH_LONG).show();
                 finish();
             }
         });

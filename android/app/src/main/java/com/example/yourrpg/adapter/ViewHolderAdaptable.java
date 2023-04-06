@@ -1,4 +1,4 @@
-package com.example.yourrpg.model;
+package com.example.yourrpg.adapter;
 
 import androidx.annotation.DrawableRes;
 

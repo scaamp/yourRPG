@@ -1,5 +1,6 @@
 package com.example.yourrpg.model;
 
+import com.example.yourrpg.adapter.ViewHolderAdaptable;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;

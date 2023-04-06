@@ -1,7 +1,5 @@
 package com.example.yourrpg.adapter;
 
-import com.example.yourrpg.model.ViewHolderAdaptable;
-
 /**
  * Interfejs do zapenienia funkcjonalności usunięcia elementu historii
  */

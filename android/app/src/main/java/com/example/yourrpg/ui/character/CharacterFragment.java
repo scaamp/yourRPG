@@ -12,8 +12,10 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.yourrpg.MainActivity;
 import com.example.yourrpg.R;
 import com.example.yourrpg.databinding.FragmentCharacterBinding;
+import com.example.yourrpg.model.Character;
 import com.example.yourrpg.persistency.SharedPreferencesSaver;
 
 
@@ -44,5 +46,8 @@ public class CharacterFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        MainActivity mainActivity = (MainActivity) getActivity();
+        Character character = mainActivity.getCurrentCharacter();
+        strengthPoints.setText("" + character.getStrength());
     }
 }

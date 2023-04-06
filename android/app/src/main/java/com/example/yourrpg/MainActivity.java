@@ -7,6 +7,9 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.example.yourrpg.activity.NewCharacterActivity;
+import com.example.yourrpg.adapter.HistoryRemover;
+import com.example.yourrpg.adapter.SpellbookAdapter;
+import com.example.yourrpg.adapter.ViewHolderAdaptable;
 import com.example.yourrpg.model.Character;
 import com.example.yourrpg.persistency.SharedPreferencesSaver;
 import com.example.yourrpg.ui.spellbook.SpellbookFragment;
@@ -17,12 +20,13 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.yourrpg.databinding.ActivityMainBinding;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
 
     public static final int NEW_CHARACTER = 111;
     private ActivityMainBinding binding;
@@ -35,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         initViews();
         initCharacterList();
-        characterList.clear();
+        //characterList.clear();
         //characterList.add(new Character(1,"Xd", 15));
 
         if (characterList.isEmpty()) {
@@ -99,5 +103,7 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferencesSaver.saveTo(characterList, getPreferences(MODE_PRIVATE));
         SharedPreferencesSaver.saveSpellbookTo(SpellbookFragment.getSpellList(), getPreferences(MODE_PRIVATE));
     }
+
+
 }
 

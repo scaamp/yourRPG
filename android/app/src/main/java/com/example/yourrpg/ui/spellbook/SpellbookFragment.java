@@ -17,17 +17,19 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.yourrpg.activity.NewSpellbookActivity;
+import com.example.yourrpg.MainActivity;
+import com.example.yourrpg.activity.NewSpellActivity;
 import com.example.yourrpg.R;
+import com.example.yourrpg.adapter.HistoryRemover;
 import com.example.yourrpg.databinding.FragmentSpellbookBinding;
 import com.example.yourrpg.model.Spellbook;
-import com.example.yourrpg.model.ViewHolderAdaptable;
+import com.example.yourrpg.adapter.ViewHolderAdaptable;
 import com.example.yourrpg.persistency.SharedPreferencesSaver;
 import com.example.yourrpg.adapter.SpellbookAdapter;
 
 import java.util.ArrayList;
 
-public class SpellbookFragment extends Fragment {
+public class SpellbookFragment extends Fragment implements HistoryRemover {
 
     public static final int NEW_SPELL = 222;
     private static ArrayList<Spellbook> spellList;
@@ -58,7 +60,7 @@ public class SpellbookFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 assert getParentFragment() != null;
-                startActivityForResult(new Intent(getContext(), NewSpellbookActivity.class), NEW_SPELL);
+                startActivityForResult(new Intent(getContext(), NewSpellActivity.class), NEW_SPELL);
             }
         });
         initSpellList();
@@ -82,9 +84,8 @@ public class SpellbookFragment extends Fragment {
         historyRecyclerView.setLayoutManager(historyLayoutManager);
 
         historyRecyclerView.setHasFixedSize(true);
-
         updateAllHistoryItems();
-        spellbookAdapter = new SpellbookAdapter(allItems, getContext());
+        spellbookAdapter = new SpellbookAdapter(allItems, this, getContext()); //TODO usuwanie
         historyRecyclerView.setAdapter(spellbookAdapter);
     }
 
@@ -93,13 +94,6 @@ public class SpellbookFragment extends Fragment {
         allItems.addAll(spellList);
         return allItems;
     }
-
-//    private void initSpellListSpinner()
-//    {
-//        spellbookArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, spellList);
-//        spellbookArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        autoChooseSpinner.setAdapter(spinnerAdapter);
-//    }
 
     @Override
     public void onResume() {
@@ -123,7 +117,7 @@ public class SpellbookFragment extends Fragment {
         if (requestCode == NEW_SPELL) {
             if (resultCode == Activity.RESULT_OK) {
                 if (data != null) {
-                    Spellbook newSpell = (Spellbook) data.getExtras().get(NewSpellbookActivity.NEW_SPELL);
+                    Spellbook newSpell = (Spellbook) data.getExtras().get(NewSpellActivity.NEW_SPELL);
                     spellText = String.valueOf(newSpell.getText());
                     //spellTextView.setText(spellText);
                     spellList.add(newSpell);
@@ -135,8 +129,12 @@ public class SpellbookFragment extends Fragment {
     public static ArrayList<Spellbook> getSpellList() {
         return spellList;
     }
-
-    public void setSpellList(ArrayList<Spellbook> spellList) {
-        this.spellList = spellList;
+    
+    @Override
+    public void remove(ViewHolderAdaptable viewHolderAdaptable) {
+        spellList.remove(viewHolderAdaptable);
+        allItems.remove(viewHolderAdaptable);
+        spellbookAdapter.notifyDataSetChanged();
+        SharedPreferencesSaver.saveSpellbookTo(spellList, getActivity().getSharedPreferences("SPELLBOOK_PREF", MODE_PRIVATE));
     }
 }

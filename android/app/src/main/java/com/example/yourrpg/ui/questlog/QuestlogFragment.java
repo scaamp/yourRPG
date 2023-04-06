@@ -45,20 +45,23 @@ public class QuestlogFragment extends Fragment {
 //                textView.setText(s);
 //            }
 //        });
-
+        MainActivity mainActivity = (MainActivity) getActivity();
+        Character character = mainActivity.getCurrentCharacter();
         questCheckBox = (CheckBox) root.findViewById(R.id.checkBox);
         questTextView = (TextView) root.findViewById(R.id.questTextView);
+        questTextView.setText(character.getName() + "\n Strength: " + character.getStrength());
         questCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (questCheckBox.isChecked()) {
-                    MainActivity mainActivity = (MainActivity) getActivity();
-                    Character character = mainActivity.getCurrentCharacter();
-                    character.setStrength(character.getStrength() + 1);
-                    questTextView.setText(character.getName() + "\n Strength: " + character.getStrength());
 
-                    //SharedPreferencesSaver.saveTo(character, getPreferences(MODE_PRIVATE));
+                if (!questCheckBox.isChecked())
+                {
+                    character.setStrength(character.getStrength()-1);
                 }
+                if (questCheckBox.isChecked()) {
+                    character.setStrength(character.getStrength() + 1);
+                }
+                questTextView.setText(character.getName() + "\n Strength: " + character.getStrength());
             }
         });
 

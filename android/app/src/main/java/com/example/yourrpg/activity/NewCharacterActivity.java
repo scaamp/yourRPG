@@ -29,7 +29,6 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class NewCharacterActivity extends AppCompatActivity {
-    String prevStarted = "prevStarted";
     private Button doneCharacterButton;
     private Button addStrengthButton;
     private TextView strengthPoints;

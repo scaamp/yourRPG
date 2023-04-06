@@ -12,7 +12,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.yourrpg.R;
-import com.example.yourrpg.model.ViewHolderAdaptable;
+import com.example.yourrpg.ui.spellbook.SpellbookFragment;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
