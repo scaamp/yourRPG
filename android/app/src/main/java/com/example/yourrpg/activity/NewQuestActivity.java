@@ -1,20 +1,26 @@
 package com.example.yourrpg.activity;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.yourrpg.R;
+import com.example.yourrpg.model.Questlog;
+import com.example.yourrpg.model.Spellbook;
 
 import java.text.DateFormat;
 import java.util.Calendar;
@@ -27,6 +33,7 @@ public class NewQuestActivity extends AppCompatActivity implements DatePickerDia
     private EditText questDeadlineHourEditText;
     private Spinner questStatSpinner;
     private Spinner questStatPointsSpinner;
+    private Button addQuestButton;
     private DateFormat dateFormat;
     TimePickerDialog picker;
 
@@ -38,6 +45,7 @@ public class NewQuestActivity extends AppCompatActivity implements DatePickerDia
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         questStatSpinner = (Spinner) findViewById(R.id.questStatSpinner);
+        addQuestButton = (Button) findViewById(R.id.addQuestButton);
         ArrayAdapter<CharSequence> questStatAdapter = ArrayAdapter.createFromResource(getApplicationContext(),
                 R.array.stats_array, android.R.layout.simple_spinner_item);
         questStatAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -79,6 +87,18 @@ public class NewQuestActivity extends AppCompatActivity implements DatePickerDia
                 DatePickerDialog datePickerDialog = new DatePickerDialog(NewQuestActivity.this, NewQuestActivity.this, year, month, day);
 
                 datePickerDialog.show();
+            }
+        });
+        addQuestButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Questlog questlog = new Questlog(1, "XD", true);
+                //postData(1, textSpellbook.getText().toString(), trainerSpellbook.getText().toString(), spinnerSpellbookRank.getSelectedItem().toString());
+                Intent intent = new Intent();
+                intent.putExtra(NEW_QUEST, questlog);
+                setResult(Activity.RESULT_OK, intent);
+                Toast.makeText(NewQuestActivity.this,"Quest added!", Toast.LENGTH_LONG).show();
+                finish();
             }
         });
     }

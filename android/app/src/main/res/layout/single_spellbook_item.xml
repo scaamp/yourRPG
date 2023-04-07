@@ -54,7 +54,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
-                    android:id="@+id/spellTextView"
+                    android:id="@+id/questTextView"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:paddingBottom="10dp"
@@ -72,7 +72,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/spellDateTextView"
+                    android:id="@+id/questDateTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="TextView"
@@ -80,7 +80,7 @@
                     android:textSize="12sp" />
 
                 <TextView
-                    android:id="@+id/spellTrainerTextView"
+                    android:id="@+id/questStatTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="TextView"
@@ -88,7 +88,7 @@
                     android:textSize="12sp" />
 
                 <TextView
-                    android:id="@+id/spellRankTextView"
+                    android:id="@+id/questStatPointsTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="TextView"

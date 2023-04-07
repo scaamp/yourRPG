@@ -1,4 +1,4 @@
-package com.example.yourrpg.adapter;
+package com.example.yourrpg.spellbookAdapter;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -12,7 +12,6 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.yourrpg.R;
-import com.example.yourrpg.ui.spellbook.SpellbookFragment;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -20,14 +19,14 @@ import java.util.ArrayList;
 public class SpellbookAdapter extends RecyclerView.Adapter<SpellbookAdapter.ViewHolder> {
     private Context context;
     private Drawable drawable;
-    private ArrayList<ViewHolderAdaptable> list = new ArrayList();
-    private HistoryRemover historyRemover;
+    private ArrayList<SpellbookViewHolderAdaptable> list = new ArrayList();
+    private SpellbookRemover spellbookRemover;
 
-    public SpellbookAdapter(ArrayList<ViewHolderAdaptable> list, HistoryRemover historyRemover, Context context)
+    public SpellbookAdapter(ArrayList<SpellbookViewHolderAdaptable> list, SpellbookRemover spellbookRemover, Context context)
     {
         this.context = context;
         this.list = list;
-        this.historyRemover = historyRemover;
+        this.spellbookRemover = spellbookRemover;
         //Collections.sort(list, (o1, o2) -> o2.getDate().compareTo(o1.getDate()));
     }
 
@@ -35,14 +34,14 @@ public class SpellbookAdapter extends RecyclerView.Adapter<SpellbookAdapter.View
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_history_item, null);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_spellbook_item, null);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position)
     {
-        ViewHolderAdaptable item = list.get(position);
+        SpellbookViewHolderAdaptable item = list.get(position);
         //drawable = context.getResources().getDrawable(item.getCategoryDrawable());
         //holder.activityImageView.setImageDrawable(drawable);
         DateFormat dateFormat = DateFormat.getDateInstance();
@@ -55,7 +54,7 @@ public class SpellbookAdapter extends RecyclerView.Adapter<SpellbookAdapter.View
         {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             builder.setMessage("Na pewno usuwamy " + holder.spellTextView.getText() + "?");
-            builder.setPositiveButton("Usuń", (dialog, which) -> historyRemover.remove(list.remove(position)));
+            builder.setPositiveButton("Usuń", (dialog, which) -> spellbookRemover.remove(list.remove(position)));
             builder.setNeutralButton("Zostaw", null);
             builder.create().show();
         });
@@ -89,10 +88,10 @@ public class SpellbookAdapter extends RecyclerView.Adapter<SpellbookAdapter.View
             this.activityImageView = (ImageView) itemView.findViewById(R.id.activity_imageview);
             this.activityImageView.setImageResource(R.drawable.spell);
             this.trashImageView = (ImageView) itemView.findViewById(R.id.trash_image_view);
-            this.spellTextView = (TextView) itemView.findViewById(R.id.spellTextView);
-            this.spellDateTextView = (TextView) itemView.findViewById(R.id.spellDateTextView);
-            this.spellTrainerTextView = (TextView) itemView.findViewById(R.id.spellTrainerTextView);
-            this.spellRankTextView = (TextView) itemView.findViewById(R.id.spellRankTextView);
+            this.spellTextView = (TextView) itemView.findViewById(R.id.questTextView);
+            this.spellDateTextView = (TextView) itemView.findViewById(R.id.questDateTextView);
+            this.spellTrainerTextView = (TextView) itemView.findViewById(R.id.questStatTextView);
+            this.spellRankTextView = (TextView) itemView.findViewById(R.id.questStatPointsTextView);
         }
     }
 }

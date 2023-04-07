@@ -1,9 +1,8 @@
-package com.example.yourrpg.adapter;
+package com.example.yourrpg.spellbookAdapter;
 
 import androidx.annotation.DrawableRes;
 
-import java.util.Date;
-public interface ViewHolderAdaptable {
+public interface SpellbookViewHolderAdaptable {
 
     String getText();
     String getRank();

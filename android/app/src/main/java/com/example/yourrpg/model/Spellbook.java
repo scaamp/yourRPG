@@ -1,11 +1,11 @@
 package com.example.yourrpg.model;
 
-import com.example.yourrpg.adapter.ViewHolderAdaptable;
+import com.example.yourrpg.spellbookAdapter.SpellbookViewHolderAdaptable;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 
-public class Spellbook implements Serializable, ViewHolderAdaptable {
+public class Spellbook implements Serializable, SpellbookViewHolderAdaptable {
 
     @JsonProperty("spellbookId")
     private long spellbookId;

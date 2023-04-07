@@ -3,6 +3,7 @@ package com.example.yourrpg.persistency;
 import android.content.SharedPreferences;
 
 import com.example.yourrpg.model.Character;
+import com.example.yourrpg.model.Questlog;
 import com.example.yourrpg.model.Spellbook;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -18,6 +19,7 @@ public class SharedPreferencesSaver
 {
     private static final String CHARACTER_PREF = "CHARACTER_PREF";
     private static final String SPELLBOOK_PREF = "SPELLBOOK_PREF";
+    private static final String QUESTLOG_PREF = "QUESTLOG_PREF";
 
     public static void saveTo(ArrayList<Character> characterList, SharedPreferences preferences)
     {
@@ -47,5 +49,20 @@ public class SharedPreferencesSaver
         String string = preferences.getString(SPELLBOOK_PREF, null);
         Gson gson = new Gson();
         return gson.fromJson(string, new TypeToken<ArrayList<Spellbook>>(){}.getType());
+    }
+
+    public static void saveQuestlogTo(ArrayList<Questlog> questList, SharedPreferences preferences)
+    {
+        SharedPreferences.Editor editor = preferences.edit();
+        Gson gson = new Gson();
+        editor.putString(QUESTLOG_PREF, gson.toJson(questList));
+        editor.apply();
+    }
+
+    public static ArrayList<Questlog> loadQuestlogFrom(SharedPreferences preferences)
+    {
+        String string = preferences.getString(QUESTLOG_PREF, null);
+        Gson gson = new Gson();
+        return gson.fromJson(string, new TypeToken<ArrayList<Questlog>>(){}.getType());
     }
 }

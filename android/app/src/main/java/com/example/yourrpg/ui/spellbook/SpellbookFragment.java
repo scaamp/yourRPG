@@ -17,19 +17,18 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.yourrpg.MainActivity;
 import com.example.yourrpg.activity.NewSpellActivity;
 import com.example.yourrpg.R;
-import com.example.yourrpg.adapter.HistoryRemover;
+import com.example.yourrpg.spellbookAdapter.SpellbookRemover;
+import com.example.yourrpg.spellbookAdapter.SpellbookViewHolderAdaptable;
 import com.example.yourrpg.databinding.FragmentSpellbookBinding;
 import com.example.yourrpg.model.Spellbook;
-import com.example.yourrpg.adapter.ViewHolderAdaptable;
 import com.example.yourrpg.persistency.SharedPreferencesSaver;
-import com.example.yourrpg.adapter.SpellbookAdapter;
+import com.example.yourrpg.spellbookAdapter.SpellbookAdapter;
 
 import java.util.ArrayList;
 
-public class SpellbookFragment extends Fragment implements HistoryRemover {
+public class SpellbookFragment extends Fragment implements SpellbookRemover {
 
     public static final int NEW_SPELL = 222;
     private static ArrayList<Spellbook> spellList;
@@ -41,7 +40,7 @@ public class SpellbookFragment extends Fragment implements HistoryRemover {
     private String spellText;
 
     private RecyclerView.LayoutManager historyLayoutManager;
-    private ArrayList<ViewHolderAdaptable> allItems;
+    private ArrayList<SpellbookViewHolderAdaptable> allItems;
     private RecyclerView historyRecyclerView;
     private RecyclerView.Adapter spellbookAdapter;
 
@@ -53,7 +52,7 @@ public class SpellbookFragment extends Fragment implements HistoryRemover {
         binding = FragmentSpellbookBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         nullSpellListTextView = (TextView) root.findViewById(R.id.nullSpellListTextView);
-        historyRecyclerView = (RecyclerView) root.findViewById(R.id.recyclerView);
+        historyRecyclerView = (RecyclerView) root.findViewById(R.id.spellbookRecyclerView);
 
         goToAddSpell = (Button) root.findViewById(R.id.goToAddSpellButton);
         goToAddSpell.setOnClickListener(new View.OnClickListener() {
@@ -69,7 +68,9 @@ public class SpellbookFragment extends Fragment implements HistoryRemover {
     }
 
     private void initSpellList() {
-        ArrayList<Spellbook> newSpellList = SharedPreferencesSaver.loadSpellbookFrom(getActivity().getSharedPreferences("SPELLBOOK_PREF", MODE_PRIVATE));
+        ArrayList<Spellbook> newSpellList = new ArrayList<>();
+        newSpellList.add(new Spellbook(1,"XD", "Jakub", "XD"));
+        newSpellList = SharedPreferencesSaver.loadSpellbookFrom(getActivity().getSharedPreferences("SPELLBOOK_PREF", MODE_PRIVATE));
         if (newSpellList.size() != 0) {
             spellList = newSpellList;
             nullSpellListTextView.setVisibility(View.INVISIBLE);
@@ -77,6 +78,7 @@ public class SpellbookFragment extends Fragment implements HistoryRemover {
         } else {
             spellList = new ArrayList<>();
             nullSpellListTextView.setVisibility(View.VISIBLE);
+            nullSpellListTextView.setTextSize(32);
             nullSpellListTextView.setText("Your spellbook is empty... \nPlease add your first spell");
         }
     }
@@ -87,11 +89,11 @@ public class SpellbookFragment extends Fragment implements HistoryRemover {
 
         historyRecyclerView.setHasFixedSize(true);
         updateAllHistoryItems();
-        spellbookAdapter = new SpellbookAdapter(allItems, this, getContext()); //TODO usuwanie
+        spellbookAdapter = new SpellbookAdapter(allItems, this, getContext());
         historyRecyclerView.setAdapter(spellbookAdapter);
     }
 
-    private ArrayList<ViewHolderAdaptable> updateAllHistoryItems() {
+    private ArrayList<SpellbookViewHolderAdaptable> updateAllHistoryItems() {
         allItems = new ArrayList<>();
         allItems.addAll(spellList);
         return allItems;
@@ -134,7 +136,7 @@ public class SpellbookFragment extends Fragment implements HistoryRemover {
     }
 
     @Override
-    public void remove(ViewHolderAdaptable viewHolderAdaptable) {
+    public void remove(SpellbookViewHolderAdaptable viewHolderAdaptable) {
         spellList.remove(viewHolderAdaptable);
         allItems.remove(viewHolderAdaptable);
         spellbookAdapter.notifyDataSetChanged();
