@@ -40,7 +40,7 @@ public class NewSpellActivity extends AppCompatActivity {
 
         textSpellbook = (EditText) findViewById(R.id.questDeadlineEditText);
         trainerSpellbook = (EditText) findViewById(R.id.questDescEditText);
-        spinnerSpellbookRank = (Spinner) findViewById(R.id.questStatSpinner);
+        spinnerSpellbookRank = (Spinner) findViewById(R.id.spellStatSpinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(),
                 R.array.ranks_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

@@ -1,7 +1,7 @@
 package com.example.yourrpg.questlogAdapter;
 
 public interface QuestlogViewHolderAdaptable {
-    String getText();
+    String getDesc();
     String getDeadline();
     String getStat();
     String getStatPoints();

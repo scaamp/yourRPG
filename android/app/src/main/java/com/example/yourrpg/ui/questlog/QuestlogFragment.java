@@ -87,7 +87,7 @@ public class QuestlogFragment extends Fragment implements QuestlogRemover {
 
     private void initQuestList() {
         ArrayList<Questlog> newQuestList = new ArrayList<>();
-        newQuestList.add(new Questlog(1,"XD",false));
+        //newQuestList.add(new Questlog(1,"XD",false));
         newQuestList = SharedPreferencesSaver.loadQuestlogFrom(getActivity().getSharedPreferences("QUESTLOG_PREF", MODE_PRIVATE));
 
         if (newQuestList.size() != 0) {

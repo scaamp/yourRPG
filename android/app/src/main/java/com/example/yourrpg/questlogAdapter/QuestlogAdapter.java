@@ -7,15 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.yourrpg.MainActivity;
 import com.example.yourrpg.R;
-import com.example.yourrpg.model.Character;
-import com.example.yourrpg.spellbookAdapter.SpellbookRemover;
 
 
 import java.text.DateFormat;
@@ -51,10 +47,10 @@ public class QuestlogAdapter extends RecyclerView.Adapter<QuestlogAdapter.ViewHo
 //        Character character = mainActivity.getCurrentCharacter();
         DateFormat dateFormat = DateFormat.getDateInstance();
         //holder.leftLabelTopTextView.setText(dateFormat.format(item.getDate()));
-        holder.questTextView.setText("\"" + item.getText() + "\"");
+        holder.questTextView.setText("\"" + item.getDesc() + "\"");
         holder.questDateTextView.setText("05.04.2023");
         holder.questStatTextView.setText(item.getStat());
-        holder.questStatPointsTextView.setText(item.getStatPoints());
+        holder.questStatPointsTextView.setText("Points: "+item.getStatPoints());
 //        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 //            @Override
 //            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {

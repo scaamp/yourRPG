@@ -31,10 +31,12 @@ public class NewQuestActivity extends AppCompatActivity implements DatePickerDia
     public static final String NEW_QUEST = "NEW_QUEST";
     private EditText questDeadlineEditText;
     private EditText questDeadlineHourEditText;
+    private EditText questDescEditText;
     private Spinner questStatSpinner;
     private Spinner questStatPointsSpinner;
     private Button addQuestButton;
     private DateFormat dateFormat;
+
     TimePickerDialog picker;
 
     @Override
@@ -44,6 +46,7 @@ public class NewQuestActivity extends AppCompatActivity implements DatePickerDia
         setTitle("New quest");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        questDescEditText = (EditText) findViewById(R.id.questDescEditText);
         questStatSpinner = (Spinner) findViewById(R.id.questStatSpinner);
         addQuestButton = (Button) findViewById(R.id.addQuestButton);
         ArrayAdapter<CharSequence> questStatAdapter = ArrayAdapter.createFromResource(getApplicationContext(),
@@ -92,7 +95,9 @@ public class NewQuestActivity extends AppCompatActivity implements DatePickerDia
         addQuestButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Questlog questlog = new Questlog(1, "XD", true);
+                //Questlog questlog = new Questlog(1, "XD", true);
+                Questlog questlog = new Questlog(1, questDescEditText.getText().toString(),
+                        questStatSpinner.getSelectedItem().toString(), questStatPointsSpinner.getSelectedItem().toString(), false);
                 //postData(1, textSpellbook.getText().toString(), trainerSpellbook.getText().toString(), spinnerSpellbookRank.getSelectedItem().toString());
                 Intent intent = new Intent();
                 intent.putExtra(NEW_QUEST, questlog);

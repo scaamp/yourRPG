@@ -88,10 +88,10 @@ public class SpellbookAdapter extends RecyclerView.Adapter<SpellbookAdapter.View
             this.activityImageView = (ImageView) itemView.findViewById(R.id.activity_imageview);
             this.activityImageView.setImageResource(R.drawable.spell);
             this.trashImageView = (ImageView) itemView.findViewById(R.id.trash_image_view);
-            this.spellTextView = (TextView) itemView.findViewById(R.id.questTextView);
-            this.spellDateTextView = (TextView) itemView.findViewById(R.id.questDateTextView);
-            this.spellTrainerTextView = (TextView) itemView.findViewById(R.id.questStatTextView);
-            this.spellRankTextView = (TextView) itemView.findViewById(R.id.questStatPointsTextView);
+            this.spellTextView = (TextView) itemView.findViewById(R.id.spellTextView);
+            this.spellDateTextView = (TextView) itemView.findViewById(R.id.spellDateTextView);
+            this.spellTrainerTextView = (TextView) itemView.findViewById(R.id.spellStatTextView);
+            this.spellRankTextView = (TextView) itemView.findViewById(R.id.spellStatPointsTextView);
         }
     }
 }

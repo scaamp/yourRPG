@@ -72,7 +72,7 @@
                     android:id="@+id/questStatTextView"
                     android:layout_width="match_parent"
                     android:layout_height="20dp"
-                    android:text="TextView"
+                    android:text="cze"
                     android:textColor="@color/black"
                     android:textSize="12sp" />
 
