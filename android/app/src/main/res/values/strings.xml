@@ -11,4 +11,25 @@
         <item>C</item>
         <item>D</item>
     </string-array>
+
+    <string-array name="stats_array">
+        <item>Strength</item>
+        <item>Agility</item>
+        <item>Stamina</item>
+        <item>Power</item>
+        <item>Cunning</item>
+        <item>Endurance</item>
+        <item>Intelligence</item>
+        <item>Creativity</item>
+        <item>Wisdom</item>
+        <item>Productivity</item>
+        <item>Influence</item>
+        <item>Determination</item>
+    </string-array>
+
+    <string-array name="statsPoints_array">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
 </resources>
