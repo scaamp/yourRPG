@@ -52,7 +52,7 @@ public class SpellbookFragment extends Fragment implements HistoryRemover {
 
         binding = FragmentSpellbookBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-        //nullSpellListTextView = (TextView) root.findViewById(R.id.nullSpellListTextView);
+        nullSpellListTextView = (TextView) root.findViewById(R.id.nullSpellListTextView);
         historyRecyclerView = (RecyclerView) root.findViewById(R.id.recyclerView);
 
         goToAddSpell = (Button) root.findViewById(R.id.goToAddSpellButton);
@@ -70,12 +70,14 @@ public class SpellbookFragment extends Fragment implements HistoryRemover {
 
     private void initSpellList() {
         ArrayList<Spellbook> newSpellList = SharedPreferencesSaver.loadSpellbookFrom(getActivity().getSharedPreferences("SPELLBOOK_PREF", MODE_PRIVATE));
-        if (newSpellList != null) {
+        if (newSpellList.size() != 0) {
             spellList = newSpellList;
+            nullSpellListTextView.setVisibility(View.INVISIBLE);
             //spellTextView.setText(spellList.get(0).getText());
         } else {
             spellList = new ArrayList<>();
-            //nullSpellListTextView.setText("Your spellbook is empty... \nPlease add your first spell");
+            nullSpellListTextView.setVisibility(View.VISIBLE);
+            nullSpellListTextView.setText("Your spellbook is empty... \nPlease add your first spell");
         }
     }
 
@@ -99,6 +101,7 @@ public class SpellbookFragment extends Fragment implements HistoryRemover {
     public void onResume() {
         super.onResume();
         SharedPreferencesSaver.saveSpellbookTo(spellList, getActivity().getSharedPreferences("SPELLBOOK_PREF", MODE_PRIVATE));
+        //initSpellList();
         initRecyclerView();
     }
 
@@ -129,7 +132,7 @@ public class SpellbookFragment extends Fragment implements HistoryRemover {
     public static ArrayList<Spellbook> getSpellList() {
         return spellList;
     }
-    
+
     @Override
     public void remove(ViewHolderAdaptable viewHolderAdaptable) {
         spellList.remove(viewHolderAdaptable);

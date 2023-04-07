@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity{
         initViews();
         initCharacterList();
         //characterList.clear();
-        //characterList.add(new Character(1,"Xd", 15));
 
         if (characterList.isEmpty()) {
             Intent intent = new Intent(MainActivity.this, NewCharacterActivity.class);
@@ -63,12 +62,15 @@ public class MainActivity extends AppCompatActivity{
 
     public Character getCurrentCharacter()
     {
-        return (Character) characterList.get(0);
+        if (characterList.size() !=0 ) {
+            return (Character) characterList.get(0);
+        }
+        return new Character (1, "", 0);
     }
 
     private void initCharacterList() {
         ArrayList<Character> newCharacterList = SharedPreferencesSaver.loadFrom(getPreferences(MODE_PRIVATE));
-        if (newCharacterList != null) {
+        if (newCharacterList.size()  != 0) {
             characterList = newCharacterList;
             strengthPoints.setText(String.valueOf(characterList.get(0).getStrength()));
         } else {

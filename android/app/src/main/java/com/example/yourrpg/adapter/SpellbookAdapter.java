@@ -31,13 +31,6 @@ public class SpellbookAdapter extends RecyclerView.Adapter<SpellbookAdapter.View
         //Collections.sort(list, (o1, o2) -> o2.getDate().compareTo(o1.getDate()));
     }
 
-    public SpellbookAdapter(ArrayList<ViewHolderAdaptable> list, Context context)
-    {
-        this.context = context;
-        this.list = list;
-        //Collections.sort(list, (o1, o2) -> o2.getDate().compareTo(o1.getDate()));
-    }
-
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {

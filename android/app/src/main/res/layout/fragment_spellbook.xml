@@ -6,6 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".ui.spellbook.SpellbookFragment">
 
+    <TextView
+        android:id="@+id/nullSpellListTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="176dp"
+        android:layout_marginEnd="177dp"
+        android:layout_marginBottom="1dp"
+        android:text="czeeee"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="366dp"

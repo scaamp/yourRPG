@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
@@ -20,6 +21,8 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.yourrpg.MainActivity;
 import com.example.yourrpg.R;
 import com.example.yourrpg.activity.NewCharacterActivity;
+import com.example.yourrpg.activity.NewQuestActivity;
+import com.example.yourrpg.activity.NewSpellActivity;
 import com.example.yourrpg.databinding.FragmentQuestlogBinding;
 import com.example.yourrpg.model.Character;
 import com.example.yourrpg.persistency.SharedPreferencesSaver;
@@ -31,8 +34,8 @@ public class QuestlogFragment extends Fragment {
     private FragmentQuestlogBinding binding;
     private CheckBox questCheckBox;
     private TextView questTextView;
-    public static final String QUEST_FINISHED = "QUEST_FINISHED";
-    //private MainActivity mainActivity;
+    private Button goToAddQuestButton;
+    public static final int NEW_QUEST = 333;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         notificationsViewModel = new ViewModelProvider(this).get(QuestlogViewModel.class);
@@ -49,6 +52,7 @@ public class QuestlogFragment extends Fragment {
         Character character = mainActivity.getCurrentCharacter();
         questCheckBox = (CheckBox) root.findViewById(R.id.checkBox);
         questTextView = (TextView) root.findViewById(R.id.questTextView);
+        goToAddQuestButton = (Button) root.findViewById(R.id.goToAddQuestButton);
         questTextView.setText(character.getName() + "\n Strength: " + character.getStrength());
         questCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -64,7 +68,13 @@ public class QuestlogFragment extends Fragment {
                 questTextView.setText(character.getName() + "\n Strength: " + character.getStrength());
             }
         });
-
+        goToAddQuestButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                assert getParentFragment() != null;
+                startActivityForResult(new Intent(getContext(), NewQuestActivity.class), NEW_QUEST);
+            }
+        });
         return root;
     }
 
