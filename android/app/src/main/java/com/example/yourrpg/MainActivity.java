@@ -56,6 +56,11 @@ public class MainActivity extends AppCompatActivity{
         strengthPoints = (TextView) findViewById(R.id.strengthPointsHome);
     }
 
+    public ArrayList<Character> getCharacterList() {
+        return characterList;
+    }
+
+
     public Character getCurrentCharacter()
     {
         if (characterList.size() !=0 ) {
@@ -66,7 +71,7 @@ public class MainActivity extends AppCompatActivity{
 
     private void initCharacterList() {
         ArrayList<Character> newCharacterList = SharedPreferencesSaver.loadFrom(getPreferences(MODE_PRIVATE));
-        if (newCharacterList.size()  != 0) {
+        if (newCharacterList  != null) {
             characterList = newCharacterList;
             strengthPoints.setText(String.valueOf(characterList.get(0).getStrength()));
         } else {
@@ -101,7 +106,5 @@ public class MainActivity extends AppCompatActivity{
         SharedPreferencesSaver.saveTo(characterList, getPreferences(MODE_PRIVATE));
         SharedPreferencesSaver.saveSpellbookTo(SpellbookFragment.getSpellList(), getPreferences(MODE_PRIVATE));
     }
-
-
 }
 

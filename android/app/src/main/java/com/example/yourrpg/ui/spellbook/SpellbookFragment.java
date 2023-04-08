@@ -71,15 +71,17 @@ public class SpellbookFragment extends Fragment implements SpellbookRemover {
         ArrayList<Spellbook> newSpellList = new ArrayList<>();
         newSpellList.add(new Spellbook(1,"XD", "Jakub", "XD"));
         newSpellList = SharedPreferencesSaver.loadSpellbookFrom(getActivity().getSharedPreferences("SPELLBOOK_PREF", MODE_PRIVATE));
-        if (newSpellList.size() != 0) {
+        if (newSpellList != null) {
             spellList = newSpellList;
-            nullSpellListTextView.setVisibility(View.INVISIBLE);
-            //spellTextView.setText(spellList.get(0).getText());
+            if (newSpellList.size() != 0) nullSpellListTextView.setVisibility(View.INVISIBLE);
+            else
+            {
+                nullSpellListTextView.setVisibility(View.VISIBLE);
+                nullSpellListTextView.setTextSize(32);
+                nullSpellListTextView.setText("Your spellbook is empty... \nPlease add your first spell");
+            }
         } else {
             spellList = new ArrayList<>();
-            nullSpellListTextView.setVisibility(View.VISIBLE);
-            nullSpellListTextView.setTextSize(32);
-            nullSpellListTextView.setText("Your spellbook is empty... \nPlease add your first spell");
         }
     }
 
@@ -124,7 +126,6 @@ public class SpellbookFragment extends Fragment implements SpellbookRemover {
                 if (data != null) {
                     Spellbook newSpell = (Spellbook) data.getExtras().get(NewSpellActivity.NEW_SPELL);
                     spellText = String.valueOf(newSpell.getText());
-                    //spellTextView.setText(spellText);
                     spellList.add(newSpell);
                 }
             }

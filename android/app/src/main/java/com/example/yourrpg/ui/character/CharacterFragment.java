@@ -17,6 +17,7 @@ import com.example.yourrpg.R;
 import com.example.yourrpg.databinding.FragmentCharacterBinding;
 import com.example.yourrpg.model.Character;
 import com.example.yourrpg.persistency.SharedPreferencesSaver;
+import com.example.yourrpg.ui.spellbook.SpellbookFragment;
 
 
 public class CharacterFragment extends Fragment {
@@ -25,6 +26,7 @@ public class CharacterFragment extends Fragment {
     private FragmentCharacterBinding binding;
     private TextView strengthPoints;
     private TextView agilityPoints;
+    private static CharacterFragment instance = null;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel =
@@ -34,7 +36,7 @@ public class CharacterFragment extends Fragment {
         View root = binding.getRoot();
         strengthPoints = (TextView) root.findViewById(R.id.strengthPointsHome);
         agilityPoints = (TextView) root.findViewById(R.id.agilityPoints);
-
+        instance = this;
         return root;
     }
 
@@ -45,12 +47,16 @@ public class CharacterFragment extends Fragment {
         binding = null;
     }
 
+
     @Override
     public void onResume() {
         super.onResume();
         MainActivity mainActivity = (MainActivity) getActivity();
         Character character = mainActivity.getCurrentCharacter();
-        strengthPoints.setText("" + character.getStrength());
-        agilityPoints.setText("" + character.getAgility());
+        strengthPoints.setText(String.valueOf(character.getStrength()));
+        agilityPoints.setText(String.valueOf(character.getAgility()));
+
+        SharedPreferencesSaver.saveTo(mainActivity.getCharacterList(), getActivity().getSharedPreferences("CHARACTER_PREF", MODE_PRIVATE));
+        SharedPreferencesSaver.saveSpellbookTo(SpellbookFragment.getSpellList(), getActivity().getSharedPreferences("SPELLBOOK_PREF", MODE_PRIVATE));
     }
 }

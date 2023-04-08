@@ -178,6 +178,7 @@ public class Character implements Serializable {
         this.characterId = characterId;
     }
 
+
     @Override
     public String toString()
     {

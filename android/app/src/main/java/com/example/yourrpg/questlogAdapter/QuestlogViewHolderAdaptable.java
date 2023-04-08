@@ -7,6 +7,4 @@ public interface QuestlogViewHolderAdaptable {
     int getStatPoints();
     boolean isDone();
     void setDone(boolean isDone);
-
-
 }

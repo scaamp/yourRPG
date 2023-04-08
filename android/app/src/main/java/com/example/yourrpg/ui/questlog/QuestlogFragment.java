@@ -16,6 +16,8 @@ import android.widget.CompoundButton;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -30,6 +32,7 @@ import com.example.yourrpg.persistency.SharedPreferencesSaver;
 import com.example.yourrpg.questlogAdapter.QuestlogAdapter;
 import com.example.yourrpg.questlogAdapter.QuestlogInterface;
 import com.example.yourrpg.questlogAdapter.QuestlogViewHolderAdaptable;
+import com.example.yourrpg.ui.character.CharacterFragment;
 
 import java.util.ArrayList;
 
@@ -53,27 +56,8 @@ public class QuestlogFragment extends Fragment implements QuestlogInterface {
         notificationsViewModel = new ViewModelProvider(this).get(QuestlogViewModel.class);
         binding = FragmentQuestlogBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-//        notificationsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-//            @Override
-//            public void onChanged(@Nullable String s) {
-//                textView.setText(s);
-//            }
-//        });
-
-        //questCheckBox = (CheckBox) root.findViewById(R.id.checkBox);
         goToAddQuestButton = (Button) root.findViewById(R.id.goToAddQuestButton);
         historyRecyclerView = (RecyclerView) root.findViewById(R.id.questRecyclerView);
-//        questCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-//                if (!questCheckBox.isChecked()) {
-//                    character.setStrength(character.getStrength() - 1);
-//                }
-//                if (questCheckBox.isChecked()) {
-//                    character.setStrength(character.getStrength() + 1);
-//                }
-//            }
-//        });
         goToAddQuestButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -163,15 +147,22 @@ public class QuestlogFragment extends Fragment implements QuestlogInterface {
     public void questIsDone(boolean checked, int position, String stat, int statPoints) {
         MainActivity mainActivity = (MainActivity) getActivity();
         Character character = mainActivity.getCurrentCharacter();
+
+        //Character character = CharacterFragment.getInstance().getCurrentCharacter();
+
         if (checked) {
             questList.get(position).setDone(true);
+
             if (stat.equals("Strength")) character.setStrength(character.getStrength() + statPoints);
             if (stat.equals("Agility")) character.setAgility(character.getAgility() + statPoints);
         }
         if (!checked) {
-            character.setStrength(character.getStrength() - statPoints);
+            if (character.getStrength() - statPoints < 0) character.setStrength(0);
+            else character.setStrength(character.getStrength() - statPoints);
             questList.get(position).setDone(false);
         }
         SharedPreferencesSaver.saveQuestlogTo(questList, getActivity().getSharedPreferences("QUESTLOG_PREF", MODE_PRIVATE));
+        SharedPreferencesSaver.saveTo(mainActivity.getCharacterList(), getActivity().getSharedPreferences("CHARACTER_PREF", MODE_PRIVATE));
     }
+
 }
