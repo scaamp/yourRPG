@@ -24,6 +24,7 @@ public class CharacterFragment extends Fragment {
     private CharacterViewModel homeViewModel;
     private FragmentCharacterBinding binding;
     private TextView strengthPoints;
+    private TextView agilityPoints;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel =
@@ -32,6 +33,7 @@ public class CharacterFragment extends Fragment {
         binding = FragmentCharacterBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         strengthPoints = (TextView) root.findViewById(R.id.strengthPointsHome);
+        agilityPoints = (TextView) root.findViewById(R.id.agilityPoints);
 
         return root;
     }
@@ -49,5 +51,6 @@ public class CharacterFragment extends Fragment {
         MainActivity mainActivity = (MainActivity) getActivity();
         Character character = mainActivity.getCurrentCharacter();
         strengthPoints.setText("" + character.getStrength());
+        agilityPoints.setText("" + character.getAgility());
     }
 }

@@ -16,17 +16,21 @@ public class Questlog implements Serializable, QuestlogViewHolderAdaptable {
     private String stat;
 
     @JsonProperty("statPoints")
-    private String statPoints;
+    private int statPoints;
 
     @JsonProperty("isDone")
     private boolean isDone;
 
-    public Questlog(long questId, String desc, String stat, String statPoints, boolean isDone) {
+    public Questlog(long questId, String desc, String stat, int statPoints, boolean isDone) {
         this.questId = questId;
         this.desc = desc;
         this.stat = stat;
         this.statPoints = statPoints;
         this.isDone = isDone;
+    }
+
+    public void setStatPoints(int statPoints) {
+        this.statPoints = statPoints;
     }
 
     public long getQuestId() {
@@ -61,12 +65,8 @@ public class Questlog implements Serializable, QuestlogViewHolderAdaptable {
     }
 
     @Override
-    public String getStatPoints() {
+    public int getStatPoints() {
         return statPoints;
-    }
-
-    public void setStatPoints(String statPoints) {
-        this.statPoints = statPoints;
     }
 
     @Override

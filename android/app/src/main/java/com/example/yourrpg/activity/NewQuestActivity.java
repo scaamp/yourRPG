@@ -97,7 +97,7 @@ public class NewQuestActivity extends AppCompatActivity implements DatePickerDia
             public void onClick(View view) {
                 //Questlog questlog = new Questlog(1, "XD", true);
                 Questlog questlog = new Questlog(1, questDescEditText.getText().toString(),
-                        questStatSpinner.getSelectedItem().toString(), questStatPointsSpinner.getSelectedItem().toString(), false);
+                        questStatSpinner.getSelectedItem().toString(), Integer.valueOf(questStatPointsSpinner.getSelectedItem().toString()), false);
                 //postData(1, textSpellbook.getText().toString(), trainerSpellbook.getText().toString(), spinnerSpellbookRank.getSelectedItem().toString());
                 Intent intent = new Intent();
                 intent.putExtra(NEW_QUEST, questlog);

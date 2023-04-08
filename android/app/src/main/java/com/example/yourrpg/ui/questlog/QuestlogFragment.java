@@ -4,7 +4,9 @@ import static android.content.Context.MODE_PRIVATE;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,13 +28,13 @@ import com.example.yourrpg.model.Character;
 import com.example.yourrpg.model.Questlog;
 import com.example.yourrpg.persistency.SharedPreferencesSaver;
 import com.example.yourrpg.questlogAdapter.QuestlogAdapter;
-import com.example.yourrpg.questlogAdapter.QuestlogRemover;
+import com.example.yourrpg.questlogAdapter.QuestlogInterface;
 import com.example.yourrpg.questlogAdapter.QuestlogViewHolderAdaptable;
 
 import java.util.ArrayList;
 
 
-public class QuestlogFragment extends Fragment implements QuestlogRemover {
+public class QuestlogFragment extends Fragment implements QuestlogInterface {
 
     private QuestlogViewModel notificationsViewModel;
     private FragmentQuestlogBinding binding;
@@ -57,8 +59,7 @@ public class QuestlogFragment extends Fragment implements QuestlogRemover {
 //                textView.setText(s);
 //            }
 //        });
-        MainActivity mainActivity = (MainActivity) getActivity();
-        Character character = mainActivity.getCurrentCharacter();
+
         //questCheckBox = (CheckBox) root.findViewById(R.id.checkBox);
         goToAddQuestButton = (Button) root.findViewById(R.id.goToAddQuestButton);
         historyRecyclerView = (RecyclerView) root.findViewById(R.id.questRecyclerView);
@@ -155,6 +156,22 @@ public class QuestlogFragment extends Fragment implements QuestlogRemover {
         questList.remove(viewHolderAdaptable);
         allItems.remove(viewHolderAdaptable);
         questAdapter.notifyDataSetChanged();
+        SharedPreferencesSaver.saveQuestlogTo(questList, getActivity().getSharedPreferences("QUESTLOG_PREF", MODE_PRIVATE));
+    }
+
+    @Override
+    public void questIsDone(boolean checked, int position, String stat, int statPoints) {
+        MainActivity mainActivity = (MainActivity) getActivity();
+        Character character = mainActivity.getCurrentCharacter();
+        if (checked) {
+            questList.get(position).setDone(true);
+            if (stat.equals("Strength")) character.setStrength(character.getStrength() + statPoints);
+            if (stat.equals("Agility")) character.setAgility(character.getAgility() + statPoints);
+        }
+        if (!checked) {
+            character.setStrength(character.getStrength() - statPoints);
+            questList.get(position).setDone(false);
+        }
         SharedPreferencesSaver.saveQuestlogTo(questList, getActivity().getSharedPreferences("QUESTLOG_PREF", MODE_PRIVATE));
     }
 }
