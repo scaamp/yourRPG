@@ -1,6 +1,9 @@
 package com.example.yourrpg.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -16,7 +19,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.yourrpg.R;
 import com.example.yourrpg.RetrofitAPI;
+import com.example.yourrpg.RetrofitClient;
 import com.example.yourrpg.model.Spellbook;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -30,12 +36,13 @@ public class NewSpellActivity extends AppCompatActivity {
     private Button addSpellButton;
     private Spinner spinnerSpellbookRank;
     public static final String NEW_SPELL = "NEW_SPELL";
+    private Context context;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState)
-    {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_spellbook);
+        setTitle("New spell");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         textSpellbook = (EditText) findViewById(R.id.questDeadlineEditText);
@@ -50,21 +57,37 @@ public class NewSpellActivity extends AppCompatActivity {
         addSpellButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Spellbook spellbook = new Spellbook(1, textSpellbook.getText().toString(), trainerSpellbook.getText().toString(), spinnerSpellbookRank.getSelectedItem().toString());
-                //postData(1, textSpellbook.getText().toString(), trainerSpellbook.getText().toString(), spinnerSpellbookRank.getSelectedItem().toString());
-                Intent intent = new Intent();
-                intent.putExtra(NEW_SPELL, spellbook);
-                setResult(Activity.RESULT_OK, intent);
-                Toast.makeText(NewSpellActivity.this,"Spell added!", Toast.LENGTH_LONG).show();
-                finish();
+                if (textSpellbook.getText().toString().isEmpty())
+                {
+                    new AlertDialog.Builder(NewSpellActivity.this)
+                            .setTitle("No spell added")
+                            .setMessage("Your spell is empty!\nDo you want to add random generated spell?")
+                            .setCancelable(false)
+                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    getAffirmation();
+                                }
+                            }).setNegativeButton("No", null)
+                            .show();
+                }
+                else {
+                    Spellbook spellbook = new Spellbook(1, textSpellbook.getText().toString(), trainerSpellbook.getText().toString(), spinnerSpellbookRank.getSelectedItem().toString());
+                    //postData(1, textSpellbook.getText().toString(), trainerSpellbook.getText().toString(), spinnerSpellbookRank.getSelectedItem().toString());
+                    Intent intent = new Intent();
+                    intent.putExtra(NEW_SPELL, spellbook);
+                    setResult(Activity.RESULT_OK, intent);
+                    Toast.makeText(NewSpellActivity.this, "Spell added!", Toast.LENGTH_LONG).show();
+                    finish();
+                }
             }
         });
 
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        if(item.getItemId() == android.R.id.home){
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
 
             finish();
 
@@ -88,10 +111,30 @@ public class NewSpellActivity extends AppCompatActivity {
             public void onResponse(Call<Spellbook> call, Response<Spellbook> response) {
                 Spellbook responseFromAPI = response.body();
             }
+
             @Override
             public void onFailure(Call<Spellbook> call, Throwable t) {
                 t.getMessage();
             }
         });
     }
+
+    private void getAffirmation() {
+        Call<Spellbook> call = RetrofitClient.getInstance().getMyRetrofitAPI().getAffirmation();
+        call.enqueue(new Callback<Spellbook>() {
+            @Override
+            public void onResponse(Call<Spellbook> call, Response<Spellbook> response) {
+                String affirmation = response.body().getText();
+                textSpellbook.setText(affirmation);
+            }
+
+            @Override
+            public void onFailure(Call<Spellbook> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), "An error has occured", Toast.LENGTH_LONG).show();
+            }
+        });
+
+    }
 }
+
+

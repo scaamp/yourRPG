@@ -70,9 +70,9 @@ public class QuestlogAdapter extends RecyclerView.Adapter<QuestlogAdapter.ViewHo
         holder.trashImageView.setOnClickListener(v ->
         {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            builder.setMessage("Na pewno usuwamy " + holder.questTextView.getText() + "?");
-            builder.setPositiveButton("Usuń", (dialog, which) -> questlogInterface.remove(list.remove(position)));
-            builder.setNeutralButton("Zostaw", null);
+            builder.setMessage("Are you sure to delete " + holder.questTextView.getText() + "?");
+            builder.setPositiveButton("Yes", (dialog, which) -> questlogInterface.remove(list.remove(position)));
+            builder.setNeutralButton("No", null);
             builder.create().show();
         });
     }

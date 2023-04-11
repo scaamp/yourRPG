@@ -53,9 +53,9 @@ public class SpellbookAdapter extends RecyclerView.Adapter<SpellbookAdapter.View
         holder.trashImageView.setOnClickListener(v ->
         {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            builder.setMessage("Na pewno usuwamy " + holder.spellTextView.getText() + "?");
-            builder.setPositiveButton("Usuń", (dialog, which) -> spellbookRemover.remove(list.remove(position)));
-            builder.setNeutralButton("Zostaw", null);
+            builder.setMessage("Are you sure to delete " + holder.spellTextView.getText() + "?");
+            builder.setPositiveButton("Yes", (dialog, which) -> spellbookRemover.remove(list.remove(position)));
+            builder.setNeutralButton("No", null);
             builder.create().show();
         });
     }

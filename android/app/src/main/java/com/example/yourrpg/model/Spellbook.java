@@ -2,6 +2,7 @@ package com.example.yourrpg.model;
 
 import com.example.yourrpg.spellbookAdapter.SpellbookViewHolderAdaptable;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
@@ -11,6 +12,7 @@ public class Spellbook implements Serializable, SpellbookViewHolderAdaptable {
     private long spellbookId;
 
     @JsonProperty("text")
+    @SerializedName("affirmation")
     private String text;
 
     @JsonProperty("trainer")

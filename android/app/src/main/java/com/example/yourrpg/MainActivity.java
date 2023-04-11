@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.example.yourrpg.activity.NewCharacterActivity;
 import com.example.yourrpg.model.Character;
 import com.example.yourrpg.persistency.SharedPreferencesSaver;
+import com.example.yourrpg.ui.character.CharacterFragment;
 import com.example.yourrpg.ui.spellbook.SpellbookFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -25,6 +26,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity{
 
     public static final int NEW_CHARACTER = 111;
+    public static final int QUEST_DONE = 444;
     private ActivityMainBinding binding;
     private ArrayList<Character> characterList;
     private TextView strengthPoints;
@@ -66,14 +68,14 @@ public class MainActivity extends AppCompatActivity{
         if (characterList.size() !=0 ) {
             return (Character) characterList.get(0);
         }
-        return new Character (1, "", 0);
+        return new Character (1, "", 0,0);
     }
 
     private void initCharacterList() {
         ArrayList<Character> newCharacterList = SharedPreferencesSaver.loadFrom(getPreferences(MODE_PRIVATE));
         if (newCharacterList  != null) {
             characterList = newCharacterList;
-            strengthPoints.setText(String.valueOf(characterList.get(0).getStrength()));
+            strengthPoints.setText(String.valueOf(getCurrentCharacter().getStrength()));
         } else {
             characterList = new ArrayList<>();
         }
@@ -90,8 +92,20 @@ public class MainActivity extends AppCompatActivity{
                     characterList.add(newCharacter);
                 }
             }
+
+        }
+
+        if (requestCode == QUEST_DONE) {
+            if (resultCode == Activity.RESULT_OK) {
+                if (data != null) {
+//                    Character newCharacter = (Character) data.getExtras().get(CharacterFragment.NEW_CHARACTER);
+//                    strengthPoints.setText(String.valueOf(newCharacter.getStrength()));
+//                    characterList.add(newCharacter);
+                }
+            }
         }
     }
+
 
     @Override
     protected void onResume() {

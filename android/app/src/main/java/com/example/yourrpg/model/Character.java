@@ -47,6 +47,14 @@ public class Character implements Serializable {
     @JsonProperty("determination")
     private int determination;
 
+
+    public Character(long characterId, String name, int strength, int agility) {
+        this.characterId = characterId;
+        this.name = name;
+        this.strength = strength;
+        this.agility = agility;
+    }
+
     public long getCharacterId() {
         return characterId;
     }
@@ -141,12 +149,6 @@ public class Character implements Serializable {
 
     public void setDetermination(int determination) {
         this.determination = determination;
-    }
-
-    public Character(long characterId, String name, int strength) {
-        this.characterId = characterId;
-        this.name = name;
-        this.strength = strength;
     }
 
     public Character getCharacter()

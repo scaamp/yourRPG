@@ -32,6 +32,7 @@ public class NewCharacterActivity extends AppCompatActivity {
     private Button doneCharacterButton;
     private Button addStrengthButton;
     private TextView strengthPoints;
+    private TextView agilityPoints;
     private Character character;
     public static final String NEW_CHARACTER = "NEW_CHARACTER";
 
@@ -46,6 +47,7 @@ public class NewCharacterActivity extends AppCompatActivity {
     public void init()
     {
         strengthPoints = (TextView) findViewById(R.id.strengthPoints);
+        agilityPoints = (TextView) findViewById(R.id.agilityPoints);
         addStrengthButton = (Button) findViewById(R.id.addStrengthButton);
         addStrengthButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,7 +63,7 @@ public class NewCharacterActivity extends AppCompatActivity {
         doneCharacterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Character character = new Character(1, "XD", Integer.parseInt(strengthPoints.getText().toString()));
+                Character character = new Character(1, "XD", Integer.parseInt(strengthPoints.getText().toString()), Integer.parseInt(agilityPoints.getText().toString()));
                 postData(character);
                 Intent intent = new Intent();
                 intent.putExtra(NEW_CHARACTER, character);
@@ -72,14 +74,14 @@ public class NewCharacterActivity extends AppCompatActivity {
         });
     }
 
-    private void postData(long characterId, String name, int strength) {
+    private void postData(long characterId, String name, int strength, int agility) {
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://172.23.240.3:8090/characters/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
-        Character modal = new Character(characterId, name, strength);
+        Character modal = new Character(characterId, name, strength, agility);
         Call<Character> call = retrofitAPI.createPost(modal);
         call.enqueue(new Callback<Character>() {
 
@@ -116,11 +118,6 @@ public class NewCharacterActivity extends AppCompatActivity {
         });
     }
 
-    @Nullable
-    private Character getCurrentAuto()
-    {
-        return (Character) new Character(1, "XD", 3);
-    }
 
 //    private View.OnClickListener goToMainActivity()
 //    {

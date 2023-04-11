@@ -16,8 +16,6 @@ import com.example.yourrpg.MainActivity;
 import com.example.yourrpg.R;
 import com.example.yourrpg.databinding.FragmentCharacterBinding;
 import com.example.yourrpg.model.Character;
-import com.example.yourrpg.persistency.SharedPreferencesSaver;
-import com.example.yourrpg.ui.spellbook.SpellbookFragment;
 
 
 public class CharacterFragment extends Fragment {
@@ -56,7 +54,9 @@ public class CharacterFragment extends Fragment {
         strengthPoints.setText(String.valueOf(character.getStrength()));
         agilityPoints.setText(String.valueOf(character.getAgility()));
 
-        SharedPreferencesSaver.saveTo(mainActivity.getCharacterList(), getActivity().getSharedPreferences("CHARACTER_PREF", MODE_PRIVATE));
-        SharedPreferencesSaver.saveSpellbookTo(SpellbookFragment.getSpellList(), getActivity().getSharedPreferences("SPELLBOOK_PREF", MODE_PRIVATE));
+        //SharedPreferencesSaver.saveTo(mainActivity.getCharacterList(), getActivity().getSharedPreferences("CHARACTER_PREF", MODE_PRIVATE));
+        //SharedPreferencesSaver.saveSpellbookTo(SpellbookFragment.getSpellList(), getActivity().getSharedPreferences("SPELLBOOK_PREF", MODE_PRIVATE));
     }
+
+
 }

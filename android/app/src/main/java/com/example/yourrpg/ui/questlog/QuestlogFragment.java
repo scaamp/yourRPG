@@ -34,16 +34,19 @@ import com.example.yourrpg.questlogAdapter.QuestlogInterface;
 import com.example.yourrpg.questlogAdapter.QuestlogViewHolderAdaptable;
 import com.example.yourrpg.ui.character.CharacterFragment;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class QuestlogFragment extends Fragment implements QuestlogInterface {
 
     private QuestlogViewModel notificationsViewModel;
     private FragmentQuestlogBinding binding;
-    private CheckBox questCheckBox;
     private Button goToAddQuestButton;
     public static final int NEW_QUEST = 333;
+    public static final String QUEST_DONE = "QUEST_DONE";
     private static ArrayList<Questlog> questList;
 
     private RecyclerView.LayoutManager historyLayoutManager;
@@ -75,7 +78,7 @@ public class QuestlogFragment extends Fragment implements QuestlogInterface {
         //newQuestList.add(new Questlog(1,"XD",false));
         newQuestList = SharedPreferencesSaver.loadQuestlogFrom(getActivity().getSharedPreferences("QUESTLOG_PREF", MODE_PRIVATE));
 
-        if (newQuestList.size() != 0) {
+        if (!newQuestList.isEmpty()) {
             questList = newQuestList;
 //            nullSpellListTextView.setVisibility(View.INVISIBLE);
             //questTextView.setText(questList.get(0).getText());
@@ -147,14 +150,17 @@ public class QuestlogFragment extends Fragment implements QuestlogInterface {
     public void questIsDone(boolean checked, int position, String stat, int statPoints) {
         MainActivity mainActivity = (MainActivity) getActivity();
         Character character = mainActivity.getCurrentCharacter();
-
         //Character character = CharacterFragment.getInstance().getCurrentCharacter();
-
         if (checked) {
             questList.get(position).setDone(true);
 
             if (stat.equals("Strength")) character.setStrength(character.getStrength() + statPoints);
             if (stat.equals("Agility")) character.setAgility(character.getAgility() + statPoints);
+
+//            Intent intent = new Intent(getContext(), MainActivity.class);
+//            intent.putExtra(QUEST_DONE, character);
+//            getActivity().setResult(Activity.RESULT_OK, intent);
+//            startActivityForResult(intent, 444);
         }
         if (!checked) {
             if (character.getStrength() - statPoints < 0) character.setStrength(0);
