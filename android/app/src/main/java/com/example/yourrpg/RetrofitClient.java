@@ -25,4 +25,5 @@ public class RetrofitClient {
     public RetrofitAPI getMyRetrofitAPI() {
         return myRetrofitAPI;
     }
+
 }

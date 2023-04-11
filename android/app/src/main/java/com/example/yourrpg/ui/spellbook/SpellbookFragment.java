@@ -69,7 +69,7 @@ public class SpellbookFragment extends Fragment implements SpellbookRemover {
 
     private void initSpellList() {
         ArrayList<Spellbook> newSpellList = new ArrayList<>();
-        newSpellList.add(new Spellbook(1,"XD", "Jakub", "XD"));
+        //newSpellList.add(new Spellbook(1,"XD", "Jakub", "XD"));
         newSpellList = SharedPreferencesSaver.loadSpellbookFrom(getActivity().getSharedPreferences("SPELLBOOK_PREF", MODE_PRIVATE));
         if (newSpellList != null) {
             spellList = newSpellList;

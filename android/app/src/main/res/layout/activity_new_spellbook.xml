@@ -11,11 +11,13 @@
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
         <TextView
-            android:id="@+id/questDescTextView"
+            android:id="@+id/spellTrainerTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
@@ -23,13 +25,13 @@
             android:layout_marginEnd="32dp"
             android:layout_marginBottom="10dp"
             android:text="Trainer:"
-            app:layout_constraintBottom_toTopOf="@+id/questDescEditText"
+            app:layout_constraintBottom_toTopOf="@+id/spellTrainerEditText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/questDescEditText"
+            android:id="@+id/spellTrainerEditText"
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_marginStart="32dp"
@@ -38,52 +40,48 @@
             android:inputType="textPersonName"
             android:minHeight="48dp"
             android:text="Name"
-            app:layout_constraintBottom_toTopOf="@+id/questRewardTextView"
+            app:layout_constraintBottom_toTopOf="@+id/spellRankTextView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/questDescTextView" />
+            app:layout_constraintTop_toBottomOf="@+id/spellTrainerTextView" />
 
         <TextView
-            android:id="@+id/questRewardTextView"
+            android:id="@+id/spellRankTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:layout_marginTop="24dp"
-            android:layout_marginEnd="32dp"
             android:layout_marginBottom="10dp"
             android:text="Rank:"
             app:layout_constraintBottom_toTopOf="@+id/spellStatSpinner"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/questDescEditText" />
+            app:layout_constraintTop_toBottomOf="@+id/spellTrainerEditText" />
 
         <Spinner
             android:id="@+id/spellStatSpinner"
             android:layout_width="93dp"
-            android:layout_height="45dp"
+            android:layout_height="48dp"
             android:layout_marginStart="32dp"
             android:layout_marginBottom="16dp"
             android:minHeight="48dp"
-            app:layout_constraintBottom_toTopOf="@+id/questDeadlineTextView"
+            app:layout_constraintBottom_toTopOf="@+id/spellTextView"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/questRewardTextView"
+            app:layout_constraintTop_toBottomOf="@+id/spellRankTextView"
             tools:ignore="SpeakableTextPresentCheck" />
 
         <TextView
-            android:id="@+id/questDeadlineTextView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:id="@+id/spellTextView"
+            android:layout_width="87dp"
+            android:layout_height="14dp"
             android:layout_marginStart="32dp"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="32dp"
             android:text="Your spell:"
-            app:layout_constraintBottom_toTopOf="@+id/questDeadlineEditText"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/spellEditText"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/spellStatSpinner" />
 
         <EditText
-            android:id="@+id/questDeadlineEditText"
+            android:id="@+id/spellEditText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
@@ -94,18 +92,52 @@
             android:minHeight="48dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/questDeadlineTextView"
+            app:layout_constraintTop_toBottomOf="@+id/spellTextView"
             tools:ignore="SpeakableTextPresentCheck" />
 
         <Button
-            android:id="@+id/addQuestButton"
+            android:id="@+id/addSpellButton"
             android:layout_width="111dp"
             android:layout_height="48dp"
             android:layout_marginTop="24dp"
-            android:layout_marginEnd="42dp"
+            android:layout_marginEnd="32dp"
             android:text="Add"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/questDeadlineEditText" />
+            app:layout_constraintTop_toBottomOf="@+id/spellEditText" />
+
+        <ImageButton
+            android:id="@+id/getRandomSpellButton"
+            android:layout_width="51dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="44dp"
+            app:layout_constraintBottom_toTopOf="@+id/spellEditText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/random" />
+
+        <TextView
+            android:id="@+id/spellDateTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="132dp"
+            android:layout_marginBottom="12dp"
+            android:text="Date:"
+            app:layout_constraintBottom_toTopOf="@+id/spellEditTextDate"
+            app:layout_constraintStart_toEndOf="@+id/spellRankTextView" />
+
+        <EditText
+            android:id="@+id/spellEditTextDate"
+            android:layout_width="94dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="60dp"
+            android:layout_marginEnd="59dp"
+            android:layout_marginBottom="44dp"
+            android:ems="10"
+            android:inputType="date"
+            app:layout_constraintBottom_toTopOf="@+id/spellEditText"
+            app:layout_constraintEnd_toStartOf="@+id/getRandomSpellButton"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/spellStatSpinner" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

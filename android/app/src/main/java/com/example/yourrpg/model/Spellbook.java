@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class Spellbook implements Serializable, SpellbookViewHolderAdaptable {
 
@@ -21,11 +22,15 @@ public class Spellbook implements Serializable, SpellbookViewHolderAdaptable {
     @JsonProperty("rank")
     private String rank;
 
-    public Spellbook(long spellbookId, String text, String trainer, String rank) {
+    @JsonProperty("date")
+    private Date date;
+
+    public Spellbook(long spellbookId, String text, String trainer, String rank, Date date) {
         this.spellbookId = spellbookId;
         this.text = text;
         this.trainer = trainer;
         this.rank = rank;
+        this.date = date;
     }
 
     public long getSpellbookId() {
@@ -63,5 +68,13 @@ public class Spellbook implements Serializable, SpellbookViewHolderAdaptable {
 
     public void setRank(String rank) {
         this.rank = rank;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 }

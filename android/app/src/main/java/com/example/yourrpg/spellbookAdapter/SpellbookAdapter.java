@@ -47,7 +47,7 @@ public class SpellbookAdapter extends RecyclerView.Adapter<SpellbookAdapter.View
         DateFormat dateFormat = DateFormat.getDateInstance();
         //holder.leftLabelTopTextView.setText(dateFormat.format(item.getDate()));
         holder.spellTextView.setText("\"" + item.getText() + "\"");
-        holder.spellDateTextView.setText("05.04.2023");
+        holder.spellDateTextView.setText(dateFormat.format(item.getDate()));
         holder.spellTrainerTextView.setText(item.getTrainer());
         holder.spellRankTextView.setText("Rank: " + item.getRank());
         holder.trashImageView.setOnClickListener(v ->
