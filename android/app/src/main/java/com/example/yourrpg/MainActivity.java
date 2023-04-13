@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity{
     private ArrayList<Character> characterList;
     private TextView strengthPoints;
     private CheckBox questCheckBox;
+    private static final String SPELLBOOK_PREF = "SPELLBOOK_PREF";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,9 +73,10 @@ public class MainActivity extends AppCompatActivity{
     }
 
     private void initCharacterList() {
-        ArrayList<Character> newCharacterList = SharedPreferencesSaver.loadFrom(getPreferences(MODE_PRIVATE));
+        ArrayList<Character> newCharacterList = SharedPreferencesSaver.loadFrom(getPreferences(MODE_PRIVATE), SharedPreferencesSaver.CHARACTER_PREF);
         if (newCharacterList  != null) {
             characterList = newCharacterList;
+            //characterList.clear();
             strengthPoints.setText(String.valueOf(getCurrentCharacter().getStrength()));
         } else {
             characterList = new ArrayList<>();
@@ -110,15 +112,15 @@ public class MainActivity extends AppCompatActivity{
     @Override
     protected void onResume() {
         super.onResume();
-        SharedPreferencesSaver.saveTo(characterList, getPreferences(MODE_PRIVATE));
-        SharedPreferencesSaver.saveSpellbookTo(SpellbookFragment.getSpellList(), getPreferences(MODE_PRIVATE));
+        SharedPreferencesSaver.saveTo(characterList, getPreferences(MODE_PRIVATE), SharedPreferencesSaver.CHARACTER_PREF);
+        SharedPreferencesSaver.saveTo(SpellbookFragment.getSpellList(), getPreferences(MODE_PRIVATE), SPELLBOOK_PREF);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        SharedPreferencesSaver.saveTo(characterList, getPreferences(MODE_PRIVATE));
-        SharedPreferencesSaver.saveSpellbookTo(SpellbookFragment.getSpellList(), getPreferences(MODE_PRIVATE));
+        SharedPreferencesSaver.saveTo(characterList, getPreferences(MODE_PRIVATE), SharedPreferencesSaver.CHARACTER_PREF);
+        SharedPreferencesSaver.saveTo(SpellbookFragment.getSpellList(), getPreferences(MODE_PRIVATE), SPELLBOOK_PREF);
     }
 }
 

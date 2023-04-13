@@ -16,8 +16,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.yourrpg.MainActivity;
 import com.example.yourrpg.R;
 import com.example.yourrpg.RetrofitAPI;
+import com.example.yourrpg.RetrofitClient;
 import com.example.yourrpg.model.Character;
 import com.example.yourrpg.model.Character;
+import com.example.yourrpg.model.Spellbook;
 import com.example.yourrpg.persistency.SharedPreferencesSaver;
 
 import java.util.ArrayList;
@@ -35,6 +37,7 @@ public class NewCharacterActivity extends AppCompatActivity {
     private TextView agilityPoints;
     private Character character;
     public static final String NEW_CHARACTER = "NEW_CHARACTER";
+    public RetrofitClient retrofitClient;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -98,13 +101,8 @@ public class NewCharacterActivity extends AppCompatActivity {
     }
 
     private void postData(Character character) {
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://172.23.240.3:8090/characters/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);;
-        Call<Character> call = retrofitAPI.createPost(character);
+        retrofitClient = new RetrofitClient(RetrofitAPI.CHARACTER_URL);
+        Call<Character> call = retrofitClient.getMyRetrofitAPI().createPost(character);
         call.enqueue(new Callback<Character>() {
 
             @Override

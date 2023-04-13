@@ -76,10 +76,11 @@ public class QuestlogFragment extends Fragment implements QuestlogInterface {
     private void initQuestList() {
         ArrayList<Questlog> newQuestList = new ArrayList<>();
         //newQuestList.add(new Questlog(1,"XD",false));
-        newQuestList = SharedPreferencesSaver.loadQuestlogFrom(getActivity().getSharedPreferences("QUESTLOG_PREF", MODE_PRIVATE));
+        newQuestList = SharedPreferencesSaver.loadFrom(getActivity().getSharedPreferences("QUESTLOG_PREF", MODE_PRIVATE), SharedPreferencesSaver.QUESTLOG_PREF);
 
-        if (!newQuestList.isEmpty()) {
+        if (newQuestList != null) {
             questList = newQuestList;
+            //questList.clear();
 //            nullSpellListTextView.setVisibility(View.INVISIBLE);
             //questTextView.setText(questList.get(0).getText());
         } else {
@@ -110,7 +111,7 @@ public class QuestlogFragment extends Fragment implements QuestlogInterface {
     @Override
     public void onResume() {
         super.onResume();
-        SharedPreferencesSaver.saveQuestlogTo(questList, getActivity().getSharedPreferences("QUESTLOG_PREF", MODE_PRIVATE));
+        SharedPreferencesSaver.saveTo(questList, getActivity().getSharedPreferences("QUESTLOG_PREF", MODE_PRIVATE), SharedPreferencesSaver.QUESTLOG_PREF);
         initQuestList();
         initRecyclerView();
     }
@@ -143,7 +144,7 @@ public class QuestlogFragment extends Fragment implements QuestlogInterface {
         questList.remove(viewHolderAdaptable);
         allItems.remove(viewHolderAdaptable);
         questAdapter.notifyDataSetChanged();
-        SharedPreferencesSaver.saveQuestlogTo(questList, getActivity().getSharedPreferences("QUESTLOG_PREF", MODE_PRIVATE));
+        SharedPreferencesSaver.saveTo(questList, getActivity().getSharedPreferences("QUESTLOG_PREF", MODE_PRIVATE), SharedPreferencesSaver.QUESTLOG_PREF);
     }
 
     @Override
@@ -167,8 +168,8 @@ public class QuestlogFragment extends Fragment implements QuestlogInterface {
             else character.setStrength(character.getStrength() - statPoints);
             questList.get(position).setDone(false);
         }
-        SharedPreferencesSaver.saveQuestlogTo(questList, getActivity().getSharedPreferences("QUESTLOG_PREF", MODE_PRIVATE));
-        SharedPreferencesSaver.saveTo(mainActivity.getCharacterList(), getActivity().getSharedPreferences("CHARACTER_PREF", MODE_PRIVATE));
+        SharedPreferencesSaver.saveTo(questList, getActivity().getSharedPreferences("QUESTLOG_PREF", MODE_PRIVATE), SharedPreferencesSaver.QUESTLOG_PREF);
+        SharedPreferencesSaver.saveTo(mainActivity.getCharacterList(), getActivity().getSharedPreferences("CHARACTER_PREF", MODE_PRIVATE), SharedPreferencesSaver.CHARACTER_PREF);
     }
 
 }

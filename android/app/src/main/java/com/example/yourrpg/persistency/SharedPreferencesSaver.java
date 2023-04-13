@@ -17,52 +17,42 @@ import java.util.ArrayList;
 
 public class SharedPreferencesSaver
 {
-    private static final String CHARACTER_PREF = "CHARACTER_PREF";
-    private static final String SPELLBOOK_PREF = "SPELLBOOK_PREF";
-    private static final String QUESTLOG_PREF = "QUESTLOG_PREF";
+    public static final String CHARACTER_PREF = "CHARACTER_PREF";
+    public static final String SPELLBOOK_PREF = "SPELLBOOK_PREF";
+    public static final String QUESTLOG_PREF = "QUESTLOG_PREF";
 
-    public static void saveTo(ArrayList<Character> characterList, SharedPreferences preferences)
+    public static ArrayList loadFrom(SharedPreferences preferences, String pref)
     {
+        String string = preferences.getString(pref, null);
+        Gson gson = new Gson();
+        if (pref.equals(SPELLBOOK_PREF)) return gson.fromJson(string, new TypeToken<ArrayList<Spellbook>>(){}.getType());
+        if (pref.equals(CHARACTER_PREF)) return gson.fromJson(string, new TypeToken<ArrayList<Character>>(){}.getType());
+        if (pref.equals(QUESTLOG_PREF)) return gson.fromJson(string, new TypeToken<ArrayList<Questlog>>(){}.getType());
+        return new ArrayList();
+    }
+
+    public static void saveTo(ArrayList list, SharedPreferences preferences, String pref)
+    {
+
         SharedPreferences.Editor editor = preferences.edit();
         Gson gson = new Gson();
-        editor.putString(CHARACTER_PREF, gson.toJson(characterList));
+        if (pref.equals(SPELLBOOK_PREF)) editor.putString(pref, gson.toJson(list));
+        if (pref.equals(CHARACTER_PREF)) editor.putString(pref, gson.toJson(list));
+        if (pref.equals(QUESTLOG_PREF)) editor.putString(pref, gson.toJson(list));
         editor.apply();
     }
 
-    public static ArrayList<Character> loadFrom(SharedPreferences preferences)
-    {
-        String string = preferences.getString(CHARACTER_PREF, null);
-        Gson gson = new Gson();
-        return gson.fromJson(string, new TypeToken<ArrayList<Character>>(){}.getType());
-    }
-
-    public static void saveSpellbookTo(ArrayList<Spellbook> spellList, SharedPreferences preferences)
-    {
-        SharedPreferences.Editor editor = preferences.edit();
-        Gson gson = new Gson();
-        editor.putString(SPELLBOOK_PREF, gson.toJson(spellList));
-        editor.apply();
-    }
-
-    public static ArrayList<Spellbook> loadSpellbookFrom(SharedPreferences preferences)
-    {
-        String string = preferences.getString(SPELLBOOK_PREF, null);
-        Gson gson = new Gson();
-        return gson.fromJson(string, new TypeToken<ArrayList<Spellbook>>(){}.getType());
-    }
-
-    public static void saveQuestlogTo(ArrayList<Questlog> questList, SharedPreferences preferences)
-    {
-        SharedPreferences.Editor editor = preferences.edit();
-        Gson gson = new Gson();
-        editor.putString(QUESTLOG_PREF, gson.toJson(questList));
-        editor.apply();
-    }
-
-    public static ArrayList<Questlog> loadQuestlogFrom(SharedPreferences preferences)
-    {
-        String string = preferences.getString(QUESTLOG_PREF, null);
-        Gson gson = new Gson();
-        return gson.fromJson(string, new TypeToken<ArrayList<Questlog>>(){}.getType());
-    }
+//    public static ArrayList<Spellbook> loadSpellbookFrom(SharedPreferences preferences)
+//    {
+//        String string = preferences.getString(SPELLBOOK_PREF, null);
+//        Gson gson = new Gson();
+//        return gson.fromJson(string, new TypeToken<ArrayList<Spellbook>>(){}.getType());
+//    }
+//
+//    public static ArrayList<Questlog> loadQuestlogFrom(SharedPreferences preferences)
+//    {
+//        String string = preferences.getString(QUESTLOG_PREF, null);
+//        Gson gson = new Gson();
+//        return gson.fromJson(string, new TypeToken<ArrayList<Questlog>>(){}.getType());
+//    }
 }

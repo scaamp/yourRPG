@@ -1,6 +1,7 @@
 package com.example.yourrpg.model;
 
 import com.example.yourrpg.spellbookAdapter.SpellbookViewHolderAdaptable;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.annotations.SerializedName;
 
@@ -23,6 +24,7 @@ public class Spellbook implements Serializable, SpellbookViewHolderAdaptable {
     private String rank;
 
     @JsonProperty("date")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MMM dd, yyyy HH:mm:ss a")
     private Date date;
 
     public Spellbook(long spellbookId, String text, String trainer, String rank, Date date) {

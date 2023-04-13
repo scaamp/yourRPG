@@ -28,14 +28,12 @@ public class SpellbookServiceImpl implements SpellbookService {
     @Override
     public List<SpellbookResponse> getAllSpellbooks()
     {
-        /*return StreamSupport.stream(spellbookRepository.findAll().spliterator(), false)
-                .map(entity -> new SpellbookResponse(entity.getSpellbook_id(), entity.getName(), entity.getAge(), entity.getMovie_id().getMovie_id()))
-                .collect(Collectors.toList());*/
         List<Spellbook> spellbooks = spellbookRepository.findAll();
         List<SpellbookResponse> spellbookResponses = new ArrayList<>(spellbooks.size());
 
         for (Spellbook w : spellbooks) {
-            SpellbookResponse spellbookResponse = new SpellbookResponse(w.getSpellbookId(), w.getText(), w.getTrainer(), w.getRank(), w.getCharacterId()); //, a.getMovie());
+            SpellbookResponse spellbookResponse = new SpellbookResponse(w.getSpellbookId(), w.getText(),
+                    w.getTrainer(), w.getRank(), w.getDate(), w.getCharacterId());
             spellbookResponses.add(spellbookResponse);
         }
 
@@ -51,10 +49,9 @@ public class SpellbookServiceImpl implements SpellbookService {
         spellbook.setText(spellbookRequest.getText());
         spellbook.setTrainer(spellbookRequest.getTrainer());
         spellbook.setRank(spellbookRequest.getRank());
+        spellbook.setDate(spellbookRequest.getDate());
         spellbook.setCharacterId(spellbookRequest.getCharacter());
-
         spellbookRepository.save(spellbook);
-
     }
 
     @Override
@@ -69,7 +66,7 @@ public class SpellbookServiceImpl implements SpellbookService {
         spellbook.setSpellbookId(spellbookArg.getSpellbookId());
         spellbook.setText(spellbookArg.getText());
         spellbook.setTrainer(spellbookArg.getTrainer());
-        spellbook.setSpellbookId(spellbookArg.getSpellbookId());
+        spellbook.setDate(spellbookArg.getDate());
         spellbook.setCharacterId(spellbookArg.getCharacterId());
         spellbookRepository.save(spellbook);
     }

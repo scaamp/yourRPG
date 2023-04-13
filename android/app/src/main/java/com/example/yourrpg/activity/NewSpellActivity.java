@@ -1,5 +1,7 @@
 package com.example.yourrpg.activity;
 
+import static android.webkit.ConsoleMessage.MessageLevel.LOG;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -25,15 +27,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.yourrpg.R;
 import com.example.yourrpg.RetrofitAPI;
 import com.example.yourrpg.RetrofitClient;
+import com.example.yourrpg.model.Character;
 import com.example.yourrpg.model.Spellbook;
 
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
+import java.time.ZonedDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Locale;
+import java.util.SimpleTimeZone;
 
+import cz.msebera.android.httpclient.client.utils.DateUtils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -49,6 +58,7 @@ public class NewSpellActivity extends AppCompatActivity implements DatePickerDia
     private Spinner spinnerSpellbookRank;
     private DateFormat dateFormat;
     public static final String NEW_SPELL = "NEW_SPELL";
+    public RetrofitClient retrofitClient;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,8 +80,7 @@ public class NewSpellActivity extends AppCompatActivity implements DatePickerDia
         addSpellButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (textSpellbook.getText().toString().isEmpty())
-                {
+                if (textSpellbook.getText().toString().isEmpty()) {
                     new AlertDialog.Builder(NewSpellActivity.this)
                             .setTitle("No spell added")
                             .setMessage("Your spell is empty!\nDo you want to add random generated spell?")
@@ -83,10 +92,12 @@ public class NewSpellActivity extends AppCompatActivity implements DatePickerDia
                                 }
                             }).setNegativeButton("No", null)
                             .show();
-                }
-                else {
-                    Spellbook spellbook = new Spellbook(1, textSpellbook.getText().toString(), trainerSpellbook.getText().toString(), spinnerSpellbookRank.getSelectedItem().toString(), getDateEditTextDate());
-                    //postData(1, textSpellbook.getText().toString(), trainerSpellbook.getText().toString(), spinnerSpellbookRank.getSelectedItem().toString());
+                } else {
+                    Spellbook spellbook = new Spellbook(1, textSpellbook.getText().toString(), trainerSpellbook.getText().toString(),
+                            spinnerSpellbookRank.getSelectedItem().toString(), getDateEditTextDate());
+                    postData(spellbook);
+//                    postData(1, textSpellbook.getText().toString(), trainerSpellbook.getText().toString(),
+//                            spinnerSpellbookRank.getSelectedItem().toString(), getDateEditTextDate());
                     Intent intent = new Intent();
                     intent.putExtra(NEW_SPELL, spellbook);
                     setResult(Activity.RESULT_OK, intent);
@@ -112,12 +123,9 @@ public class NewSpellActivity extends AppCompatActivity implements DatePickerDia
                 int day = calendar.get(Calendar.DAY_OF_MONTH);
 
                 DatePickerDialog datePickerDialog = new DatePickerDialog(NewSpellActivity.this, NewSpellActivity.this, year, month, day);
-
                 datePickerDialog.show();
             }
         });
-
-
     }
 
     @Override
@@ -131,31 +139,51 @@ public class NewSpellActivity extends AppCompatActivity implements DatePickerDia
         return super.onOptionsItemSelected(item);
     }
 
-//    private void postData(long id, String text, String trainer, String rank) {
-//
+    private void postData(Spellbook spellbook) {
+
+        retrofitClient = new RetrofitClient(RetrofitAPI.SPELLBOOK_URL);
+        Call<Spellbook> call = retrofitClient.getMyRetrofitAPI().createPost(spellbook);
+        call.enqueue(new Callback<Spellbook>() {
+
+            @Override
+            public void onResponse(Call<Spellbook> call, Response<Spellbook> response) {
+                Spellbook responseFromAPI = response.body();
+            }
+
+            @Override
+            public void onFailure(Call<Spellbook> call, Throwable t) {
+                t.getMessage();
+            }
+        });
+    }
+
+    private void postData(long spellbookId, String text, String trainer, String rank, Date date) {
+
 //        Retrofit retrofit = new Retrofit.Builder()
 //                .baseUrl("http://172.23.240.3:8090/api/spellbooks/")
 //                .addConverterFactory(GsonConverterFactory.create())
 //                .build();
 //        RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
-//        Spellbook modal = new Spellbook(id, text, trainer, rank);
-//        Call<Spellbook> call = retrofitAPI.createPost(modal);
+//
+//        Spellbook spellbook = new Spellbook(spellbookId, text, trainer, rank, date);
+//        //Call<Spellbook> call = retrofitAPI.createPost(spellbook);
+//        Call<Spellbook> call = RetrofitClient.createRetrofitClient().createPost(spellbook);
 //        call.enqueue(new Callback<Spellbook>() {
 //
-//            @Override
-//            public void onResponse(Call<Spellbook> call, Response<Spellbook> response) {
-//                Spellbook responseFromAPI = response.body();
-//            }
+//                @Override
+//                public void onResponse(Call<Spellbook> call, Response<Spellbook> response) {
+//                    Spellbook responseFromAPI = response.body();
+//                }
 //
-//            @Override
-//            public void onFailure(Call<Spellbook> call, Throwable t) {
-//                t.getMessage();
-//            }
-//        });
-//    }
+//                @Override
+//                public void onFailure(Call<Spellbook> call, Throwable t) {
+//                    t.getMessage();
+//                }
+//            });
+    }
 
     private void getAffirmation() {
-        Call<Spellbook> call = RetrofitClient.getInstance().getMyRetrofitAPI().getAffirmation();
+        Call<Spellbook> call = RetrofitClient.getInstance(RetrofitAPI.AFFIRMATION_URL).getMyRetrofitAPI().getAffirmation();
         call.enqueue(new Callback<Spellbook>() {
             @Override
             public void onResponse(Call<Spellbook> call, Response<Spellbook> response) {
@@ -170,8 +198,7 @@ public class NewSpellActivity extends AppCompatActivity implements DatePickerDia
         });
     }
 
-    private String getCurrentDate()
-    {
+    private String getCurrentDate() {
         dateFormat = DateFormat.getDateInstance();
         Date date = new Date();
         return dateFormat.format(date);
@@ -183,18 +210,52 @@ public class NewSpellActivity extends AppCompatActivity implements DatePickerDia
         dateSpellbook.setText(dateFormat.format(calendar.getTime()));
     }
 
-    private Date getDateEditTextDate()
-    {
-        try
-        {
-            return dateFormat.parse(dateSpellbook.getText().toString());
-        } catch (ParseException e)
-        {
+    private Date getDateEditTextDate() {
+
+//        try
+//        {
+//            return dateFormat.parse(dateSpellbook.getText().toString());
+//        } catch (ParseException e)
+//        {
+//            e.printStackTrace();
+//        }
+//
+//        dateFormat = DateFormat.getDateInstance();
+//        return new Date();
+
+        try {
+            SimpleDateFormat parser = new SimpleDateFormat("MMM dd, yyyy");
+            Date date = parser.parse(dateSpellbook.getText().toString());
+            SimpleDateFormat formatter = new SimpleDateFormat("MMM dd, yyyy HH:mm:ss aa", Locale.ENGLISH);
+
+            String formattedDate = formatter.format(date);
+            Date date1 = formatter.parse(formattedDate);
+
+            return date1;
+        } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        dateFormat = DateFormat.getDateInstance();
         return new Date();
+
+
+        //        SimpleDateFormat formatter = new SimpleDateFormat("MM dd, yyyy");
+        //        SimpleDateFormat formatterOut = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+        //        try {
+        //
+        //            Date date1 = formatter.parse(dateSpellbook.getText().toString());
+        //            System.out.println(date1);
+        //            System.out.println(formatterOut.format(date1));
+        //            String dateString = formatterOut.format(date1);
+        //            Date date2 = formatterOut.parse(dateString);
+        //            return date2;
+        //
+        //        } catch (ParseException e) {
+        //            e.printStackTrace();
+        //        }
+        //        dateFormat = DateFormat.getDateInstance();
+        //        return new Date();
+        //
     }
 }
 

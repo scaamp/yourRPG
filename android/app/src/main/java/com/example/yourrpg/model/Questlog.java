@@ -4,6 +4,7 @@ import com.example.yourrpg.questlogAdapter.QuestlogViewHolderAdaptable;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class Questlog implements Serializable, QuestlogViewHolderAdaptable {
     @JsonProperty("questId")
@@ -21,12 +22,25 @@ public class Questlog implements Serializable, QuestlogViewHolderAdaptable {
     @JsonProperty("isDone")
     private boolean isDone;
 
-    public Questlog(long questId, String desc, String stat, int statPoints, boolean isDone) {
+    @JsonProperty("date")
+    private Date date;
+
+    public Questlog(long questId, String desc, String stat, int statPoints, boolean isDone, Date date) {
         this.questId = questId;
         this.desc = desc;
         this.stat = stat;
         this.statPoints = statPoints;
         this.isDone = isDone;
+        this.date = date;
+    }
+
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public void setStatPoints(int statPoints) {

@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.yourrpg.RetrofitAPI;
 import com.example.yourrpg.activity.NewSpellActivity;
 import com.example.yourrpg.R;
 import com.example.yourrpg.spellbookAdapter.SpellbookRemover;
@@ -27,6 +28,13 @@ import com.example.yourrpg.persistency.SharedPreferencesSaver;
 import com.example.yourrpg.spellbookAdapter.SpellbookAdapter;
 
 import java.util.ArrayList;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SpellbookFragment extends Fragment implements SpellbookRemover {
 
@@ -68,11 +76,12 @@ public class SpellbookFragment extends Fragment implements SpellbookRemover {
     }
 
     private void initSpellList() {
-        ArrayList<Spellbook> newSpellList = new ArrayList<>();
+        ArrayList newSpellList;
         //newSpellList.add(new Spellbook(1,"XD", "Jakub", "XD"));
-        newSpellList = SharedPreferencesSaver.loadSpellbookFrom(getActivity().getSharedPreferences("SPELLBOOK_PREF", MODE_PRIVATE));
+        newSpellList = SharedPreferencesSaver.loadFrom(getActivity().getSharedPreferences("SPELLBOOK_PREF", MODE_PRIVATE), SharedPreferencesSaver.SPELLBOOK_PREF);
         if (newSpellList != null) {
             spellList = newSpellList;
+            //spellList.clear();
             if (newSpellList.size() != 0) nullSpellListTextView.setVisibility(View.INVISIBLE);
             else
             {
@@ -104,7 +113,7 @@ public class SpellbookFragment extends Fragment implements SpellbookRemover {
     @Override
     public void onResume() {
         super.onResume();
-        SharedPreferencesSaver.saveSpellbookTo(spellList, getActivity().getSharedPreferences("SPELLBOOK_PREF", MODE_PRIVATE));
+        SharedPreferencesSaver.saveTo(spellList, getActivity().getSharedPreferences("SPELLBOOK_PREF", MODE_PRIVATE), SharedPreferencesSaver.SPELLBOOK_PREF);
         //initSpellList();
         initRecyclerView();
     }
@@ -141,6 +150,26 @@ public class SpellbookFragment extends Fragment implements SpellbookRemover {
         spellList.remove(viewHolderAdaptable);
         allItems.remove(viewHolderAdaptable);
         spellbookAdapter.notifyDataSetChanged();
-        SharedPreferencesSaver.saveSpellbookTo(spellList, getActivity().getSharedPreferences("SPELLBOOK_PREF", MODE_PRIVATE));
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://172.23.240.3:8090/api/spellbooks/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
+        Call<ResponseBody> deleteRequest = retrofitAPI.deleteSpell(2853);
+        deleteRequest.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                // use response.code, response.headers, etc.
+                response.body();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                // handle failure
+                t.getMessage();
+            }
+        });
+        SharedPreferencesSaver.saveTo(spellList, getActivity().getSharedPreferences("SPELLBOOK_PREF", MODE_PRIVATE), SharedPreferencesSaver.SPELLBOOK_PREF);
     }
 }

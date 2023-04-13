@@ -23,6 +23,7 @@ import com.example.yourrpg.model.Questlog;
 import com.example.yourrpg.model.Spellbook;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -97,7 +98,7 @@ public class NewQuestActivity extends AppCompatActivity implements DatePickerDia
             public void onClick(View view) {
                 //Questlog questlog = new Questlog(1, "XD", true);
                 Questlog questlog = new Questlog(1, questDescEditText.getText().toString(),
-                        questStatSpinner.getSelectedItem().toString(), Integer.valueOf(questStatPointsSpinner.getSelectedItem().toString()), false);
+                        questStatSpinner.getSelectedItem().toString(), Integer.valueOf(questStatPointsSpinner.getSelectedItem().toString()), false, getDateEditTextDate());
                 //postData(1, textSpellbook.getText().toString(), trainerSpellbook.getText().toString(), spinnerSpellbookRank.getSelectedItem().toString());
                 Intent intent = new Intent();
                 intent.putExtra(NEW_QUEST, questlog);
@@ -130,5 +131,19 @@ public class NewQuestActivity extends AppCompatActivity implements DatePickerDia
     public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
         Calendar calendar = new GregorianCalendar(year, month, dayOfMonth);
         questDeadlineEditText.setText(dateFormat.format(calendar.getTime()));
+    }
+
+    private Date getDateEditTextDate()
+    {
+        try
+        {
+            return dateFormat.parse(questDeadlineEditText.getText().toString());
+        } catch (ParseException e)
+        {
+            e.printStackTrace();
+        }
+
+        dateFormat = DateFormat.getDateInstance();
+        return new Date();
     }
 }
