@@ -28,14 +28,4 @@ public class RetrofitClient {
         return myRetrofitAPI;
     }
 
-    public RetrofitAPI createRetrofitClient(String url)
-    {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://172.23.240.3:8090/api/spellbooks/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
-        return retrofitAPI;
-    }
-
 }

@@ -24,6 +24,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.yourrpg.MainActivity;
 import com.example.yourrpg.R;
+import com.example.yourrpg.RetrofitAPI;
+import com.example.yourrpg.RetrofitClient;
 import com.example.yourrpg.activity.NewQuestActivity;
 import com.example.yourrpg.databinding.FragmentQuestlogBinding;
 import com.example.yourrpg.model.Character;
@@ -39,6 +41,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 
 public class QuestlogFragment extends Fragment implements QuestlogInterface {
 
@@ -46,8 +53,8 @@ public class QuestlogFragment extends Fragment implements QuestlogInterface {
     private FragmentQuestlogBinding binding;
     private Button goToAddQuestButton;
     public static final int NEW_QUEST = 333;
-    public static final String QUEST_DONE = "QUEST_DONE";
     private static ArrayList<Questlog> questList;
+    private RetrofitClient retrofitClient;
 
     private RecyclerView.LayoutManager historyLayoutManager;
     private ArrayList<QuestlogViewHolderAdaptable> allItems;
@@ -144,6 +151,22 @@ public class QuestlogFragment extends Fragment implements QuestlogInterface {
         questList.remove(viewHolderAdaptable);
         allItems.remove(viewHolderAdaptable);
         questAdapter.notifyDataSetChanged();
+
+        retrofitClient = new RetrofitClient(RetrofitAPI.QUESTLOG_URL);
+        Call<ResponseBody> deleteRequest = retrofitClient.getMyRetrofitAPI().deleteSpell(2803);
+        deleteRequest.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                // use response.code, response.headers, etc.
+                response.body();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                // handle failure
+                t.getMessage();
+            }
+        });
         SharedPreferencesSaver.saveTo(questList, getActivity().getSharedPreferences("QUESTLOG_PREF", MODE_PRIVATE), SharedPreferencesSaver.QUESTLOG_PREF);
     }
 

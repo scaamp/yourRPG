@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.yourrpg.RetrofitAPI;
+import com.example.yourrpg.RetrofitClient;
 import com.example.yourrpg.activity.NewSpellActivity;
 import com.example.yourrpg.R;
 import com.example.yourrpg.spellbookAdapter.SpellbookRemover;
@@ -40,13 +41,12 @@ public class SpellbookFragment extends Fragment implements SpellbookRemover {
 
     public static final int NEW_SPELL = 222;
     private static ArrayList<Spellbook> spellList;
-
+    private RetrofitClient retrofitClient;
     private SpellbookViewModel dashboardViewModel;
     private FragmentSpellbookBinding binding;
     private Button goToAddSpell;
     private TextView nullSpellListTextView;
     private String spellText;
-
     private RecyclerView.LayoutManager historyLayoutManager;
     private ArrayList<SpellbookViewHolderAdaptable> allItems;
     private RecyclerView historyRecyclerView;
@@ -151,12 +151,8 @@ public class SpellbookFragment extends Fragment implements SpellbookRemover {
         allItems.remove(viewHolderAdaptable);
         spellbookAdapter.notifyDataSetChanged();
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://172.23.240.3:8090/api/spellbooks/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
-        Call<ResponseBody> deleteRequest = retrofitAPI.deleteSpell(2853);
+        retrofitClient = new RetrofitClient(RetrofitAPI.SPELLBOOK_URL);
+        Call<ResponseBody> deleteRequest = retrofitClient.getMyRetrofitAPI().deleteSpell(2803);
         deleteRequest.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

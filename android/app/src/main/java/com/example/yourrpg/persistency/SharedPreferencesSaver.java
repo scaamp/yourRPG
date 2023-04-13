@@ -33,26 +33,9 @@ public class SharedPreferencesSaver
 
     public static void saveTo(ArrayList list, SharedPreferences preferences, String pref)
     {
-
         SharedPreferences.Editor editor = preferences.edit();
         Gson gson = new Gson();
-        if (pref.equals(SPELLBOOK_PREF)) editor.putString(pref, gson.toJson(list));
-        if (pref.equals(CHARACTER_PREF)) editor.putString(pref, gson.toJson(list));
-        if (pref.equals(QUESTLOG_PREF)) editor.putString(pref, gson.toJson(list));
+        editor.putString(pref, gson.toJson(list));
         editor.apply();
     }
-
-//    public static ArrayList<Spellbook> loadSpellbookFrom(SharedPreferences preferences)
-//    {
-//        String string = preferences.getString(SPELLBOOK_PREF, null);
-//        Gson gson = new Gson();
-//        return gson.fromJson(string, new TypeToken<ArrayList<Spellbook>>(){}.getType());
-//    }
-//
-//    public static ArrayList<Questlog> loadQuestlogFrom(SharedPreferences preferences)
-//    {
-//        String string = preferences.getString(QUESTLOG_PREF, null);
-//        Gson gson = new Gson();
-//        return gson.fromJson(string, new TypeToken<ArrayList<Questlog>>(){}.getType());
-//    }
 }

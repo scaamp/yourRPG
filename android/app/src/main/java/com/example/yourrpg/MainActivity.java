@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         initViews();
         initCharacterList();
-        //characterList.clear();
 
         if (characterList.isEmpty()) {
             Intent intent = new Intent(MainActivity.this, NewCharacterActivity.class);

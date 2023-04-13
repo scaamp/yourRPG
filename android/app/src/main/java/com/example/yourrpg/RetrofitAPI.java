@@ -16,6 +16,7 @@ public interface RetrofitAPI {
     String AFFIRMATION_URL = "https://www.affirmations.dev";
     String SPELLBOOK_URL = "http://172.23.240.3:8090/api/spellbooks/";
     String CHARACTER_URL = "http://172.23.240.3:8090/api/characters/";
+    String QUESTLOG_URL = "http://172.23.240.3:8090/api/quests/";
 
     @POST("/api/spellbooks")
     Call<Spellbook> createPost(@Body Spellbook spellbook);

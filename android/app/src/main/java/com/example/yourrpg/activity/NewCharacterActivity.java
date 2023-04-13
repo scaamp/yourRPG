@@ -1,29 +1,18 @@
 package com.example.yourrpg.activity;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.yourrpg.MainActivity;
 import com.example.yourrpg.R;
 import com.example.yourrpg.RetrofitAPI;
 import com.example.yourrpg.RetrofitClient;
 import com.example.yourrpg.model.Character;
-import com.example.yourrpg.model.Character;
-import com.example.yourrpg.model.Spellbook;
-import com.example.yourrpg.persistency.SharedPreferencesSaver;
-
-import java.util.ArrayList;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -35,7 +24,6 @@ public class NewCharacterActivity extends AppCompatActivity {
     private Button addStrengthButton;
     private TextView strengthPoints;
     private TextView agilityPoints;
-    private Character character;
     public static final String NEW_CHARACTER = "NEW_CHARACTER";
     public RetrofitClient retrofitClient;
 
@@ -78,7 +66,6 @@ public class NewCharacterActivity extends AppCompatActivity {
     }
 
     private void postData(long characterId, String name, int strength, int agility) {
-
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://172.23.240.3:8090/characters/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -115,20 +102,4 @@ public class NewCharacterActivity extends AppCompatActivity {
             }
         });
     }
-
-
-//    private View.OnClickListener goToMainActivity()
-//    {
-//        return new View.OnClickListener()
-//        {
-//            @Override
-//            public void onClick(View v)
-//            {
-//                Intent intent = new Intent(NewCharacterActivity.this, MainActivity.class);
-//                intent.putExtra(SPECIAL_DATA, getCurrentAuto());
-//                startActivity(intent);
-//            }
-//        };
-//    }
-
 }

@@ -25,8 +25,6 @@ public class QuestlogAdapter extends RecyclerView.Adapter<QuestlogAdapter.ViewHo
     private ArrayList<QuestlogViewHolderAdaptable> list = new ArrayList();
     private QuestlogInterface questlogInterface;
 
-
-
     public QuestlogAdapter(ArrayList<QuestlogViewHolderAdaptable> list, QuestlogInterface questlogInterface, Context context) {
         this.context = context;
         this.list = list;
