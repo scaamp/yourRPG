@@ -17,8 +17,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.yourrpg.RetrofitAPI;
-import com.example.yourrpg.RetrofitClient;
+import com.example.yourrpg.retrofit.RetrofitAPI;
+import com.example.yourrpg.retrofit.RetrofitClient;
 import com.example.yourrpg.activity.NewSpellActivity;
 import com.example.yourrpg.R;
 import com.example.yourrpg.spellbookAdapter.SpellbookRemover;
@@ -34,8 +34,6 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SpellbookFragment extends Fragment implements SpellbookRemover {
 

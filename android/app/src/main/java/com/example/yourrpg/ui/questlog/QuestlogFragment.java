@@ -4,28 +4,22 @@ import static android.content.Context.MODE_PRIVATE;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.yourrpg.MainActivity;
 import com.example.yourrpg.R;
-import com.example.yourrpg.RetrofitAPI;
-import com.example.yourrpg.RetrofitClient;
+import com.example.yourrpg.retrofit.RetrofitAPI;
+import com.example.yourrpg.retrofit.RetrofitClient;
 import com.example.yourrpg.activity.NewQuestActivity;
 import com.example.yourrpg.databinding.FragmentQuestlogBinding;
 import com.example.yourrpg.model.Character;
@@ -34,12 +28,8 @@ import com.example.yourrpg.persistency.SharedPreferencesSaver;
 import com.example.yourrpg.questlogAdapter.QuestlogAdapter;
 import com.example.yourrpg.questlogAdapter.QuestlogInterface;
 import com.example.yourrpg.questlogAdapter.QuestlogViewHolderAdaptable;
-import com.example.yourrpg.ui.character.CharacterFragment;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;

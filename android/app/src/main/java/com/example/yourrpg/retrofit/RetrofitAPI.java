@@ -1,4 +1,4 @@
-package com.example.yourrpg;
+package com.example.yourrpg.retrofit;
 import com.example.yourrpg.model.Character;
 import com.example.yourrpg.model.Spellbook;
 

@@ -1,6 +1,4 @@
-package com.example.yourrpg;
-
-import com.example.yourrpg.model.Spellbook;
+package com.example.yourrpg.retrofit;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

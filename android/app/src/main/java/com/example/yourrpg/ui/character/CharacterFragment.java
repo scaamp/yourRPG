@@ -49,6 +49,7 @@ public class CharacterFragment extends Fragment {
     private Handler handler = new Handler();
     private TextView progressTextView;
     private int pStatus = 0;
+    private int k = 1;
     private KonfettiView konfettiView = null;
     private Shape.DrawableShape drawableShape = null;
 
@@ -62,13 +63,11 @@ public class CharacterFragment extends Fragment {
 
         strengthPoints = (TextView) root.findViewById(R.id.strengthPointsHome);
         agilityPoints = (TextView) root.findViewById(R.id.agilityPoints);
-
         instance = this;
 
         Resources res = getResources();
         Drawable drawable = res.getDrawable(R.drawable.custom_progressbar_drawable);
         mProgress = (ProgressBar) root.findViewById(R.id.progressBar);
-        //mProgress.setProgress(0);   // Main Progress
         mProgress.setSecondaryProgress(100); // Secondary Progress
         mProgress.setMax(100); // Maximum Progress
         mProgress.setProgressDrawable(drawable);
@@ -157,14 +156,17 @@ public class CharacterFragment extends Fragment {
         Character character = mainActivity.getCurrentCharacter();
         strengthPoints.setText(String.valueOf(character.getStrength()));
         agilityPoints.setText(String.valueOf(character.getAgility()));
-        pStatus = character.getStrength()*10;
-        mProgress.setProgress(pStatus);
-        progressTextView.setText(pStatus + "%");
-        if (pStatus==100) {
+        pStatus = character.getStrength() * 10;
+        mProgress.setProgress(pStatus%100);
+        if (pStatus>=100*k) {
             parade();
             explode();
             rain();
+            k++;
         }
+        progressTextView.setText(String.valueOf(pStatus%100) + "%");
+
+        //TODO watek opozniony, level up
         //SharedPreferencesSaver.saveTo(mainActivity.getCharacterList(), getActivity().getSharedPreferences("CHARACTER_PREF", MODE_PRIVATE));
         //SharedPreferencesSaver.saveSpellbookTo(SpellbookFragment.getSpellList(), getActivity().getSharedPreferences("SPELLBOOK_PREF", MODE_PRIVATE));
     }

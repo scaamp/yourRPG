@@ -1,12 +1,8 @@
 package com.example.yourrpg.activity;
 
-import static android.webkit.ConsoleMessage.MessageLevel.LOG;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,36 +14,27 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.yourrpg.R;
-import com.example.yourrpg.RetrofitAPI;
-import com.example.yourrpg.RetrofitClient;
-import com.example.yourrpg.model.Character;
+import com.example.yourrpg.retrofit.RetrofitAPI;
+import com.example.yourrpg.retrofit.RetrofitClient;
 import com.example.yourrpg.model.Spellbook;
 
 import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
-import java.time.ZonedDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.List;
 import java.util.Locale;
-import java.util.SimpleTimeZone;
 
-import cz.msebera.android.httpclient.client.utils.DateUtils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class NewSpellActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
     private EditText textSpellbook;
