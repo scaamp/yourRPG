@@ -13,6 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -20,6 +21,21 @@ import com.example.yourrpg.MainActivity;
 import com.example.yourrpg.R;
 import com.example.yourrpg.databinding.FragmentCharacterBinding;
 import com.example.yourrpg.model.Character;
+
+import java.util.Arrays;
+import java.util.concurrent.TimeUnit;
+
+import nl.dionsegijn.konfetti.core.Angle;
+import nl.dionsegijn.konfetti.core.Party;
+import nl.dionsegijn.konfetti.core.PartyFactory;
+import static nl.dionsegijn.konfetti.core.Position.Relative;
+import nl.dionsegijn.konfetti.core.Spread;
+import nl.dionsegijn.konfetti.core.emitter.Emitter;
+import nl.dionsegijn.konfetti.core.emitter.EmitterConfig;
+import nl.dionsegijn.konfetti.core.models.Shape;
+import nl.dionsegijn.konfetti.core.models.Size;
+import nl.dionsegijn.konfetti.core.emitter.Confetti;
+import nl.dionsegijn.konfetti.xml.KonfettiView;
 
 
 public class CharacterFragment extends Fragment {
@@ -33,6 +49,9 @@ public class CharacterFragment extends Fragment {
     private Handler handler = new Handler();
     private TextView progressTextView;
     private int pStatus = 0;
+    private KonfettiView konfettiView = null;
+    private Shape.DrawableShape drawableShape = null;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel =
@@ -40,49 +59,89 @@ public class CharacterFragment extends Fragment {
 
         binding = FragmentCharacterBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
         strengthPoints = (TextView) root.findViewById(R.id.strengthPointsHome);
         agilityPoints = (TextView) root.findViewById(R.id.agilityPoints);
+
         instance = this;
+
         Resources res = getResources();
         Drawable drawable = res.getDrawable(R.drawable.custom_progressbar_drawable);
         mProgress = (ProgressBar) root.findViewById(R.id.progressBar);
-        mProgress.setProgress(80);   // Main Progress
+        //mProgress.setProgress(0);   // Main Progress
         mProgress.setSecondaryProgress(100); // Secondary Progress
         mProgress.setMax(100); // Maximum Progress
         mProgress.setProgressDrawable(drawable);
         progressTextView = (TextView) root.findViewById(R.id.txtProgress);
 
-//        new Thread(new Runnable() {
-//
-//            @Override
-//            public void run() {
-//                // TODO Auto-generated method stub
-//                while (pStatus < 100) {
-//                    pStatus += 1;
-//
-//                    handler.post(new Runnable() {
-//
-//                        @Override
-//                        public void run() {
-//                            // TODO Auto-generated method stub
-//                            mProgress.setProgress(pStatus);
-//                            progressTextView.setText(pStatus + "%");
-//
-//                        }
-//                    });
-//                    try {
-//                        // Sleep for 200 milliseconds.
-//                        // Just to display the progress slowly
-//                        Thread.sleep(200); //thread will take approx 1.5 seconds to finish
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            }
-//        }).start();
+        final Drawable drawableHeart = ContextCompat.getDrawable(getContext(), R.drawable.ic_heart);
+        drawableShape = new Shape.DrawableShape(drawableHeart, true);
+
+        konfettiView = root.findViewById(R.id.konfettiView);
+        EmitterConfig emitterConfig = new Emitter(5L, TimeUnit.SECONDS).perSecond(50);
+        Party party = new PartyFactory(emitterConfig)
+                .angle(270)
+                .spread(90)
+                .setSpeedBetween(1f, 5f)
+                .timeToLive(2000L)
+                .shapes(new Shape.Rectangle(0.2f), drawableShape)
+                .sizes(new Size(12, 5f, 0.2f))
+                .position(0.0, 0.0, 1.0, 0.0)
+                .build();
+        konfettiView.setOnClickListener(view ->
+                konfettiView.start(party)
+        );
         return root;
     }
 
+    public void explode() {
+        EmitterConfig emitterConfig = new Emitter(100L, TimeUnit.MILLISECONDS).max(100);
+        konfettiView.start(
+                new PartyFactory(emitterConfig)
+                        .spread(360)
+                        .shapes(Arrays.asList(Shape.Square.INSTANCE, Shape.Circle.INSTANCE, drawableShape))
+                        .colors(Arrays.asList(0xfce18a, 0xff726d, 0xf4306d, 0xb48def))
+                        .setSpeedBetween(0f, 30f)
+                        .position(new Relative(0.5, 0.3))
+                        .build()
+        );
+    }
+
+    public void parade() {
+        EmitterConfig emitterConfig = new Emitter(5, TimeUnit.SECONDS).perSecond(30);
+        konfettiView.start(
+                new PartyFactory(emitterConfig)
+                        .angle(Angle.RIGHT - 45)
+                        .spread(Spread.SMALL)
+                        .shapes(Arrays.asList(Shape.Square.INSTANCE, Shape.Circle.INSTANCE, drawableShape))
+                        .colors(Arrays.asList(0xfce18a, 0xff726d, 0xf4306d, 0xb48def))
+                        .setSpeedBetween(10f, 30f)
+                        .position(new Relative(0.0, 0.5))
+                        .build(),
+                new PartyFactory(emitterConfig)
+                        .angle(Angle.LEFT + 45)
+                        .spread(Spread.SMALL)
+                        .shapes(Arrays.asList(Shape.Square.INSTANCE, Shape.Circle.INSTANCE, drawableShape))
+                        .colors(Arrays.asList(0xfce18a, 0xff726d, 0xf4306d, 0xb48def))
+                        .setSpeedBetween(10f, 30f)
+                        .position(new Relative(1.0, 0.5))
+                        .build()
+        );
+    }
+
+    public void rain() {
+        EmitterConfig emitterConfig = new Emitter(5, TimeUnit.SECONDS).perSecond(100);
+        konfettiView.start(
+                new PartyFactory(emitterConfig)
+                        .angle(Angle.BOTTOM)
+                        .spread(Spread.ROUND)
+                        .shapes(Arrays.asList(Shape.Square.INSTANCE, Shape.Circle.INSTANCE, drawableShape))
+                        .colors(Arrays.asList(0xfce18a, 0xff726d, 0xf4306d, 0xb48def))
+                        .setSpeedBetween(0f, 15f)
+                        .position(new Relative(0.0, 0.0).between(new Relative(1.0, 0.0)))
+                        .build()
+        );
+    }
 
     @Override
     public void onDestroyView() {
@@ -101,6 +160,11 @@ public class CharacterFragment extends Fragment {
         pStatus = character.getStrength()*10;
         mProgress.setProgress(pStatus);
         progressTextView.setText(pStatus + "%");
+        if (pStatus==100) {
+            parade();
+            explode();
+            rain();
+        }
         //SharedPreferencesSaver.saveTo(mainActivity.getCharacterList(), getActivity().getSharedPreferences("CHARACTER_PREF", MODE_PRIVATE));
         //SharedPreferencesSaver.saveSpellbookTo(SpellbookFragment.getSpellList(), getActivity().getSharedPreferences("SPELLBOOK_PREF", MODE_PRIVATE));
     }
