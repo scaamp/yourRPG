@@ -14,7 +14,7 @@ public class Spellbook implements Serializable, SpellbookViewHolderAdaptable {
     private long spellbookId;
 
     @JsonProperty("text")
-    @SerializedName("affirmation")
+    //@SerializedName("affirmation")
     private String text;
 
     @JsonProperty("trainer")
@@ -27,12 +27,23 @@ public class Spellbook implements Serializable, SpellbookViewHolderAdaptable {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MMM dd, yyyy HH:mm:ss a")
     private Date date;
 
+    @SerializedName("affirmation")
+    private String affirmation;
+
     public Spellbook(long spellbookId, String text, String trainer, String rank, Date date) {
         this.spellbookId = spellbookId;
         this.text = text;
         this.trainer = trainer;
         this.rank = rank;
         this.date = date;
+    }
+
+    public String getAffirmation() {
+        return affirmation;
+    }
+
+    public void setAffirmation(String affirmation) {
+        this.affirmation = affirmation;
     }
 
     public long getSpellbookId() {

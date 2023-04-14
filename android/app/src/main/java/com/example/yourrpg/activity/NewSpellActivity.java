@@ -30,6 +30,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Locale;
 
 import retrofit2.Call;
@@ -45,7 +46,9 @@ public class NewSpellActivity extends AppCompatActivity implements DatePickerDia
     private Spinner spinnerSpellbookRank;
     private DateFormat dateFormat;
     public static final String NEW_SPELL = "NEW_SPELL";
-    public RetrofitClient retrofitClient;
+    private RetrofitClient retrofitClient;
+    private List<Spellbook> spellbooks;
+    private int spellsCount;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,6 +67,7 @@ public class NewSpellActivity extends AppCompatActivity implements DatePickerDia
         spinnerSpellbookRank.setAdapter(adapter);
         addSpellButton = (Button) findViewById(R.id.addSpellButton);
         addRandomSpellButton = (ImageButton) findViewById(R.id.getRandomSpellButton);
+        getSpells();
         addSpellButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,7 +84,15 @@ public class NewSpellActivity extends AppCompatActivity implements DatePickerDia
                             }).setNegativeButton("No", null)
                             .show();
                 } else {
-                    Spellbook spellbook = new Spellbook(1, textSpellbook.getText().toString(), trainerSpellbook.getText().toString(),
+                    if (getSpells() != null)
+                    {
+                        spellsCount = getSpells().size()+1;
+                    }
+                    else
+                    {
+                        spellsCount=1;
+                    }
+                    Spellbook spellbook = new Spellbook(spellsCount, textSpellbook.getText().toString(), trainerSpellbook.getText().toString(),
                             spinnerSpellbookRank.getSelectedItem().toString(), getDateEditTextDate());
                     postData(spellbook);
 //                    postData(1, textSpellbook.getText().toString(), trainerSpellbook.getText().toString(),
@@ -144,29 +156,23 @@ public class NewSpellActivity extends AppCompatActivity implements DatePickerDia
         });
     }
 
-    private void postData(long spellbookId, String text, String trainer, String rank, Date date) {
+    private List<Spellbook> getSpells() {
+        retrofitClient = new RetrofitClient(RetrofitAPI.SPELLBOOK_URL);
+        Call<List<Spellbook>> call = retrofitClient.getMyRetrofitAPI().getSpells();
 
-//        Retrofit retrofit = new Retrofit.Builder()
-//                .baseUrl("http://172.23.240.3:8090/api/spellbooks/")
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .build();
-//        RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
-//
-//        Spellbook spellbook = new Spellbook(spellbookId, text, trainer, rank, date);
-//        //Call<Spellbook> call = retrofitAPI.createPost(spellbook);
-//        Call<Spellbook> call = RetrofitClient.createRetrofitClient().createPost(spellbook);
-//        call.enqueue(new Callback<Spellbook>() {
-//
-//                @Override
-//                public void onResponse(Call<Spellbook> call, Response<Spellbook> response) {
-//                    Spellbook responseFromAPI = response.body();
-//                }
-//
-//                @Override
-//                public void onFailure(Call<Spellbook> call, Throwable t) {
-//                    t.getMessage();
-//                }
-//            });
+        call.enqueue(new Callback<List<Spellbook>>() {
+
+            @Override
+            public void onResponse(Call<List<Spellbook>> call, Response<List<Spellbook>> response) {
+                spellbooks = response.body();
+            }
+
+            @Override
+            public void onFailure(Call<List<Spellbook>> call, Throwable t) {
+                t.getMessage();
+            }
+        });
+        return spellbooks;
     }
 
     private void getAffirmation() {
@@ -174,7 +180,7 @@ public class NewSpellActivity extends AppCompatActivity implements DatePickerDia
         call.enqueue(new Callback<Spellbook>() {
             @Override
             public void onResponse(Call<Spellbook> call, Response<Spellbook> response) {
-                String affirmation = response.body().getText();
+                String affirmation = response.body().getAffirmation();
                 textSpellbook.setText(affirmation);
             }
 

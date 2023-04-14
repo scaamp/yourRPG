@@ -16,6 +16,6 @@ public class SpellbookResponse {
     private String text;
     private String trainer;
     private String rank;
-    private Date date;
+    //private Date date;
     private Character character;
 }

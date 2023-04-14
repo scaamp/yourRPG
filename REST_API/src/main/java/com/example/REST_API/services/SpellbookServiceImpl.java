@@ -33,7 +33,7 @@ public class SpellbookServiceImpl implements SpellbookService {
 
         for (Spellbook w : spellbooks) {
             SpellbookResponse spellbookResponse = new SpellbookResponse(w.getSpellbookId(), w.getText(),
-                    w.getTrainer(), w.getRank(), w.getDate(), w.getCharacterId());
+                    w.getTrainer(), w.getRank(), w.getCharacterId()); //w.getDate(), w.getCharacterId());
             spellbookResponses.add(spellbookResponse);
         }
 
@@ -49,7 +49,7 @@ public class SpellbookServiceImpl implements SpellbookService {
         spellbook.setText(spellbookRequest.getText());
         spellbook.setTrainer(spellbookRequest.getTrainer());
         spellbook.setRank(spellbookRequest.getRank());
-        spellbook.setDate(spellbookRequest.getDate());
+        //spellbook.setDate(spellbookRequest.getDate());
         spellbook.setCharacterId(spellbookRequest.getCharacter());
         spellbookRepository.save(spellbook);
     }
@@ -66,7 +66,7 @@ public class SpellbookServiceImpl implements SpellbookService {
         spellbook.setSpellbookId(spellbookArg.getSpellbookId());
         spellbook.setText(spellbookArg.getText());
         spellbook.setTrainer(spellbookArg.getTrainer());
-        spellbook.setDate(spellbookArg.getDate());
+        //spellbook.setDate(spellbookArg.getDate());
         spellbook.setCharacterId(spellbookArg.getCharacterId());
         spellbookRepository.save(spellbook);
     }

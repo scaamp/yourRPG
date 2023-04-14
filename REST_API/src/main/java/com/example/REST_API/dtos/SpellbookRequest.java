@@ -19,6 +19,6 @@ public class SpellbookRequest {
     private String rank;
     //@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "EEE LLL dd HH:mm:ss Z yyyy")pell
     //@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MMM dd, yyyy HH:mm:ss aa")
-    private Date date;
+    //private Date date;
     private Character character;
 }

@@ -2,10 +2,10 @@ package com.example.yourrpg.retrofit;
 import com.example.yourrpg.model.Character;
 import com.example.yourrpg.model.Spellbook;
 
+import java.util.List;
+
 import okhttp3.ResponseBody;
 import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
@@ -28,6 +28,9 @@ public interface RetrofitAPI {
 
     @DELETE("/api/spellbooks/{id}")
     Call<ResponseBody> deleteSpell(@Path("id") int spellbookId);
+
+    @GET("/api/spellbooks")
+    Call<List<Spellbook>> getSpells();
 
     @GET("https://www.affirmations.dev")
     Call<Spellbook> getAffirmation();

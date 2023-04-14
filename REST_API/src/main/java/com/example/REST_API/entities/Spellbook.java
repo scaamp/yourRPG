@@ -13,17 +13,15 @@ import java.util.Date;
 @Table(name = "spellbooks")
 public class Spellbook {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false)
     private long spellbookId;
     private String text;
     private String trainer;
     private String rank;
-
-
     //@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MMM dd, yyyy HH:mm:ss aa")
     //@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "EEE LLL dd HH:mm:ss Z yyyy")
-    private Date date;
+    //private Date date;
     @ManyToOne //(cascade = { CascadeType.PERSIST, CascadeType.MERGE})
     @JsonBackReference
     @JoinColumn(name = "characterId")
