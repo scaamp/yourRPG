@@ -6,17 +6,26 @@
     android:layout_height="match_parent"
     tools:context=".ui.character.CharacterFragment">
 
-    <nl.dionsegijn.konfetti.xml.KonfettiView
-        android:id="@+id/konfettiView"
-        android:layout_width="408dp"
-        android:layout_height="833dp"
-        android:layout_marginTop="-1000dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.881" />
 
+    <TextView
+        android:id="@+id/yourLevelTextView"
+        android:layout_width="93dp"
+        android:layout_height="33dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="18dp"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@+id/relativeLayout2"
+        app:layout_constraintTop_toBottomOf="@+id/yourNickTextView" />
+
+    <TextView
+        android:id="@+id/nickTextView"
+        android:layout_width="93dp"
+        android:layout_height="33dp"
+        android:layout_marginTop="16dp"
+        android:text="Nickname"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@+id/yourNickTextView"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout6" />
 
     <LinearLayout
         android:id="@+id/linearLayout6"
@@ -471,6 +480,12 @@
                         </LinearLayout>
                     </LinearLayout>
 
+                    <nl.dionsegijn.konfetti.xml.KonfettiView
+                        android:id="@+id/konfettiView"
+                        android:layout_width="408dp"
+                        android:layout_height="833dp"
+                        android:layout_marginTop="-1000dp" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -647,14 +662,17 @@
     </LinearLayout>
 
     <RelativeLayout
+        android:id="@+id/relativeLayout2"
         android:layout_width="145dp"
         android:layout_height="158dp"
         android:layout_centerInParent="true"
         android:layout_marginTop="-220dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.83"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout6">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout6"
+        app:layout_constraintVertical_bias="0.492">
 
         <ProgressBar
             android:id="@+id/progressBar"
@@ -678,6 +696,26 @@
             android:layout_marginBottom="54dp"
             android:textAppearance="?android:attr/textAppearanceSmall" />
     </RelativeLayout>
+
+    <TextView
+        android:id="@+id/levelTextView"
+        android:layout_width="93dp"
+        android:layout_height="33dp"
+        android:layout_marginTop="16dp"
+        android:text="Level"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@+id/yourLevelTextView"
+        app:layout_constraintTop_toBottomOf="@+id/nickTextView" />
+
+    <TextView
+        android:id="@+id/yourNickTextView"
+        android:layout_width="93dp"
+        android:layout_height="33dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="18dp"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@+id/relativeLayout2"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout6" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -44,11 +44,13 @@ public class CharacterFragment extends Fragment {
     private FragmentCharacterBinding binding;
     private TextView strengthPoints;
     private TextView agilityPoints;
+    private TextView nickName;
+    private TextView level;
     private static CharacterFragment instance = null;
     private ProgressBar mProgress;
     private Handler handler = new Handler();
     private TextView progressTextView;
-    private int pStatus = 0;
+    private int exp = 0;
     private int k = 1;
     private KonfettiView konfettiView = null;
     private Shape.DrawableShape drawableShape = null;
@@ -60,7 +62,8 @@ public class CharacterFragment extends Fragment {
 
         binding = FragmentCharacterBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-
+        nickName = (TextView) root.findViewById(R.id.yourNickTextView);
+        level = (TextView) root.findViewById(R.id.yourLevelTextView);
         strengthPoints = (TextView) root.findViewById(R.id.strengthPointsHome);
         agilityPoints = (TextView) root.findViewById(R.id.agilityPoints);
         instance = this;
@@ -148,25 +151,30 @@ public class CharacterFragment extends Fragment {
         binding = null;
     }
 
-
-    @Override
-    public void onResume() {
-        super.onResume();
+    public void setCharacter()
+    {
         MainActivity mainActivity = (MainActivity) getActivity();
         Character character = mainActivity.getCurrentCharacter();
         strengthPoints.setText(String.valueOf(character.getStrength()));
         agilityPoints.setText(String.valueOf(character.getAgility()));
-        pStatus = character.getStrength() * 10;
-        mProgress.setProgress(pStatus%100);
-        if (pStatus>=100*k) {
+        level.setText(String.valueOf(character.getLevel()));
+        nickName.setText(String.valueOf(character.getName()));
+        exp = character.getStrength() * 10;
+        character.setExp(exp);
+        mProgress.setProgress(exp%100);
+        if (exp >= 100 * character.getLevel()) {
             parade();
             explode();
             rain();
-            k++;
+            character.setLevel(character.getLevel()+1);
         }
-        progressTextView.setText(String.valueOf(pStatus%100) + "%");
+        progressTextView.setText(String.valueOf(exp%100) + "%");
+    }
 
-        //TODO watek opozniony, level up
+    @Override
+    public void onResume() {
+        super.onResume();
+        setCharacter();
         //SharedPreferencesSaver.saveTo(mainActivity.getCharacterList(), getActivity().getSharedPreferences("CHARACTER_PREF", MODE_PRIVATE));
         //SharedPreferencesSaver.saveSpellbookTo(SpellbookFragment.getSpellList(), getActivity().getSharedPreferences("SPELLBOOK_PREF", MODE_PRIVATE));
     }

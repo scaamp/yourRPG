@@ -54,7 +54,8 @@ public class NewCharacterActivity extends AppCompatActivity {
         doneCharacterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Character character = new Character(1, "XD", Integer.parseInt(strengthPoints.getText().toString()), Integer.parseInt(agilityPoints.getText().toString()));
+                //Character character = new Character(1, "XD", Integer.parseInt(strengthPoints.getText().toString()), Integer.parseInt(agilityPoints.getText().toString()));
+                Character character = new Character(1, "XD", 1, 0, Integer.parseInt(strengthPoints.getText().toString()), Integer.parseInt(agilityPoints.getText().toString()));
                 postData(character);
                 Intent intent = new Intent();
                 intent.putExtra(NEW_CHARACTER, character);
@@ -72,7 +73,7 @@ public class NewCharacterActivity extends AppCompatActivity {
                 .build();
         RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
         Character modal = new Character(characterId, name, strength, agility);
-        Call<Character> call = retrofitAPI.createPost(modal);
+        Call<Character> call = retrofitAPI.addCharacter(modal);
         call.enqueue(new Callback<Character>() {
 
             @Override
@@ -89,7 +90,7 @@ public class NewCharacterActivity extends AppCompatActivity {
 
     private void postData(Character character) {
         retrofitClient = new RetrofitClient(RetrofitAPI.CHARACTER_URL);
-        Call<Character> call = retrofitClient.getMyRetrofitAPI().createPost(character);
+        Call<Character> call = retrofitClient.getMyRetrofitAPI().addCharacter(character);
         call.enqueue(new Callback<Character>() {
 
             @Override

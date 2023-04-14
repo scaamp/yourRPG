@@ -11,6 +11,12 @@ public class Character implements Serializable {
     @JsonProperty("name")
     private String name;
 
+    @JsonProperty("level")
+    private int level;
+
+    @JsonProperty("exp")
+    private double exp;
+
     @JsonProperty("strength")
     private int strength;
 
@@ -47,12 +53,55 @@ public class Character implements Serializable {
     @JsonProperty("determination")
     private int determination;
 
+    public Character(long characterId, String name, int level, double exp, int strength, int agility, int stamina, int power, int cunning, int endurance, int intelligence, int creativity, int wisdom, int productivity, int influence, int determination) {
+        this.characterId = characterId;
+        this.name = name;
+        this.level = level;
+        this.exp = exp;
+        this.strength = strength;
+        this.agility = agility;
+        this.stamina = stamina;
+        this.power = power;
+        this.cunning = cunning;
+        this.endurance = endurance;
+        this.intelligence = intelligence;
+        this.creativity = creativity;
+        this.wisdom = wisdom;
+        this.productivity = productivity;
+        this.influence = influence;
+        this.determination = determination;
+    }
+
+    public Character(long characterId, String name,int level, double exp, int strength, int agility) {
+        this.characterId = characterId;
+        this.name = name;
+        this.level = level;
+        this.exp = exp;
+        this.strength = strength;
+        this.agility = agility;
+    }
 
     public Character(long characterId, String name, int strength, int agility) {
         this.characterId = characterId;
         this.name = name;
         this.strength = strength;
         this.agility = agility;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public double getExp() {
+        return exp;
+    }
+
+    public void setExp(double exp) {
+        this.exp = exp;
     }
 
     public long getCharacterId() {

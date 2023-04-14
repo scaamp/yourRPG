@@ -129,7 +129,7 @@ public class NewSpellActivity extends AppCompatActivity implements DatePickerDia
     private void postData(Spellbook spellbook) {
 
         retrofitClient = new RetrofitClient(RetrofitAPI.SPELLBOOK_URL);
-        Call<Spellbook> call = retrofitClient.getMyRetrofitAPI().createPost(spellbook);
+        Call<Spellbook> call = retrofitClient.getMyRetrofitAPI().addSpell(spellbook);
         call.enqueue(new Callback<Spellbook>() {
 
             @Override

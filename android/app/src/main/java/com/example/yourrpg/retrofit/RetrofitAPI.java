@@ -19,13 +19,12 @@ public interface RetrofitAPI {
     String QUESTLOG_URL = "http://172.23.240.3:8090/api/quests/";
 
     @POST("/api/spellbooks")
-    Call<Spellbook> createPost(@Body Spellbook spellbook);
+    Call<Spellbook> addSpell(@Body Spellbook spellbook);
 
     @POST("/api/characters")
-    Call<Character> createPost(@Body Character character);
+    Call<Character> addCharacter(@Body Character character);
 
     @DELETE("/api/spellbooks/{id}")
-    //void deleteSpell(@Path("id") int spellbookId, Callback<Response> callback);
     Call<ResponseBody> deleteSpell(@Path("id") int spellbookId);
 
     @GET("https://www.affirmations.dev")
