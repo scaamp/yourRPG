@@ -5,10 +5,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.yourrpg.activity.NewCharacterActivity;
 import com.example.yourrpg.model.Character;
+import com.example.yourrpg.model.Spellbook;
 import com.example.yourrpg.persistency.SharedPreferencesSaver;
+import com.example.yourrpg.retrofit.RetrofitAPI;
+import com.example.yourrpg.retrofit.RetrofitClient;
 import com.example.yourrpg.ui.character.CharacterFragment;
 import com.example.yourrpg.ui.spellbook.SpellbookFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -23,6 +27,10 @@ import com.example.yourrpg.databinding.ActivityMainBinding;
 
 import java.util.ArrayList;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class MainActivity extends AppCompatActivity{
 
     public static final int NEW_CHARACTER = 111;
@@ -30,7 +38,7 @@ public class MainActivity extends AppCompatActivity{
     private ActivityMainBinding binding;
     private ArrayList<Character> characterList;
     private TextView strengthPoints;
-    private CheckBox questCheckBox;
+    private RetrofitClient retrofitClient;
     private static final String SPELLBOOK_PREF = "SPELLBOOK_PREF";
 
     @Override
@@ -113,13 +121,28 @@ public class MainActivity extends AppCompatActivity{
         super.onResume();
         SharedPreferencesSaver.saveTo(characterList, getPreferences(MODE_PRIVATE), SharedPreferencesSaver.CHARACTER_PREF);
         SharedPreferencesSaver.saveTo(SpellbookFragment.getSpellList(), getPreferences(MODE_PRIVATE), SPELLBOOK_PREF);
+        syncData();
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        SharedPreferencesSaver.saveTo(characterList, getPreferences(MODE_PRIVATE), SharedPreferencesSaver.CHARACTER_PREF);
-        SharedPreferencesSaver.saveTo(SpellbookFragment.getSpellList(), getPreferences(MODE_PRIVATE), SPELLBOOK_PREF);
+
+    protected void syncData()
+    {
+        retrofitClient = new RetrofitClient(RetrofitAPI.SPELLBOOK_URL);
+        Call<Character> call = retrofitClient.getMyRetrofitAPI().updateCharacter(getCurrentCharacter().getUserId(), getCurrentCharacter());
+
+        // on below line we are executing our method.
+        call.enqueue(new Callback<Character>() {
+            @Override
+            public void onResponse(Call<Character> call, Response<Character> response) {
+                // this method is called when we get response from our api.
+                //Toast.makeText(MainActivity.this, "Data updated to API", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<Character> call, Throwable t) {
+                t.getMessage();
+            }
+        });
     }
 }
 

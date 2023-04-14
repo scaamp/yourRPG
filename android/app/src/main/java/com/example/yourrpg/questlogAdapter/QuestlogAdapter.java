@@ -18,6 +18,7 @@ import com.example.yourrpg.R;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class QuestlogAdapter extends RecyclerView.Adapter<QuestlogAdapter.ViewHolder> {
     private Context context;
@@ -29,7 +30,7 @@ public class QuestlogAdapter extends RecyclerView.Adapter<QuestlogAdapter.ViewHo
         this.context = context;
         this.list = list;
         this.questlogInterface = questlogInterface;
-        //Collections.sort(list, (o1, o2) -> o2.getDate().compareTo(o1.getDate()));
+        Collections.sort(list, (o2, o1) -> o2.getDate().compareTo(o1.getDate()));
     }
 
     @Override
@@ -43,23 +44,23 @@ public class QuestlogAdapter extends RecyclerView.Adapter<QuestlogAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         QuestlogViewHolderAdaptable item = list.get(position);
-        //DateFormat dateFormat = DateFormat.getDateInstance();
+        DateFormat dateFormat = DateFormat.getDateInstance();
         //holder.leftLabelTopTextView.setText(dateFormat.format(item.getDate()));
 
         holder.checkBox.setChecked(item.isDone());
         holder.questTextView.setText("\"" + item.getDesc() + "\"");
-        holder.questDateTextView.setText("05.04.2023");
+        holder.questDateTextView.setText(dateFormat.format(item.getDate()));
         holder.questStatTextView.setText(item.getStat());
         holder.questStatPointsTextView.setText("Points: " + item.getStatPoints());
         holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (!b) {
-                    questlogInterface.questIsDone(false, position, item.getStat(), item.getStatPoints());
+                    questlogInterface.questIsDone(false, holder.getAdapterPosition(), item.getStat(), item.getStatPoints());
                     item.setDone(false);
                 }
                 if (b) {
-                    questlogInterface.questIsDone(true, position, item.getStat(), item.getStatPoints());
+                    questlogInterface.questIsDone(true, holder.getAdapterPosition(), item.getStat(), item.getStatPoints());
                     item.setDone(true);
                 }
 

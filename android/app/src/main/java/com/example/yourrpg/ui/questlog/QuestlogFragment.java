@@ -118,7 +118,6 @@ public class QuestlogFragment extends Fragment implements QuestlogInterface {
         for (Fragment fragment : getChildFragmentManager().getFragments()) {
             fragment.onActivityResult(requestCode, resultCode, data);
         }
-
         if (requestCode == NEW_QUEST) {
             if (resultCode == Activity.RESULT_OK) {
                 if (data != null) {

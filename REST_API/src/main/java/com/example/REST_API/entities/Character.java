@@ -12,11 +12,14 @@ import java.util.List;
 @Data
 public class Character {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false)
     private long characterId;
     private String name;
+    private int level;
+    private int exp;
     private int strength;
+    private int agility;
 //    private int power;
 //    private int intelligence;
 //    private int influence;

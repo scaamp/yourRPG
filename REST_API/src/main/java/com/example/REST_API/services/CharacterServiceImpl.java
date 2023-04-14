@@ -36,7 +36,7 @@ public class CharacterServiceImpl implements CharacterService {
         List<CharacterResponse> characterResponses = new ArrayList<>(characters.size());
 
         for (Character u : characters) {
-            CharacterResponse characterResponse = new CharacterResponse(u.getCharacterId(), u.getName(), u.getStrength(), u.getSpellbooks());
+            CharacterResponse characterResponse = new CharacterResponse(u.getCharacterId(), u.getName(), u.getLevel(), u.getExp(), u.getStrength(), u.getAgility(), u.getSpellbooks());
             characterResponses.add(characterResponse);
         }
 
@@ -50,6 +50,9 @@ public class CharacterServiceImpl implements CharacterService {
         Character character = new Character();
         character.setCharacterId(characterRequest.getCharacterId());
         character.setName(characterRequest.getName());
+        character.setLevel(characterRequest.getLevel());
+        character.setExp(characterRequest.getExp());
+        character.setAgility(characterRequest.getAgility());
         character.setStrength(characterRequest.getStrength());
         characterRepository.save(character);
     }
@@ -64,6 +67,9 @@ public class CharacterServiceImpl implements CharacterService {
         Character character = characterRepository.findById(id).get();
         System.out.println(characterArg.toString());
         character.setName(characterArg.getName());
+        character.setLevel(characterArg.getLevel());
+        character.setExp(characterArg.getExp());
+        character.setAgility(characterArg.getAgility());
         character.setStrength(characterArg.getStrength());
         characterRepository.save(character);
     }

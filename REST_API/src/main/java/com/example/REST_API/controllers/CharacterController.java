@@ -28,7 +28,7 @@ public class CharacterController {
 
         return new ResponseEntity<>(characters, HttpStatus.OK);
     }
-
+    
     @GetMapping({"/{id}"})
     public ResponseEntity<Character> getCharacter(@PathVariable("id") Long id) {
         return new ResponseEntity<>(characterService.getCharacterById(id), HttpStatus.OK);

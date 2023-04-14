@@ -12,7 +12,10 @@ public class CharacterResponse
 {
     private long characterId;
     private String name;
+    private int level;
+    private int exp;
     private int strength;
+    private int agility;
     private List<Spellbook> spellbooks = new ArrayList<Spellbook>();
 
     public CharacterResponse(long id) {

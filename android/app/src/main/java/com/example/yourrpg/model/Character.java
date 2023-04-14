@@ -15,7 +15,7 @@ public class Character implements Serializable {
     private int level;
 
     @JsonProperty("exp")
-    private double exp;
+    private int exp;
 
     @JsonProperty("strength")
     private int strength;
@@ -53,7 +53,7 @@ public class Character implements Serializable {
     @JsonProperty("determination")
     private int determination;
 
-    public Character(long characterId, String name, int level, double exp, int strength, int agility, int stamina, int power, int cunning, int endurance, int intelligence, int creativity, int wisdom, int productivity, int influence, int determination) {
+    public Character(long characterId, String name, int level, int exp, int strength, int agility, int stamina, int power, int cunning, int endurance, int intelligence, int creativity, int wisdom, int productivity, int influence, int determination) {
         this.characterId = characterId;
         this.name = name;
         this.level = level;
@@ -72,7 +72,7 @@ public class Character implements Serializable {
         this.determination = determination;
     }
 
-    public Character(long characterId, String name,int level, double exp, int strength, int agility) {
+    public Character(long characterId, String name,int level, int exp, int strength, int agility) {
         this.characterId = characterId;
         this.name = name;
         this.level = level;
@@ -100,7 +100,7 @@ public class Character implements Serializable {
         return exp;
     }
 
-    public void setExp(double exp) {
+    public void setExp(int exp) {
         this.exp = exp;
     }
 

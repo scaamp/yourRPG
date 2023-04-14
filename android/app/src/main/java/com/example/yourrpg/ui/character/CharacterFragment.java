@@ -46,12 +46,12 @@ public class CharacterFragment extends Fragment {
     private TextView agilityPoints;
     private TextView nickName;
     private TextView level;
+    private TextView expTextView;
     private static CharacterFragment instance = null;
     private ProgressBar mProgress;
     private Handler handler = new Handler();
     private TextView progressTextView;
     private int exp = 0;
-    private int k = 1;
     private KonfettiView konfettiView = null;
     private Shape.DrawableShape drawableShape = null;
 
@@ -64,8 +64,10 @@ public class CharacterFragment extends Fragment {
         View root = binding.getRoot();
         nickName = (TextView) root.findViewById(R.id.yourNickTextView);
         level = (TextView) root.findViewById(R.id.yourLevelTextView);
+        expTextView = (TextView) root.findViewById(R.id.yourExpTextView);
         strengthPoints = (TextView) root.findViewById(R.id.strengthPointsHome);
         agilityPoints = (TextView) root.findViewById(R.id.agilityPoints);
+        progressTextView = (TextView) root.findViewById(R.id.txtProgress);
         instance = this;
 
         Resources res = getResources();
@@ -74,25 +76,10 @@ public class CharacterFragment extends Fragment {
         mProgress.setSecondaryProgress(100); // Secondary Progress
         mProgress.setMax(100); // Maximum Progress
         mProgress.setProgressDrawable(drawable);
-        progressTextView = (TextView) root.findViewById(R.id.txtProgress);
-
         final Drawable drawableHeart = ContextCompat.getDrawable(getContext(), R.drawable.ic_heart);
         drawableShape = new Shape.DrawableShape(drawableHeart, true);
-
         konfettiView = root.findViewById(R.id.konfettiView);
-        EmitterConfig emitterConfig = new Emitter(5L, TimeUnit.SECONDS).perSecond(50);
-        Party party = new PartyFactory(emitterConfig)
-                .angle(270)
-                .spread(90)
-                .setSpeedBetween(1f, 5f)
-                .timeToLive(2000L)
-                .shapes(new Shape.Rectangle(0.2f), drawableShape)
-                .sizes(new Size(12, 5f, 0.2f))
-                .position(0.0, 0.0, 1.0, 0.0)
-                .build();
-        konfettiView.setOnClickListener(view ->
-                konfettiView.start(party)
-        );
+
         return root;
     }
 
@@ -159,10 +146,12 @@ public class CharacterFragment extends Fragment {
         agilityPoints.setText(String.valueOf(character.getAgility()));
         level.setText(String.valueOf(character.getLevel()));
         nickName.setText(String.valueOf(character.getName()));
+        //nickName.setText("scamp");
+        expTextView.setText(String.valueOf(character.getExp()));
         exp = character.getStrength() * 10;
         character.setExp(exp);
         mProgress.setProgress(exp%100);
-        if (exp >= 100 * character.getLevel()) {
+        if (exp >= 100 * character.getLevel() && exp != 0) {
             parade();
             explode();
             rain();
