@@ -127,15 +127,15 @@ public class MainActivity extends AppCompatActivity{
 
     protected void syncData()
     {
-        retrofitClient = new RetrofitClient(RetrofitAPI.SPELLBOOK_URL);
+        retrofitClient = new RetrofitClient(RetrofitAPI.CHARACTER_URL);
         Call<Character> call = retrofitClient.getMyRetrofitAPI().updateCharacter(getCurrentCharacter().getUserId(), getCurrentCharacter());
 
         // on below line we are executing our method.
         call.enqueue(new Callback<Character>() {
             @Override
             public void onResponse(Call<Character> call, Response<Character> response) {
-                // this method is called when we get response from our api.
-                //Toast.makeText(MainActivity.this, "Data updated to API", Toast.LENGTH_SHORT).show();
+                response.body();
+                //long id = response.body().getUserId();
             }
 
             @Override

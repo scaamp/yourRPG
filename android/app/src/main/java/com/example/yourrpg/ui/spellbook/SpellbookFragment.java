@@ -17,6 +17,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.yourrpg.activity.NewCharacterActivity;
+import com.example.yourrpg.model.Character;
 import com.example.yourrpg.retrofit.RetrofitAPI;
 import com.example.yourrpg.retrofit.RetrofitClient;
 import com.example.yourrpg.activity.NewSpellActivity;
@@ -38,17 +40,20 @@ import retrofit2.Response;
 public class SpellbookFragment extends Fragment implements SpellbookRemover {
 
     public static final int NEW_SPELL = 222;
+    public static final int SPELLS_COUNT = 2;
     private static ArrayList<Spellbook> spellList;
     private RetrofitClient retrofitClient;
     private SpellbookViewModel dashboardViewModel;
     private FragmentSpellbookBinding binding;
     private Button goToAddSpell;
     private TextView nullSpellListTextView;
-    private String spellText;
     private RecyclerView.LayoutManager historyLayoutManager;
     private ArrayList<SpellbookViewHolderAdaptable> allItems;
     private RecyclerView historyRecyclerView;
     private RecyclerView.Adapter spellbookAdapter;
+    private String spellText;
+    private long spellsCount;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -132,6 +137,7 @@ public class SpellbookFragment extends Fragment implements SpellbookRemover {
             if (resultCode == Activity.RESULT_OK) {
                 if (data != null) {
                     Spellbook newSpell = (Spellbook) data.getExtras().get(NewSpellActivity.NEW_SPELL);
+                    spellsCount = newSpell.getSpellbookId();
                     spellText = String.valueOf(newSpell.getText());
                     spellList.add(newSpell);
                 }
@@ -150,7 +156,7 @@ public class SpellbookFragment extends Fragment implements SpellbookRemover {
         spellbookAdapter.notifyDataSetChanged();
 
         retrofitClient = new RetrofitClient(RetrofitAPI.SPELLBOOK_URL);
-        Call<ResponseBody> deleteRequest = retrofitClient.getMyRetrofitAPI().deleteSpell(2803);
+        Call<ResponseBody> deleteRequest = retrofitClient.getMyRetrofitAPI().deleteSpell(viewHolderAdaptable.getSpellbookId());
         deleteRequest.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

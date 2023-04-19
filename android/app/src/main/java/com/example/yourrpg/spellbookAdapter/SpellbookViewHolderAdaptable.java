@@ -5,7 +5,7 @@ import androidx.annotation.DrawableRes;
 import java.util.Date;
 
 public interface SpellbookViewHolderAdaptable {
-
+    long getSpellbookId();
     String getText();
     String getRank();
     String getTrainer();
