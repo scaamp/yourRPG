@@ -97,7 +97,7 @@ public class Character implements Serializable {
         this.level = level;
     }
 
-    public double getExp() {
+    public int getExp() {
         return exp;
     }
 

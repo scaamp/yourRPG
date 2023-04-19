@@ -19,6 +19,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.yourrpg.MainActivity;
 import com.example.yourrpg.R;
 import com.example.yourrpg.retrofit.RetrofitAPI;
 import com.example.yourrpg.retrofit.RetrofitClient;
@@ -50,6 +51,7 @@ public class NewSpellActivity extends AppCompatActivity implements DatePickerDia
     private RetrofitClient retrofitClient;
     private List<Spellbook> spellbooks;
     private int spellsCount;
+    private long spellId;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -96,12 +98,13 @@ public class NewSpellActivity extends AppCompatActivity implements DatePickerDia
                     Spellbook spellbook = new Spellbook(UUID.randomUUID(), textSpellbook.getText().toString(), trainerSpellbook.getText().toString(),
                             spinnerSpellbookRank.getSelectedItem().toString(), getDateEditTextDate());
                     postData(spellbook);
+                    //spellbook.setSpellbookId(spellId);
 //                    postData(1, textSpellbook.getText().toString(), trainerSpellbook.getText().toString(),
 //                            spinnerSpellbookRank.getSelectedItem().toString(), getDateEditTextDate());
                     Intent intent = new Intent();
                     intent.putExtra(NEW_SPELL, spellbook);
                     setResult(Activity.RESULT_OK, intent);
-                    Toast.makeText(NewSpellActivity.this, "Spell added!", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(NewSpellActivity.this, "Spell added!", Toast.LENGTH_LONG).show();
                     finish();
                 }
             }
@@ -148,6 +151,8 @@ public class NewSpellActivity extends AppCompatActivity implements DatePickerDia
             @Override
             public void onResponse(Call<Spellbook> call, Response<Spellbook> response) {
                 Spellbook responseFromAPI = response.body();
+                spellbook.setSpellbookId(response.body().getSpellbookId());
+                //spellId = responseFromAPI.getSpellbookId();
             }
 
             @Override
@@ -157,7 +162,7 @@ public class NewSpellActivity extends AppCompatActivity implements DatePickerDia
         });
     }
 
-    private List<Spellbook> getSpells() {
+    public List<Spellbook> getSpells() {
         retrofitClient = new RetrofitClient(RetrofitAPI.SPELLBOOK_URL);
         Call<List<Spellbook>> call = retrofitClient.getMyRetrofitAPI().getSpells();
 

@@ -39,7 +39,7 @@ public class CharacterController {
     public ResponseEntity addCharacter(@RequestBody CharacterRequest characterRequest) throws URISyntaxException {
         characterService.addCharacter(characterRequest);
         ResponseEntity.created(new URI("/characters/" + characterRequest.getCharacterId())).body(characterRequest);
-        return new ResponseEntity(HttpStatus.CREATED);
+        return new ResponseEntity(characterService.getCharacterById(characterRequest.getCharacterId()), HttpStatus.CREATED);
     }
 
 

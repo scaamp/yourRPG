@@ -58,17 +58,23 @@ public class NewCharacterActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //Character character = new Character(1, "XD", Integer.parseInt(strengthPoints.getText().toString()), Integer.parseInt(agilityPoints.getText().toString()));
+<<<<<<< HEAD
                 Character character = new Character(UUID.randomUUID(), "scamp", 1, 0, Integer.parseInt(strengthPoints.getText().toString()), Integer.parseInt(agilityPoints.getText().toString()));
+=======
+                Character character = new Character(1, "scamp", 1, 0, Integer.parseInt(strengthPoints.getText().toString()), Integer.parseInt(agilityPoints.getText().toString()));
+                //postData(1, "scamp", 1, 0, Integer.parseInt(strengthPoints.getText().toString()), Integer.parseInt(agilityPoints.getText().toString()));
+>>>>>>> master
                 postData(character);
                 Intent intent = new Intent();
                 intent.putExtra(NEW_CHARACTER, character);
                 setResult(Activity.RESULT_OK, intent);
-                Toast.makeText(NewCharacterActivity.this,"Character created!", Toast.LENGTH_LONG).show();
+                //Toast.makeText(NewCharacterActivity.this,"Character created!", Toast.LENGTH_LONG).show();
                 finish();
             }
         });
     }
 
+<<<<<<< HEAD
     private void postData(UUID characterId, String name, int strength, int agility) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://172.23.240.3:8090/characters/")
@@ -90,6 +96,24 @@ public class NewCharacterActivity extends AppCompatActivity {
             }
         });
     }
+=======
+//    private void postData(Character c) {
+//        retrofitClient = new RetrofitClient(RetrofitAPI.CHARACTER_URL);
+//        Call<Character> call = retrofitClient.getMyRetrofitAPI().addCharacter(c.getCharacterId(), c.getName(), c.getLevel(), c.getExp(), c.getStrength(), c.getAgility());
+//        call.enqueue(new Callback<Character>() {
+//
+//            @Override
+//            public void onResponse(Call<Character> call, Response<Character> response) {
+//                Character responseFromAPI = response.body();
+////                Toast.makeText(NewCharacterActivity.this,responseFromAPI.getName(), Toast.LENGTH_LONG).show();
+//            }
+//            @Override
+//            public void onFailure(Call<Character> call, Throwable t) {
+//                t.getMessage();
+//            }
+//        });
+//    }
+>>>>>>> master
 
     private void postData(Character character) {
         retrofitClient = new RetrofitClient(RetrofitAPI.CHARACTER_URL);

@@ -36,10 +36,10 @@ public class SpellbookController {
     }
 
     @PostMapping
-    public ResponseEntity addSpellbook(@RequestBody SpellbookRequest SpellbookRequest) throws URISyntaxException {
-        SpellbookService.addSpellbook(SpellbookRequest);
-        ResponseEntity.created(new URI("/spellbooks/" + SpellbookRequest.getSpellbookId())).body(SpellbookRequest);
-        return new ResponseEntity(HttpStatus.CREATED);
+    public ResponseEntity addSpellbook(@RequestBody SpellbookRequest spellbookRequest) throws URISyntaxException {
+        SpellbookService.addSpellbook(spellbookRequest);
+        ResponseEntity.created(new URI("/spellbooks/" + spellbookRequest.getSpellbookId())).body(spellbookRequest);
+        return new ResponseEntity(SpellbookService.getSpellbookById(spellbookRequest.getSpellbookId()), HttpStatus.CREATED);
     }
 
     @PutMapping({"/{id}"})

@@ -9,6 +9,8 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
@@ -27,8 +29,17 @@ public interface RetrofitAPI {
     @POST("/api/characters")
     Call<Character> addCharacter(@Body Character character);
 
+//    @FormUrlEncoded
+//    @POST("/api/characters")
+//    Call<Character> addCharacter(@Field("characterId") long characterId, @Field("name") String name, @Field("level") int level, @Field("exp") int exp,
+//            @Field("strength") int strength, @Field("agility") int agility);
+
     @DELETE("/api/spellbooks/{id}")
+<<<<<<< HEAD
     Call<ResponseBody> deleteSpell(@Path("id") UUID spellbookId);
+=======
+    Call<ResponseBody> deleteSpell(@Path("id") long spellbookId);
+>>>>>>> master
 
     @GET("/api/spellbooks")
     Call<List<Spellbook>> getSpells();
