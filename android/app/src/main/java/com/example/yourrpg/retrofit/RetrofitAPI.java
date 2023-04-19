@@ -3,6 +3,7 @@ import com.example.yourrpg.model.Character;
 import com.example.yourrpg.model.Spellbook;
 
 import java.util.List;
+import java.util.UUID;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -27,7 +28,7 @@ public interface RetrofitAPI {
     Call<Character> addCharacter(@Body Character character);
 
     @DELETE("/api/spellbooks/{id}")
-    Call<ResponseBody> deleteSpell(@Path("id") int spellbookId);
+    Call<ResponseBody> deleteSpell(@Path("id") UUID spellbookId);
 
     @GET("/api/spellbooks")
     Call<List<Spellbook>> getSpells();
@@ -37,7 +38,7 @@ public interface RetrofitAPI {
 
     @Headers({"Content-Type: application/json"})
     @PUT("/api/characters/{id}")
-    Call<Character> updateCharacter(@Path("id") long id, @Body Character character);
+    Call<Character> updateCharacter(@Path("id") UUID id, @Body Character character);
 
 }
 

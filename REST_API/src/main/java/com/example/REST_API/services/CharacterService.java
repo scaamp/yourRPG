@@ -5,15 +5,16 @@ import com.example.REST_API.dtos.CharacterRequest;
 import com.example.REST_API.dtos.CharacterResponse;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface CharacterService {
     List<CharacterResponse> getAllCharacters();
 
     void addCharacter(CharacterRequest characterRequest);
 
-    Character getCharacterById(Long id);
+    Character getCharacterById(UUID id);
 
-    void updateCharacter(Long id, Character character);
+    void updateCharacter(UUID id, Character character);
 
-    void deleteCharacter(Long id);
+    void deleteCharacter(UUID id);
 }

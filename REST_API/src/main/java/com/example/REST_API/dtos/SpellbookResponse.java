@@ -7,12 +7,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.UUID;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class SpellbookResponse {
-    private long spellbookId;
+    private UUID spellbookId;
     private String text;
     private String trainer;
     private String rank;

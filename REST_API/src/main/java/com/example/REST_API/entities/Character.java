@@ -6,15 +6,14 @@ import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "characters")
 @Data
 public class Character {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(unique = true, nullable = false)
-    private long characterId;
+    private UUID characterId;
     private String name;
     private int level;
     private int exp;

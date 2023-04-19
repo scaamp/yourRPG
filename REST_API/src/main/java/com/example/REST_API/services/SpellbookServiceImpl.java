@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+
 @Transactional
 @Service
 public class SpellbookServiceImpl implements SpellbookService {
@@ -55,14 +57,13 @@ public class SpellbookServiceImpl implements SpellbookService {
     }
 
     @Override
-    public Spellbook getSpellbookById(Long id) {
+    public Spellbook getSpellbookById(UUID id) {
         return spellbookRepository.findById(id).get();
     }
 
     @Override
-    public void updateSpellbook(Long id, Spellbook spellbookArg) {
+    public void updateSpellbook(UUID id, Spellbook spellbookArg) {
         Spellbook spellbook = spellbookRepository.findById(id).get();
-        System.out.println(spellbook.toString());
         spellbook.setSpellbookId(spellbookArg.getSpellbookId());
         spellbook.setText(spellbookArg.getText());
         spellbook.setTrainer(spellbookArg.getTrainer());
@@ -72,7 +73,7 @@ public class SpellbookServiceImpl implements SpellbookService {
     }
 
     @Override
-    public void deleteSpellbook(Long id) {
+    public void deleteSpellbook(UUID id) {
         spellbookRepository.deleteById(id);
     }
 }

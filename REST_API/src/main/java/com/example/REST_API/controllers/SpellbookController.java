@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/spellbooks")
@@ -30,7 +31,7 @@ public class SpellbookController {
     }
 
     @GetMapping({"/{id}"})
-    public ResponseEntity<Spellbook> getSpellbook(@PathVariable("id") Long id) {
+    public ResponseEntity<Spellbook> getSpellbook(@PathVariable("id") UUID id) {
         return new ResponseEntity (SpellbookService.getSpellbookById(id), HttpStatus.OK);
     }
 
@@ -42,13 +43,13 @@ public class SpellbookController {
     }
 
     @PutMapping({"/{id}"})
-    public ResponseEntity <Spellbook> updateSpellbook(@PathVariable("id") Long id, @RequestBody Spellbook Spellbook) {
+    public ResponseEntity <Spellbook> updateSpellbook(@PathVariable("id") UUID id, @RequestBody Spellbook Spellbook) {
         SpellbookService.updateSpellbook(id, Spellbook);
         return new ResponseEntity<>(SpellbookService.getSpellbookById(id), HttpStatus.OK);
     }
 
     @DeleteMapping({"/{id}"})
-    public ResponseEntity<Spellbook> deleteSpellbook(@PathVariable("id") Long id) {
+    public ResponseEntity<Spellbook> deleteSpellbook(@PathVariable("id") UUID id) {
         SpellbookService.deleteSpellbook(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

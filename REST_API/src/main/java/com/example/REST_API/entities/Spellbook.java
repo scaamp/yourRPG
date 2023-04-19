@@ -7,15 +7,14 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.UUID;
 
 @Entity
 @Data
 @Table(name = "spellbooks")
 public class Spellbook {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(unique = true, nullable = false)
-    private long spellbookId;
+    private UUID spellbookId;
     private String text;
     private String trainer;
     private String rank;

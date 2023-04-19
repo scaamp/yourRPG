@@ -4,13 +4,14 @@ import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class CharacterResponse
 {
-    private long characterId;
+    private UUID characterId;
     private String name;
     private int level;
     private int exp;

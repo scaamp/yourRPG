@@ -141,21 +141,21 @@ public class QuestlogFragment extends Fragment implements QuestlogInterface {
         allItems.remove(viewHolderAdaptable);
         questAdapter.notifyDataSetChanged();
 
-        retrofitClient = new RetrofitClient(RetrofitAPI.QUESTLOG_URL);
-        Call<ResponseBody> deleteRequest = retrofitClient.getMyRetrofitAPI().deleteSpell(2803);
-        deleteRequest.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                // use response.code, response.headers, etc.
-                response.body();
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                // handle failure
-                t.getMessage();
-            }
-        });
+//        retrofitClient = new RetrofitClient(RetrofitAPI.QUESTLOG_URL);
+//        Call<ResponseBody> deleteRequest = retrofitClient.getMyRetrofitAPI().deleteSpell(2803);
+//        deleteRequest.enqueue(new Callback<ResponseBody>() {
+//            @Override
+//            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+//                // use response.code, response.headers, etc.
+//                response.body();
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ResponseBody> call, Throwable t) {
+//                // handle failure
+//                t.getMessage();
+//            }
+//        });
         SharedPreferencesSaver.saveTo(questList, getActivity().getSharedPreferences("QUESTLOG_PREF", MODE_PRIVATE), SharedPreferencesSaver.QUESTLOG_PREF);
     }
 

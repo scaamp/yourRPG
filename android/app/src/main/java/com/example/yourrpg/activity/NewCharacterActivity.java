@@ -13,6 +13,9 @@ import com.example.yourrpg.R;
 import com.example.yourrpg.retrofit.RetrofitAPI;
 import com.example.yourrpg.retrofit.RetrofitClient;
 import com.example.yourrpg.model.Character;
+
+import java.util.UUID;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -55,7 +58,7 @@ public class NewCharacterActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //Character character = new Character(1, "XD", Integer.parseInt(strengthPoints.getText().toString()), Integer.parseInt(agilityPoints.getText().toString()));
-                Character character = new Character(1, "scamp", 1, 0, Integer.parseInt(strengthPoints.getText().toString()), Integer.parseInt(agilityPoints.getText().toString()));
+                Character character = new Character(UUID.randomUUID(), "scamp", 1, 0, Integer.parseInt(strengthPoints.getText().toString()), Integer.parseInt(agilityPoints.getText().toString()));
                 postData(character);
                 Intent intent = new Intent();
                 intent.putExtra(NEW_CHARACTER, character);
@@ -66,7 +69,7 @@ public class NewCharacterActivity extends AppCompatActivity {
         });
     }
 
-    private void postData(long characterId, String name, int strength, int agility) {
+    private void postData(UUID characterId, String name, int strength, int agility) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://172.23.240.3:8090/characters/")
                 .addConverterFactory(GsonConverterFactory.create())

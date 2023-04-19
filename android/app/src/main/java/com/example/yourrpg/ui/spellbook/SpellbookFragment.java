@@ -74,12 +74,12 @@ public class SpellbookFragment extends Fragment implements SpellbookRemover {
     }
 
     private void initSpellList() {
+
         ArrayList newSpellList;
         //newSpellList.add(new Spellbook(1,"XD", "Jakub", "XD"));
         newSpellList = SharedPreferencesSaver.loadFrom(getActivity().getSharedPreferences("SPELLBOOK_PREF", MODE_PRIVATE), SharedPreferencesSaver.SPELLBOOK_PREF);
         if (newSpellList != null) {
             spellList = newSpellList;
-            //spellList.clear();
             if (newSpellList.size() != 0) nullSpellListTextView.setVisibility(View.INVISIBLE);
             else
             {
@@ -150,7 +150,7 @@ public class SpellbookFragment extends Fragment implements SpellbookRemover {
         spellbookAdapter.notifyDataSetChanged();
 
         retrofitClient = new RetrofitClient(RetrofitAPI.SPELLBOOK_URL);
-        Call<ResponseBody> deleteRequest = retrofitClient.getMyRetrofitAPI().deleteSpell(2803);
+        Call<ResponseBody> deleteRequest = retrofitClient.getMyRetrofitAPI().deleteSpell(viewHolderAdaptable.getId());
         deleteRequest.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

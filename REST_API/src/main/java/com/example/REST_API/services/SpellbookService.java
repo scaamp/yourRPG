@@ -5,15 +5,16 @@ import com.example.REST_API.dtos.SpellbookResponse;
 import com.example.REST_API.entities.Spellbook;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface SpellbookService {
     List<SpellbookResponse> getAllSpellbooks();
 
     void addSpellbook(SpellbookRequest spellbookRequest);
 
-    Spellbook getSpellbookById(Long id);
+    Spellbook getSpellbookById(UUID id);
 
-    void updateSpellbook(Long id, Spellbook spellbook);
+    void updateSpellbook(UUID id, Spellbook spellbook);
 
-    void deleteSpellbook(Long id);
+    void deleteSpellbook(UUID id);
 }

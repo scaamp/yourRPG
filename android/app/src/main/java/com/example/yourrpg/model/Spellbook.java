@@ -7,14 +7,14 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.UUID;
 
 public class Spellbook implements Serializable, SpellbookViewHolderAdaptable {
 
     @JsonProperty("spellbookId")
-    private long spellbookId;
+    private UUID spellbookId;
 
     @JsonProperty("text")
-    //@SerializedName("affirmation")
     private String text;
 
     @JsonProperty("trainer")
@@ -30,7 +30,7 @@ public class Spellbook implements Serializable, SpellbookViewHolderAdaptable {
     @SerializedName("affirmation")
     private String affirmation;
 
-    public Spellbook(long spellbookId, String text, String trainer, String rank, Date date) {
+    public Spellbook(UUID spellbookId, String text, String trainer, String rank, Date date) {
         this.spellbookId = spellbookId;
         this.text = text;
         this.trainer = trainer;
@@ -46,11 +46,11 @@ public class Spellbook implements Serializable, SpellbookViewHolderAdaptable {
         this.affirmation = affirmation;
     }
 
-    public long getSpellbookId() {
+    public UUID getSpellbookId() {
         return spellbookId;
     }
 
-    public void setSpellbookId(long spellbookId) {
+    public void setSpellbookId(UUID spellbookId) {
         this.spellbookId = spellbookId;
     }
 
@@ -64,6 +64,11 @@ public class Spellbook implements Serializable, SpellbookViewHolderAdaptable {
 
     public String getTrainer() {
         return trainer;
+    }
+
+    @Override
+    public UUID getId() {
+        return spellbookId;
     }
 
     @Override

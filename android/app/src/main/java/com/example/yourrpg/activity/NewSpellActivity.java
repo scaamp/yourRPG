@@ -32,6 +32,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -92,7 +93,7 @@ public class NewSpellActivity extends AppCompatActivity implements DatePickerDia
                     {
                         spellsCount=1;
                     }
-                    Spellbook spellbook = new Spellbook(spellsCount, textSpellbook.getText().toString(), trainerSpellbook.getText().toString(),
+                    Spellbook spellbook = new Spellbook(UUID.randomUUID(), textSpellbook.getText().toString(), trainerSpellbook.getText().toString(),
                             spinnerSpellbookRank.getSelectedItem().toString(), getDateEditTextDate());
                     postData(spellbook);
 //                    postData(1, textSpellbook.getText().toString(), trainerSpellbook.getText().toString(),

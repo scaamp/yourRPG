@@ -3,10 +3,11 @@ package com.example.yourrpg.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 public class Character implements Serializable {
     @JsonProperty("characterId")
-    private long characterId;
+    private UUID characterId;
 
     @JsonProperty("name")
     private String name;
@@ -53,7 +54,7 @@ public class Character implements Serializable {
     @JsonProperty("determination")
     private int determination;
 
-    public Character(long characterId, String name, int level, int exp, int strength, int agility, int stamina, int power, int cunning, int endurance, int intelligence, int creativity, int wisdom, int productivity, int influence, int determination) {
+    public Character(UUID characterId, String name, int level, int exp, int strength, int agility, int stamina, int power, int cunning, int endurance, int intelligence, int creativity, int wisdom, int productivity, int influence, int determination) {
         this.characterId = characterId;
         this.name = name;
         this.level = level;
@@ -72,7 +73,7 @@ public class Character implements Serializable {
         this.determination = determination;
     }
 
-    public Character(long characterId, String name,int level, int exp, int strength, int agility) {
+    public Character(UUID characterId, String name,int level, int exp, int strength, int agility) {
         this.characterId = characterId;
         this.name = name;
         this.level = level;
@@ -81,7 +82,7 @@ public class Character implements Serializable {
         this.agility = agility;
     }
 
-    public Character(long characterId, String name, int strength, int agility) {
+    public Character(UUID characterId, String name, int strength, int agility) {
         this.characterId = characterId;
         this.name = name;
         this.strength = strength;
@@ -104,11 +105,11 @@ public class Character implements Serializable {
         this.exp = exp;
     }
 
-    public long getCharacterId() {
+    public UUID getCharacterId() {
         return characterId;
     }
 
-    public void setCharacterId(long characterId) {
+    public void setCharacterId(UUID characterId) {
         this.characterId = characterId;
     }
 
@@ -205,7 +206,7 @@ public class Character implements Serializable {
         return this;
     }
 
-    public long getUserId() {
+    public UUID getUserId() {
         return characterId;
     }
 
@@ -225,7 +226,7 @@ public class Character implements Serializable {
         this.strength = strength;
     }
 
-    public void setUserId(long characterId) {
+    public void setUserId(UUID characterId) {
         this.characterId = characterId;
     }
 

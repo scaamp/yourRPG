@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/characters")
@@ -30,7 +31,7 @@ public class CharacterController {
     }
     
     @GetMapping({"/{id}"})
-    public ResponseEntity<Character> getCharacter(@PathVariable("id") Long id) {
+    public ResponseEntity<Character> getCharacter(@PathVariable("id") UUID id) {
         return new ResponseEntity<>(characterService.getCharacterById(id), HttpStatus.OK);
     }
 
@@ -43,13 +44,13 @@ public class CharacterController {
 
 
     @PutMapping({"/{id}"})
-    public ResponseEntity<Character> updateCharacter(@PathVariable("id") Long id, @RequestBody Character character) {
+    public ResponseEntity<Character> updateCharacter(@PathVariable("id") UUID id, @RequestBody Character character) {
         characterService.updateCharacter(id, character);
         return new ResponseEntity<>(characterService.getCharacterById(id), HttpStatus.OK);
     }
 
     @DeleteMapping({"/{id}"})
-    public ResponseEntity<Character> deleteCharacter(@PathVariable("id") Long id) {
+    public ResponseEntity<Character> deleteCharacter(@PathVariable("id") UUID id) {
         characterService.deleteCharacter(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

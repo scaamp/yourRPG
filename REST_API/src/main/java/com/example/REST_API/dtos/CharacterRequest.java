@@ -7,13 +7,14 @@ import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 public class CharacterRequest
 {
-    private long characterId;
+    private UUID characterId;
     private String name;
     private int level;
     private int exp;

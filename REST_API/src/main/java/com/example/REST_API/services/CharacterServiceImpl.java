@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Transactional
 @Service
@@ -58,12 +59,12 @@ public class CharacterServiceImpl implements CharacterService {
     }
 
     @Override
-    public Character getCharacterById(Long id) {
+    public Character getCharacterById(UUID id) {
         return characterRepository.findById(id).get();
     }
 
     @Override
-    public void updateCharacter(Long id, Character characterArg) {
+    public void updateCharacter(UUID id, Character characterArg) {
         Character character = characterRepository.findById(id).get();
         System.out.println(characterArg.toString());
         character.setName(characterArg.getName());
@@ -75,7 +76,7 @@ public class CharacterServiceImpl implements CharacterService {
     }
 
     @Override
-    public void deleteCharacter(Long id) {
+    public void deleteCharacter(UUID id) {
         characterRepository.deleteById(id);
     }
 }

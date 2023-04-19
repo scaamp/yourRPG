@@ -26,6 +26,7 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.yourrpg.databinding.ActivityMainBinding;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -76,10 +77,11 @@ public class MainActivity extends AppCompatActivity{
         if (characterList.size() !=0 ) {
             return (Character) characterList.get(0);
         }
-        return new Character (1, "", 0,0);
+        return new Character (UUID.randomUUID(), "", 0,0);
     }
 
     private void initCharacterList() {
+
         ArrayList<Character> newCharacterList = SharedPreferencesSaver.loadFrom(getPreferences(MODE_PRIVATE), SharedPreferencesSaver.CHARACTER_PREF);
         if (newCharacterList  != null) {
             characterList = newCharacterList;
