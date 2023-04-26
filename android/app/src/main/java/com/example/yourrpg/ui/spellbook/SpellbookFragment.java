@@ -137,7 +137,6 @@ public class SpellbookFragment extends Fragment implements SpellbookRemover {
             if (resultCode == Activity.RESULT_OK) {
                 if (data != null) {
                     Spellbook newSpell = (Spellbook) data.getExtras().get(NewSpellActivity.NEW_SPELL);
-                    spellsCount = newSpell.getSpellbookId();
                     spellText = String.valueOf(newSpell.getText());
                     spellList.add(newSpell);
                 }
@@ -154,13 +153,9 @@ public class SpellbookFragment extends Fragment implements SpellbookRemover {
         spellList.remove(viewHolderAdaptable);
         allItems.remove(viewHolderAdaptable);
         spellbookAdapter.notifyDataSetChanged();
-
         retrofitClient = new RetrofitClient(RetrofitAPI.SPELLBOOK_URL);
-<<<<<<< HEAD
         Call<ResponseBody> deleteRequest = retrofitClient.getMyRetrofitAPI().deleteSpell(viewHolderAdaptable.getId());
-=======
-        Call<ResponseBody> deleteRequest = retrofitClient.getMyRetrofitAPI().deleteSpell(viewHolderAdaptable.getSpellbookId());
->>>>>>> master
+
         deleteRequest.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

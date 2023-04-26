@@ -58,12 +58,9 @@ public class NewCharacterActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //Character character = new Character(1, "XD", Integer.parseInt(strengthPoints.getText().toString()), Integer.parseInt(agilityPoints.getText().toString()));
-<<<<<<< HEAD
                 Character character = new Character(UUID.randomUUID(), "scamp", 1, 0, Integer.parseInt(strengthPoints.getText().toString()), Integer.parseInt(agilityPoints.getText().toString()));
-=======
-                Character character = new Character(1, "scamp", 1, 0, Integer.parseInt(strengthPoints.getText().toString()), Integer.parseInt(agilityPoints.getText().toString()));
                 //postData(1, "scamp", 1, 0, Integer.parseInt(strengthPoints.getText().toString()), Integer.parseInt(agilityPoints.getText().toString()));
->>>>>>> master
+
                 postData(character);
                 Intent intent = new Intent();
                 intent.putExtra(NEW_CHARACTER, character);
@@ -74,7 +71,7 @@ public class NewCharacterActivity extends AppCompatActivity {
         });
     }
 
-<<<<<<< HEAD
+
     private void postData(UUID characterId, String name, int strength, int agility) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://172.23.240.3:8090/characters/")
@@ -96,7 +93,7 @@ public class NewCharacterActivity extends AppCompatActivity {
             }
         });
     }
-=======
+
 //    private void postData(Character c) {
 //        retrofitClient = new RetrofitClient(RetrofitAPI.CHARACTER_URL);
 //        Call<Character> call = retrofitClient.getMyRetrofitAPI().addCharacter(c.getCharacterId(), c.getName(), c.getLevel(), c.getExp(), c.getStrength(), c.getAgility());
@@ -113,7 +110,7 @@ public class NewCharacterActivity extends AppCompatActivity {
 //            }
 //        });
 //    }
->>>>>>> master
+
 
     private void postData(Character character) {
         retrofitClient = new RetrofitClient(RetrofitAPI.CHARACTER_URL);

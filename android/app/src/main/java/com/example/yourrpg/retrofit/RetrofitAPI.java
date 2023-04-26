@@ -35,14 +35,13 @@ public interface RetrofitAPI {
 //            @Field("strength") int strength, @Field("agility") int agility);
 
     @DELETE("/api/spellbooks/{id}")
-<<<<<<< HEAD
     Call<ResponseBody> deleteSpell(@Path("id") UUID spellbookId);
-=======
-    Call<ResponseBody> deleteSpell(@Path("id") long spellbookId);
->>>>>>> master
 
     @GET("/api/spellbooks")
     Call<List<Spellbook>> getSpells();
+
+    @GET("/api/characters/quests/{category}")
+    Call<String> getQuestsProposition(@Path("category") String category);
 
     @GET("https://www.affirmations.dev")
     Call<Spellbook> getAffirmation();

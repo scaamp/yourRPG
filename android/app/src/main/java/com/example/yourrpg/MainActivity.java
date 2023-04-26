@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity{
         if (newCharacterList  != null) {
             characterList = newCharacterList;
             //characterList.clear();
-            strengthPoints.setText(String.valueOf(getCurrentCharacter().getStrength()));
+            //strengthPoints.setText(String.valueOf(getCurrentCharacter().getStrength()));
         } else {
             characterList = new ArrayList<>();
         }

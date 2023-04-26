@@ -19,7 +19,6 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.yourrpg.MainActivity;
 import com.example.yourrpg.R;
 import com.example.yourrpg.retrofit.RetrofitAPI;
 import com.example.yourrpg.retrofit.RetrofitClient;
@@ -50,8 +49,6 @@ public class NewSpellActivity extends AppCompatActivity implements DatePickerDia
     public static final String NEW_SPELL = "NEW_SPELL";
     private RetrofitClient retrofitClient;
     private List<Spellbook> spellbooks;
-    private int spellsCount;
-    private long spellId;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -87,24 +84,13 @@ public class NewSpellActivity extends AppCompatActivity implements DatePickerDia
                             }).setNegativeButton("No", null)
                             .show();
                 } else {
-                    if (getSpells() != null)
-                    {
-                        spellsCount = getSpells().size()+1;
-                    }
-                    else
-                    {
-                        spellsCount=1;
-                    }
                     Spellbook spellbook = new Spellbook(UUID.randomUUID(), textSpellbook.getText().toString(), trainerSpellbook.getText().toString(),
                             spinnerSpellbookRank.getSelectedItem().toString(), getDateEditTextDate());
                     postData(spellbook);
-                    //spellbook.setSpellbookId(spellId);
-//                    postData(1, textSpellbook.getText().toString(), trainerSpellbook.getText().toString(),
-//                            spinnerSpellbookRank.getSelectedItem().toString(), getDateEditTextDate());
                     Intent intent = new Intent();
                     intent.putExtra(NEW_SPELL, spellbook);
                     setResult(Activity.RESULT_OK, intent);
-                    //Toast.makeText(NewSpellActivity.this, "Spell added!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(NewSpellActivity.this, "Spell added!", Toast.LENGTH_LONG).show();
                     finish();
                 }
             }

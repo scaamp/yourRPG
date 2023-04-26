@@ -37,6 +37,7 @@
         <activity
             android:name=".activity.NewQuestActivity"
             android:label="@string/app_name"
+            android:windowSoftInputMode="adjustPan|adjustResize"
             android:exported="true">
         </activity>
     </application>

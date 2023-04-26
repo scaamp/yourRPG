@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.UUID;
 
 public interface SpellbookViewHolderAdaptable {
-    long getSpellbookId();
+    UUID getSpellbookId();
     String getText();
     String getRank();
     String getTrainer();

@@ -84,10 +84,10 @@
         android:minHeight="48dp"
         app:layout_constraintBottom_toTopOf="@+id/questDeadlineTextView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.89"
+        app:layout_constraintHorizontal_bias="0.917"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/questRewardTextView"
-        app:layout_constraintVertical_bias="0.423"
+        app:layout_constraintVertical_bias="0.384"
         tools:ignore="SpeakableTextPresentCheck" />
 
     <TextView
@@ -132,6 +132,36 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/questPropositionButton"
+        android:layout_width="67dp"
+        android:layout_height="66dp"
+        app:layout_constraintBottom_toTopOf="@+id/addQuestButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.826"
+        app:layout_constraintStart_toEndOf="@+id/questDeadlineHourEditText"
+        app:layout_constraintTop_toBottomOf="@+id/questStatPointsSpinner"
+        app:layout_constraintVertical_bias="0.529"
+        app:srcCompat="@drawable/puzzled"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <TextView
+        android:id="@+id/questPropositionTextView"
+        android:layout_width="0dp"
+        android:layout_height="240dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="75dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="70dp"
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.411"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addQuestButton"
+        app:layout_constraintVertical_bias="0.535" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

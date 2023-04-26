@@ -1,5 +1,6 @@
 package com.example.REST_API.controllers;
 
+import com.example.REST_API.ChatGPTHelper;
 import com.example.REST_API.entities.Character;
 import com.example.REST_API.dtos.CharacterRequest;
 import com.example.REST_API.dtos.CharacterResponse;
@@ -10,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -29,6 +31,20 @@ public class CharacterController {
 
         return new ResponseEntity<>(characters, HttpStatus.OK);
     }
+
+    @GetMapping("/quests/{category}")
+    public ResponseEntity<String> getQuests(@PathVariable("category") String category) {
+        ChatGPTHelper chatGPTHelper = new ChatGPTHelper();
+        String questIdea = chatGPTHelper.getQuestsIdea(category);
+        return new ResponseEntity<>(questIdea, HttpStatus.OK);
+    }
+
+//    @GetMapping("/quests")
+//    public ResponseEntity<String> getQuests() {
+//        ChatGPTHelper chatGPTHelper = new ChatGPTHelper();
+//        String questIdea = chatGPTHelper.getQuestsIdea();
+//        return new ResponseEntity<>(questIdea, HttpStatus.OK);
+//    }
     
     @GetMapping({"/{id}"})
     public ResponseEntity<Character> getCharacter(@PathVariable("id") UUID id) {
