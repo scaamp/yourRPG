@@ -8,7 +8,8 @@ The app is built using Java programming language and Spring framework on the ser
 * Create and customize your own character
 * Develop your physical, mental, character, and intellectual skills
 * Save ideas and quotes to your spellbook
-* Add tasks to your quest log
+* Add tasks to your quest log  
+![alt text](https://github.com/scaamp/yourRPG/blob/master/screenshot/new_quest.png?raw=true)    
 * Track your progress in real-time
 * Earn rewards and level up your character
 * Interact with other players in the community
