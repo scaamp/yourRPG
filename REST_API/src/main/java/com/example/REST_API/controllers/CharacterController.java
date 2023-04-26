@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Collections;
@@ -33,7 +36,7 @@ public class CharacterController {
     }
 
     @GetMapping("/quests/{category}")
-    public ResponseEntity<String> getQuests(@PathVariable("category") String category) {
+    public ResponseEntity<String> getQuests(@PathVariable("category") String category) throws IOException {
         ChatGPTHelper chatGPTHelper = new ChatGPTHelper();
         String questIdea = chatGPTHelper.getQuestsIdea(category);
         return new ResponseEntity<>(questIdea, HttpStatus.OK);
