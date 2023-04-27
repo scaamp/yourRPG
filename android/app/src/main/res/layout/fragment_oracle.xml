@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.oracle.OracleFragment">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/idRVChats"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="42dp"
+        android:layout_marginEnd="42dp"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintBottom_toTopOf="@+id/idLLMessage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/idLLMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="42dp"
+        android:layout_marginEnd="42dp"
+        android:layout_marginBottom="232dp"
+        android:orientation="horizontal"
+        android:weightSum="5"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <!--edit text to enter message-->
+        <EditText
+            android:id="@+id/idEdtMessage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:hint="Enter Message"
+            android:singleLine="false" />
+
+        <!--button to send message-->
+        <ImageButton
+            android:id="@+id/idIBSend"
+            android:layout_width="0dp"
+            android:layout_height="29dp"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:background="@color/purple_200"
+            android:minHeight="48dp"
+            android:src="@android:drawable/ic_menu_send"
+            app:tint="@color/white"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

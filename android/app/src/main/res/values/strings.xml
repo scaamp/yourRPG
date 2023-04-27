@@ -3,6 +3,7 @@
     <string name="title_home">Character</string>
     <string name="title_dashboard">Spellbook</string>
     <string name="title_notifications">Quests</string>
+    <string name="oracle">Oracle</string>
 
     <string-array name="ranks_array">
         <item>S</item>

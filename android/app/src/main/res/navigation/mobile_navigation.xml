@@ -22,4 +22,10 @@
         android:name="com.example.yourrpg.ui.questlog.QuestlogFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_questlog" />
+
+    <fragment
+        android:id="@+id/navigation_oracle"
+        android:name="com.example.yourrpg.ui.oracle.OracleFragment"
+        android:label="Oracle"
+        tools:layout="@layout/fragment_oracle" />
 </navigation>
