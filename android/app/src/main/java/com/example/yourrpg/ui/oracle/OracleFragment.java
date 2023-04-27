@@ -60,8 +60,8 @@ public class OracleFragment extends Fragment {
         userMsgEdt = root.findViewById(R.id.idEdtMessage);
 
         // below line is to initialize our request queue.
-        mRequestQueue = Volley.newRequestQueue(getContext());
-        mRequestQueue.getCache().clear();
+//        mRequestQueue = Volley.newRequestQueue(getContext());
+//        mRequestQueue.getCache().clear();
 
         // creating a new array list
         messageModalArrayList = new ArrayList<>();
@@ -74,10 +74,10 @@ public class OracleFragment extends Fragment {
                 // by user is empty or not.
                 if (userMsgEdt.getText().toString().isEmpty()) {
                     // if the edit text is empty display a toast message.
-                    Toast.makeText(getContext(), "Please enter your message..", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Please enter your message..", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
+                Toast.makeText(getActivity(), "Please wait a moment...", Toast.LENGTH_SHORT).show();
                 // calling a method to send message
                 // to our bot to get response.
                 sendMessage(userMsgEdt.getText().toString());
@@ -108,15 +108,6 @@ public class OracleFragment extends Fragment {
         // array list which is entered by the user.
         messageModalArrayList.add(new MessageModal(userMsg, USER_KEY));
         messageRVAdapter.notifyDataSetChanged();
-
-        // url for our brain
-        // make sure to add mshape for uid.
-        // make sure to add your url.
-        String url = "Enter you API URL here" + userMsg;
-
-        // creating a variable for our request queue.
-        RequestQueue queue = Volley.newRequestQueue(getContext());
-
         retrofitClient = new RetrofitClient(RetrofitAPI.CHARACTER_URL + "oracle/");
         Call<String> call = retrofitClient.getMyRetrofitAPI().getAnswerFromOracle(userMsg);
 
@@ -124,7 +115,10 @@ public class OracleFragment extends Fragment {
             @Override
             public void onResponse(Call<String> call, retrofit2.Response<String> response) {
                 String oracleResponse = response.body();
-                messageModalArrayList.add(new MessageModal(oracleResponse, BOT_KEY));
+                String newResponsePL = oracleResponse.replace("sztuczna inteligencja", "wyrocznia");
+                String newResponse = newResponsePL.replace("AI language model", "oracle");
+                String newResponsePL1 = newResponse.replace("AI", "wyrocznia");
+                messageModalArrayList.add(new MessageModal(newResponsePL1, BOT_KEY));
                 messageRVAdapter.notifyDataSetChanged();
             }
 
@@ -134,39 +128,5 @@ public class OracleFragment extends Fragment {
                 Toast.makeText(getContext(), "No response from the bot..", Toast.LENGTH_SHORT).show();
             }
         });
-
-
-        // on below line we are making a json object request for a get request and passing our url .
-//        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-//            @Override
-//            public void onResponse(JSONObject response) {
-//                try {
-//                    // in on response method we are extracting data
-//                    // from json response and adding this response to our array list.
-//                    String botResponse = response.getString("cnt");
-//                    messageModalArrayList.add(new MessageModal(botResponse, BOT_KEY));
-//
-//                    // notifying our adapter as data changed.
-//                    messageRVAdapter.notifyDataSetChanged();
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//
-//                    // handling error response from bot.
-//                    messageModalArrayList.add(new MessageModal("No response", BOT_KEY));
-//                    messageRVAdapter.notifyDataSetChanged();
-//                }
-//            }
-//        }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                // error handling.
-//                messageModalArrayList.add(new MessageModal("Sorry no response found", BOT_KEY));
-//                Toast.makeText(getContext(), "No response from the bot..", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-
-        // at last adding json object
-        // request to our queue.
-        //queue.add(jsonObjectRequest);
     }
 }
