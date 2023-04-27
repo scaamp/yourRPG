@@ -35,20 +35,6 @@ public class CharacterController {
         return new ResponseEntity<>(characters, HttpStatus.OK);
     }
 
-    @GetMapping("/quests/{category}")
-    public ResponseEntity<String> getQuests(@PathVariable("category") String category) throws IOException {
-        ChatGPTHelper chatGPTHelper = new ChatGPTHelper();
-        String questIdea = chatGPTHelper.getQuestsIdea(category);
-        return new ResponseEntity<>(questIdea, HttpStatus.OK);
-    }
-
-//    @GetMapping("/quests")
-//    public ResponseEntity<String> getQuests() {
-//        ChatGPTHelper chatGPTHelper = new ChatGPTHelper();
-//        String questIdea = chatGPTHelper.getQuestsIdea();
-//        return new ResponseEntity<>(questIdea, HttpStatus.OK);
-//    }
-    
     @GetMapping({"/{id}"})
     public ResponseEntity<Character> getCharacter(@PathVariable("id") UUID id) {
         return new ResponseEntity<>(characterService.getCharacterById(id), HttpStatus.OK);
@@ -72,6 +58,20 @@ public class CharacterController {
     public ResponseEntity<Character> deleteCharacter(@PathVariable("id") UUID id) {
         characterService.deleteCharacter(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/quests/{category}")
+    public ResponseEntity<String> getQuests(@PathVariable("category") String category) throws IOException {
+        ChatGPTHelper chatGPTHelper = new ChatGPTHelper();
+        String questIdea = chatGPTHelper.getQuestsIdea(category);
+        return new ResponseEntity<>(questIdea, HttpStatus.OK);
+    }
+
+    @PostMapping("/oracle")
+    public ResponseEntity<String> getAnswerFromOracle(@RequestBody String string) throws IOException {
+        ChatGPTHelper chatGPTHelper = new ChatGPTHelper();
+        String questIdea = chatGPTHelper.getAnswerFromOracle(string);
+        return new ResponseEntity<>(questIdea, HttpStatus.OK);
     }
 
 //    @GetMapping("/characters")
@@ -114,6 +114,4 @@ public class CharacterController {
 //            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 //        }
 //    }
-
-
 }

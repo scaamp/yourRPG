@@ -27,10 +27,23 @@ public class ChatGPTHelper {
         service = new OpenAiService(token, Duration.ofSeconds(120));
     }
 
+
     public String getQuestsIdea(String category)
     {
         String question = "How I can develop " + category;
 
+        ChatCompletionRequest completionRequest = ChatCompletionRequest.builder().messages(List.of(new ChatMessage("user", question)))
+                .model("gpt-3.5-turbo").build();
+        List<ChatCompletionChoice> choices = service.createChatCompletion(completionRequest).getChoices();
+
+        StringBuilder stringBuilder = new StringBuilder();
+        choices.stream().map(ChatCompletionChoice::getMessage).map(ChatMessage::getContent).forEach(stringBuilder::append);
+
+        return stringBuilder.toString();
+    }
+
+    public String getAnswerFromOracle(String question)
+    {
         ChatCompletionRequest completionRequest = ChatCompletionRequest.builder().messages(List.of(new ChatMessage("user", question)))
                 .model("gpt-3.5-turbo").build();
         List<ChatCompletionChoice> choices = service.createChatCompletion(completionRequest).getChoices();

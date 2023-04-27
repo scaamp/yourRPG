@@ -23,6 +23,7 @@
             android:layout_margin="5dp"
             android:padding="3dp"
             android:text="User message"
+            android:fontFamily="casual"
             android:textColor="@color/black" />
 
         <!--we are displaying user icon-->

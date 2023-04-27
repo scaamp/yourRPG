@@ -43,6 +43,9 @@ public interface RetrofitAPI {
     @GET("/api/characters/quests/{category}")
     Call<String> getQuestsProposition(@Path("category") String category);
 
+    @POST("/api/characters/oracle")
+    Call<String> getAnswerFromOracle(@Body String string);
+
     @GET("https://www.affirmations.dev")
     Call<Spellbook> getAffirmation();
 

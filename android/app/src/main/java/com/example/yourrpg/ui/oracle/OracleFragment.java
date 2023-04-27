@@ -1,60 +1,38 @@
 package com.example.yourrpg.ui.oracle;
 
-import static nl.dionsegijn.konfetti.core.Position.Relative;
-
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.yourrpg.MainActivity;
 import com.example.yourrpg.R;
-import com.example.yourrpg.databinding.FragmentCharacterBinding;
 import com.example.yourrpg.databinding.FragmentOracleBinding;
-import com.example.yourrpg.model.Character;
 import com.example.yourrpg.model.MessageModal;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.example.yourrpg.retrofit.RetrofitAPI;
+import com.example.yourrpg.retrofit.RetrofitClient;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.concurrent.TimeUnit;
 
-import nl.dionsegijn.konfetti.core.Angle;
-import nl.dionsegijn.konfetti.core.PartyFactory;
-import nl.dionsegijn.konfetti.core.Spread;
-import nl.dionsegijn.konfetti.core.emitter.Emitter;
-import nl.dionsegijn.konfetti.core.emitter.EmitterConfig;
-import nl.dionsegijn.konfetti.core.models.Shape;
-import nl.dionsegijn.konfetti.xml.KonfettiView;
+import retrofit2.Call;
+import retrofit2.Callback;
 
 
 public class OracleFragment extends Fragment {
 
     private OracleViewModel homeViewModel;
     private FragmentOracleBinding binding;
+    private RetrofitClient retrofitClient;
     private RecyclerView chatsRV;
     private ImageButton sendMsgIB;
     private EditText userMsgEdt;
@@ -139,37 +117,56 @@ public class OracleFragment extends Fragment {
         // creating a variable for our request queue.
         RequestQueue queue = Volley.newRequestQueue(getContext());
 
-        // on below line we are making a json object request for a get request and passing our url .
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+        retrofitClient = new RetrofitClient(RetrofitAPI.CHARACTER_URL + "oracle/");
+        Call<String> call = retrofitClient.getMyRetrofitAPI().getAnswerFromOracle(userMsg);
+
+        call.enqueue(new Callback<String>() {
             @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    // in on response method we are extracting data
-                    // from json response and adding this response to our array list.
-                    String botResponse = response.getString("cnt");
-                    messageModalArrayList.add(new MessageModal(botResponse, BOT_KEY));
-
-                    // notifying our adapter as data changed.
-                    messageRVAdapter.notifyDataSetChanged();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-
-                    // handling error response from bot.
-                    messageModalArrayList.add(new MessageModal("No response", BOT_KEY));
-                    messageRVAdapter.notifyDataSetChanged();
-                }
+            public void onResponse(Call<String> call, retrofit2.Response<String> response) {
+                String oracleResponse = response.body();
+                messageModalArrayList.add(new MessageModal(oracleResponse, BOT_KEY));
+                messageRVAdapter.notifyDataSetChanged();
             }
-        }, new Response.ErrorListener() {
+
             @Override
-            public void onErrorResponse(VolleyError error) {
-                // error handling.
+            public void onFailure(Call<String> call, Throwable t) {
                 messageModalArrayList.add(new MessageModal("Sorry no response found", BOT_KEY));
                 Toast.makeText(getContext(), "No response from the bot..", Toast.LENGTH_SHORT).show();
             }
         });
 
+
+        // on below line we are making a json object request for a get request and passing our url .
+//        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+//            @Override
+//            public void onResponse(JSONObject response) {
+//                try {
+//                    // in on response method we are extracting data
+//                    // from json response and adding this response to our array list.
+//                    String botResponse = response.getString("cnt");
+//                    messageModalArrayList.add(new MessageModal(botResponse, BOT_KEY));
+//
+//                    // notifying our adapter as data changed.
+//                    messageRVAdapter.notifyDataSetChanged();
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//
+//                    // handling error response from bot.
+//                    messageModalArrayList.add(new MessageModal("No response", BOT_KEY));
+//                    messageRVAdapter.notifyDataSetChanged();
+//                }
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                // error handling.
+//                messageModalArrayList.add(new MessageModal("Sorry no response found", BOT_KEY));
+//                Toast.makeText(getContext(), "No response from the bot..", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+
         // at last adding json object
         // request to our queue.
-        queue.add(jsonObjectRequest);
+        //queue.add(jsonObjectRequest);
     }
 }
