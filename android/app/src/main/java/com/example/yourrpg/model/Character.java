@@ -54,6 +54,8 @@ public class Character implements Serializable {
     @JsonProperty("determination")
     private int determination;
 
+    private int iconPosition;
+
     public Character(UUID characterId, String name, int level, int exp, int strength, int agility, int stamina, int power, int cunning, int endurance, int intelligence, int creativity, int wisdom, int productivity, int influence, int determination) {
         this.characterId = characterId;
         this.name = name;
@@ -82,11 +84,12 @@ public class Character implements Serializable {
         this.agility = agility;
     }
 
-    public Character(UUID characterId, String name, int strength, int agility) {
+    public Character(UUID characterId, String name, int strength, int agility, int iconPosition) {
         this.characterId = characterId;
         this.name = name;
         this.strength = strength;
         this.agility = agility;
+        this.iconPosition = iconPosition;
     }
 
     public int getLevel() {
@@ -230,6 +233,13 @@ public class Character implements Serializable {
         this.characterId = characterId;
     }
 
+    public int getIconPosition() {
+        return iconPosition;
+    }
+
+    public void setIconPosition(int iconPosition) {
+        this.iconPosition = iconPosition;
+    }
 
     @Override
     public String toString()

@@ -1,15 +1,20 @@
 package com.example.yourrpg.ui.oracle;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.yourrpg.R;
+import com.example.yourrpg.activity.NewCharacterActivity;
+import com.example.yourrpg.model.Character;
 import com.example.yourrpg.model.MessageModal;
 
 import java.util.ArrayList;
@@ -49,10 +54,12 @@ public class MessageRVAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         // this method is use to set data to our layout file.
         MessageModal modal = messageModalArrayList.get(position);
+        Integer[] icons = new Integer[] {R.drawable.character, R.drawable.guru, R.drawable.oracle};
         switch (modal.getSender()) {
             case "user":
                 // below line is to set the text to our text view of user layout
                 ((UserViewHolder) holder).userTV.setText(modal.getMessage());
+                ((UserViewHolder) holder).avatarImageButton.setImageResource(icons[modal.getIcon()]);
                 break;
             case "bot":
                 // below line is to set the text to our text view of bot layout
@@ -81,7 +88,7 @@ public class MessageRVAdapter extends RecyclerView.Adapter {
     }
 
     public static class UserViewHolder extends RecyclerView.ViewHolder {
-
+        private final ImageView avatarImageButton;
         // creating a variable
         // for our text view.
         TextView userTV;
@@ -90,6 +97,7 @@ public class MessageRVAdapter extends RecyclerView.Adapter {
             super(itemView);
             // initializing with id.
             userTV = itemView.findViewById(R.id.idTVUser);
+            avatarImageButton = itemView.findViewById(R.id.avatarImageButton);
         }
     }
 

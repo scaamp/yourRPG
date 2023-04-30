@@ -28,6 +28,7 @@
 
         <!--we are displaying user icon-->
         <ImageView
+            android:id="@+id/avatarImageButton"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_margin="10dp"

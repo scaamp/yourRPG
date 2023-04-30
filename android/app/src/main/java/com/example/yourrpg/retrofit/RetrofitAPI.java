@@ -19,9 +19,11 @@ import retrofit2.http.Path;
 
 public interface RetrofitAPI {
     String AFFIRMATION_URL = "https://www.affirmations.dev";
-    String SPELLBOOK_URL = "http://172.23.240.3:8090/api/spellbooks/";
-    String CHARACTER_URL = "http://172.23.240.3:8090/api/characters/";
-    String QUESTLOG_URL = "http://172.23.240.3:8090/api/quests/";
+    //String URL = "http://172.23.240.3:8090/api/";
+    String URL = "http://192.168.0.11:8090/api/";
+    String SPELLBOOK_URL = URL + "/spellbooks/";
+    String CHARACTER_URL = URL + "/characters/";
+    String QUESTLOG_URL = URL + "/quests/";
 
     @POST("/api/spellbooks")
     Call<Spellbook> addSpell(@Body Spellbook spellbook);
@@ -29,10 +31,8 @@ public interface RetrofitAPI {
     @POST("/api/characters")
     Call<Character> addCharacter(@Body Character character);
 
-//    @FormUrlEncoded
-//    @POST("/api/characters")
-//    Call<Character> addCharacter(@Field("characterId") long characterId, @Field("name") String name, @Field("level") int level, @Field("exp") int exp,
-//            @Field("strength") int strength, @Field("agility") int agility);
+    @POST("/api/characters/oracle")
+    Call<String> getAnswerFromOracle(@Body String string);
 
     @DELETE("/api/spellbooks/{id}")
     Call<ResponseBody> deleteSpell(@Path("id") UUID spellbookId);
@@ -43,15 +43,11 @@ public interface RetrofitAPI {
     @GET("/api/characters/quests/{category}")
     Call<String> getQuestsProposition(@Path("category") String category);
 
-    @POST("/api/characters/oracle")
-    Call<String> getAnswerFromOracle(@Body String string);
-
     @GET("https://www.affirmations.dev")
     Call<Spellbook> getAffirmation();
 
     @Headers({"Content-Type: application/json"})
     @PUT("/api/characters/{id}")
     Call<Character> updateCharacter(@Path("id") UUID id, @Body Character character);
-
 }
 

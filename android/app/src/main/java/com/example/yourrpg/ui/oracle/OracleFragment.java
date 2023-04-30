@@ -1,11 +1,14 @@
 package com.example.yourrpg.ui.oracle;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -16,8 +19,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.example.yourrpg.MainActivity;
 import com.example.yourrpg.R;
+import com.example.yourrpg.activity.NewCharacterActivity;
 import com.example.yourrpg.databinding.FragmentOracleBinding;
+import com.example.yourrpg.model.Character;
 import com.example.yourrpg.model.MessageModal;
 import com.example.yourrpg.retrofit.RetrofitAPI;
 import com.example.yourrpg.retrofit.RetrofitClient;
@@ -29,7 +35,6 @@ import retrofit2.Callback;
 
 
 public class OracleFragment extends Fragment {
-
     private OracleViewModel homeViewModel;
     private FragmentOracleBinding binding;
     private RetrofitClient retrofitClient;
@@ -38,6 +43,7 @@ public class OracleFragment extends Fragment {
     private EditText userMsgEdt;
     private final String USER_KEY = "user";
     private final String BOT_KEY = "bot";
+    private int iconPosition;
 
     // creating a variable for
     // our volley request queue.
@@ -54,10 +60,10 @@ public class OracleFragment extends Fragment {
 
         binding = FragmentOracleBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-
         chatsRV = root.findViewById(R.id.idRVChats);
         sendMsgIB = root.findViewById(R.id.idIBSend);
         userMsgEdt = root.findViewById(R.id.idEdtMessage);
+
 
         // below line is to initialize our request queue.
 //        mRequestQueue = Volley.newRequestQueue(getContext());
@@ -106,7 +112,10 @@ public class OracleFragment extends Fragment {
     private void sendMessage(String userMsg) {
         // below line is to pass message to our
         // array list which is entered by the user.
-        messageModalArrayList.add(new MessageModal(userMsg, USER_KEY));
+        MainActivity mainActivity = (MainActivity) getActivity();
+        Character character = mainActivity.getCurrentCharacter();
+        iconPosition = character.getIconPosition();
+        messageModalArrayList.add(new MessageModal(userMsg, USER_KEY, iconPosition));
         messageRVAdapter.notifyDataSetChanged();
         retrofitClient = new RetrofitClient(RetrofitAPI.CHARACTER_URL + "oracle/");
         Call<String> call = retrofitClient.getMyRetrofitAPI().getAnswerFromOracle(userMsg);

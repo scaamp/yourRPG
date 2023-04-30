@@ -23,6 +23,8 @@
 
         <!--below widget is for
             displaying message of bot-->
+
+
         <TextView
             android:id="@+id/idTVBot"
             android:layout_width="match_parent"

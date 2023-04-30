@@ -178,6 +178,7 @@ public class NewSpellActivity extends AppCompatActivity implements DatePickerDia
 
             @Override
             public void onFailure(Call<Spellbook> call, Throwable t) {
+                t.getMessage();
                 Toast.makeText(getApplicationContext(), "An error has occured", Toast.LENGTH_LONG).show();
             }
         });

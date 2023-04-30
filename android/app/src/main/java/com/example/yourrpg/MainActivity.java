@@ -47,7 +47,6 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         initViews();
         initCharacterList();
-
         if (characterList.isEmpty()) {
             Intent intent = new Intent(MainActivity.this, NewCharacterActivity.class);
             startActivityForResult(intent, NEW_CHARACTER);
@@ -77,7 +76,7 @@ public class MainActivity extends AppCompatActivity{
         if (characterList.size() !=0 ) {
             return (Character) characterList.get(0);
         }
-        return new Character (UUID.randomUUID(), "", 0,0);
+        return new Character (UUID.randomUUID(), "", 0,0, 1);
     }
 
     private void initCharacterList() {
@@ -85,7 +84,7 @@ public class MainActivity extends AppCompatActivity{
         ArrayList<Character> newCharacterList = SharedPreferencesSaver.loadFrom(getPreferences(MODE_PRIVATE), SharedPreferencesSaver.CHARACTER_PREF);
         if (newCharacterList  != null) {
             characterList = newCharacterList;
-            //characterList.clear();
+            characterList.clear();
             //strengthPoints.setText(String.valueOf(getCurrentCharacter().getStrength()));
         } else {
             characterList = new ArrayList<>();
