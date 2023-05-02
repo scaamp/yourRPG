@@ -1,4 +1,4 @@
-package com.example.yourrpg.ui.questlog;
+package com.example.yourrpg.questlog;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

@@ -1,6 +1,4 @@
-package com.example.yourrpg.ui.character;
-
-import static android.content.Context.MODE_PRIVATE;
+package com.example.yourrpg.character;
 
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
@@ -13,6 +11,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -26,15 +25,12 @@ import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
 import nl.dionsegijn.konfetti.core.Angle;
-import nl.dionsegijn.konfetti.core.Party;
 import nl.dionsegijn.konfetti.core.PartyFactory;
 import static nl.dionsegijn.konfetti.core.Position.Relative;
 import nl.dionsegijn.konfetti.core.Spread;
 import nl.dionsegijn.konfetti.core.emitter.Emitter;
 import nl.dionsegijn.konfetti.core.emitter.EmitterConfig;
 import nl.dionsegijn.konfetti.core.models.Shape;
-import nl.dionsegijn.konfetti.core.models.Size;
-import nl.dionsegijn.konfetti.core.emitter.Confetti;
 import nl.dionsegijn.konfetti.xml.KonfettiView;
 
 
@@ -62,6 +58,8 @@ public class CharacterFragment extends Fragment {
 
         binding = FragmentCharacterBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+        setHasOptionsMenu(true);
+
         nickName = (TextView) root.findViewById(R.id.yourNickTextView);
         level = (TextView) root.findViewById(R.id.yourLevelTextView);
         expTextView = (TextView) root.findViewById(R.id.yourExpTextView);
@@ -79,9 +77,34 @@ public class CharacterFragment extends Fragment {
         final Drawable drawableHeart = ContextCompat.getDrawable(getContext(), R.drawable.ic_heart);
         drawableShape = new Shape.DrawableShape(drawableHeart, true);
         konfettiView = root.findViewById(R.id.konfettiView);
-
         return root;
     }
+
+//    @Override
+//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+//        //inflate menu
+//        inflater.inflate(R.menu.my_menu, menu);
+//        super.onCreateOptionsMenu(menu, inflater);
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        //handle menu item clicks
+//        int id = item.getItemId();
+//
+//        if (id == R.id.statistic) {
+//            //do your function here
+//            Toast.makeText(getActivity(), "Settings", Toast.LENGTH_SHORT).show();
+//
+//            Fragment frag = new BlankFragment();
+//            FragmentTransaction ft = getFragmentManager().beginTransaction();
+//            ft.replace(R.id.fragment_blank, frag);
+//            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+//            ft.addToBackStack(null);
+//            ft.commit();
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
     public void explode() {
         EmitterConfig emitterConfig = new Emitter(100L, TimeUnit.MILLISECONDS).max(100);

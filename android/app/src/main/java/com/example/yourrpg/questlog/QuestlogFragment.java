@@ -1,16 +1,23 @@
-package com.example.yourrpg.ui.questlog;
+package com.example.yourrpg.questlog;
 
 import static android.content.Context.MODE_PRIVATE;
 
 import android.app.Activity;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,9 +25,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.yourrpg.MainActivity;
 import com.example.yourrpg.R;
-import com.example.yourrpg.retrofit.RetrofitAPI;
+import com.example.yourrpg.character.NewCharacterActivity;
 import com.example.yourrpg.retrofit.RetrofitClient;
-import com.example.yourrpg.activity.NewQuestActivity;
 import com.example.yourrpg.databinding.FragmentQuestlogBinding;
 import com.example.yourrpg.model.Character;
 import com.example.yourrpg.model.Questlog;
@@ -29,12 +35,11 @@ import com.example.yourrpg.questlogAdapter.QuestlogAdapter;
 import com.example.yourrpg.questlogAdapter.QuestlogInterface;
 import com.example.yourrpg.questlogAdapter.QuestlogViewHolderAdaptable;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 
 public class QuestlogFragment extends Fragment implements QuestlogInterface {
@@ -67,7 +72,32 @@ public class QuestlogFragment extends Fragment implements QuestlogInterface {
         });
         initQuestList();
         initRecyclerView();
+        checkTaskDate();
         return root;
+    }
+
+    private void checkTaskDate()
+    {
+        Date date = new Date();
+        Calendar c = Calendar.getInstance();
+        Date dateTask;
+        for (int i=0; i<questList.size(); i++) {
+            if (date.after(questList.get(i).getDate()) && !questList.get(i).isDone()) {
+                showNotification("Task not completed", "You didn't complete your task :(");
+            }
+            c.setTime(questList.get(i).getDate());
+            c.add(Calendar.DATE, -1);
+            dateTask = c.getTime();
+
+            if (date.after(dateTask) && !questList.get(i).isDone()) {
+                showNotification("Hey! Hurry up...", "You have " + getDateDiff(dateTask, date, TimeUnit.HOURS) + " hours to complete your task: " + questList.get(i).getDesc());
+            }
+        }
+    }
+
+    public static long getDateDiff(Date date1, Date date2, TimeUnit timeUnit) {
+        long diffInMillies = date2.getTime() - date1.getTime();
+        return timeUnit.convert(diffInMillies,TimeUnit.MILLISECONDS);
     }
 
     private void initQuestList() {
@@ -182,6 +212,28 @@ public class QuestlogFragment extends Fragment implements QuestlogInterface {
         }
         SharedPreferencesSaver.saveTo(questList, getActivity().getSharedPreferences("QUESTLOG_PREF", MODE_PRIVATE), SharedPreferencesSaver.QUESTLOG_PREF);
         SharedPreferencesSaver.saveTo(mainActivity.getCharacterList(), getActivity().getSharedPreferences("CHARACTER_PREF", MODE_PRIVATE), SharedPreferencesSaver.CHARACTER_PREF);
+    }
+
+    void showNotification(String title, String message) {
+        NotificationManager mNotificationManager =
+                (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel("YOUR_CHANNEL_ID",
+                    "YOUR_CHANNEL_NAME",
+                    NotificationManager.IMPORTANCE_DEFAULT);
+            channel.setDescription("YOUR_NOTIFICATION_CHANNEL_DESCRIPTION");
+            mNotificationManager.createNotificationChannel(channel);
+        }
+
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getContext(), "YOUR_CHANNEL_ID")
+                .setSmallIcon(R.mipmap.ic_launcher) // notification icon
+                .setContentTitle(title) // title for notification
+                .setContentText(message)// message for notification
+                .setAutoCancel(true); // clear notification after click
+        Intent intent = new Intent(getContext(), MainActivity.class);
+        PendingIntent pi = PendingIntent.getActivity(getContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        mBuilder.setContentIntent(pi);
+        mNotificationManager.notify(0, mBuilder.build());
     }
 
 }

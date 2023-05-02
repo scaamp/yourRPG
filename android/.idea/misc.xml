@@ -9,26 +9,31 @@
         <entry key="..\:/yourRPG/android/app/src/main/res/drawable/ic_launcher_background.xml" value="0.26256410256410256" />
         <entry key="..\:/yourRPG/android/app/src/main/res/drawable/ic_notifications_black_24dp.xml" value="0.26256410256410256" />
         <entry key="..\:/yourRPG/android/app/src/main/res/font/font.xml" value="0.284375" />
-        <entry key="..\:/yourRPG/android/app/src/main/res/layout/activity_main.xml" value="0.2" />
-        <entry key="..\:/yourRPG/android/app/src/main/res/layout/activity_new_character.xml" value="0.34838709677419355" />
+        <entry key="..\:/yourRPG/android/app/src/main/res/layout/activity_main.xml" value="0.176" />
+        <entry key="..\:/yourRPG/android/app/src/main/res/layout/activity_new_character.xml" value="0.264" />
         <entry key="..\:/yourRPG/android/app/src/main/res/layout/activity_new_quest.xml" value="0.2427536231884058" />
-        <entry key="..\:/yourRPG/android/app/src/main/res/layout/activity_new_questlog.xml" value="0.1" />
+        <entry key="..\:/yourRPG/android/app/src/main/res/layout/activity_new_questlog.xml" value="0.264" />
         <entry key="..\:/yourRPG/android/app/src/main/res/layout/activity_new_spellbook.xml" value="0.24295432458697766" />
         <entry key="..\:/yourRPG/android/app/src/main/res/layout/bot_msg.xml" value="0.4" />
         <entry key="..\:/yourRPG/android/app/src/main/res/layout/custom_progressbar_drawable.xml" value="0.14166666666666666" />
-        <entry key="..\:/yourRPG/android/app/src/main/res/layout/fragment_character.xml" value="0.1" />
+        <entry key="..\:/yourRPG/android/app/src/main/res/layout/fragment_blank.xml" value="0.14375" />
+        <entry key="..\:/yourRPG/android/app/src/main/res/layout/fragment_character.xml" value="0.264" />
         <entry key="..\:/yourRPG/android/app/src/main/res/layout/fragment_dashboard.xml" value="0.25052083333333336" />
         <entry key="..\:/yourRPG/android/app/src/main/res/layout/fragment_dashboard1.xml" value="0.25052083333333336" />
         <entry key="..\:/yourRPG/android/app/src/main/res/layout/fragment_home.xml" value="0.264" />
         <entry key="..\:/yourRPG/android/app/src/main/res/layout/fragment_notifications.xml" value="0.13541666666666666" />
         <entry key="..\:/yourRPG/android/app/src/main/res/layout/fragment_oracle.xml" value="0.2" />
         <entry key="..\:/yourRPG/android/app/src/main/res/layout/fragment_questlog.xml" value="0.2" />
+        <entry key="..\:/yourRPG/android/app/src/main/res/layout/fragment_scrolling.xml" value="0.25416666666666665" />
         <entry key="..\:/yourRPG/android/app/src/main/res/layout/fragment_spellbook.xml" value="0.23867753623188406" />
+        <entry key="..\:/yourRPG/android/app/src/main/res/layout/main_fragment.xml" value="0.25416666666666665" />
         <entry key="..\:/yourRPG/android/app/src/main/res/layout/single_history_item.xml" value="0.4" />
         <entry key="..\:/yourRPG/android/app/src/main/res/layout/single_questlog_item.xml" value="0.4" />
         <entry key="..\:/yourRPG/android/app/src/main/res/layout/single_spellbook_item.xml" value="0.4" />
+        <entry key="..\:/yourRPG/android/app/src/main/res/layout/statistic_fragment.xml" value="0.25416666666666665" />
         <entry key="..\:/yourRPG/android/app/src/main/res/layout/user_msg.xml" value="0.264" />
         <entry key="..\:/yourRPG/android/app/src/main/res/menu/bottom_nav_menu.xml" value="0.25052083333333336" />
+        <entry key="..\:/yourRPG/android/app/src/main/res/menu/my_menu.xml" value="0.25416666666666665" />
         <entry key="..\:/yourRPG/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.14375" />
       </map>
     </option>

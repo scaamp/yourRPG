@@ -1,4 +1,4 @@
-package com.example.yourrpg.activity;
+package com.example.yourrpg.questlog;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -19,13 +18,11 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.yourrpg.R;
 import com.example.yourrpg.model.Questlog;
-import com.example.yourrpg.model.Spellbook;
 import com.example.yourrpg.retrofit.RetrofitAPI;
 import com.example.yourrpg.retrofit.RetrofitClient;
 
@@ -34,7 +31,6 @@ import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -92,6 +88,10 @@ public class NewQuestActivity extends AppCompatActivity implements DatePickerDia
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(TimePicker tp, int sHour, int sMinute) {
+                                if (sMinute < 10)
+                                {
+                                    questDeadlineHourEditText.setText(sHour + ":0" + sMinute);
+                                }
                                 questDeadlineHourEditText.setText(sHour + ":" + sMinute);
                             }
                         }, hour, minutes, true);
@@ -162,7 +162,7 @@ public class NewQuestActivity extends AppCompatActivity implements DatePickerDia
     {
         try
         {
-            return dateFormat.parse(questDeadlineEditText.getText().toString());
+            return dateFormat.parse(questDeadlineHourEditText.getText().toString() + ":00, " + questDeadlineEditText.getText().toString());
         } catch (ParseException e)
         {
             e.printStackTrace();

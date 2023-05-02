@@ -1,27 +1,23 @@
-package com.example.yourrpg.ui.oracle;
+package com.example.yourrpg.oracle;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
 import com.example.yourrpg.MainActivity;
 import com.example.yourrpg.R;
-import com.example.yourrpg.activity.NewCharacterActivity;
 import com.example.yourrpg.databinding.FragmentOracleBinding;
 import com.example.yourrpg.model.Character;
 import com.example.yourrpg.model.MessageModal;

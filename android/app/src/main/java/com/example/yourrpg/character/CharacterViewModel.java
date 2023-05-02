@@ -1,14 +1,14 @@
-package com.example.yourrpg.ui.oracle;
+package com.example.yourrpg.character;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class OracleViewModel extends ViewModel {
+public class CharacterViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public OracleViewModel() {
+    public CharacterViewModel() {
         mText = new MutableLiveData<>();
         mText.setValue("This is home fragment");
     }

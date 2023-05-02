@@ -7,25 +7,25 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.example.yourrpg.ui.character.CharacterFragment"
+        android:name="com.example.yourrpg.character.CharacterFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_character" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.example.yourrpg.ui.spellbook.SpellbookFragment"
+        android:name="com.example.yourrpg.spellbook.SpellbookFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_spellbook" />
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.example.yourrpg.ui.questlog.QuestlogFragment"
+        android:name="com.example.yourrpg.questlog.QuestlogFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_questlog" />
 
     <fragment
         android:id="@+id/navigation_oracle"
-        android:name="com.example.yourrpg.ui.oracle.OracleFragment"
+        android:name="com.example.yourrpg.oracle.OracleFragment"
         android:label="Oracle"
         tools:layout="@layout/fragment_oracle" />
 </navigation>

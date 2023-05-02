@@ -1,23 +1,32 @@
 package com.example.yourrpg;
 
 import android.app.Activity;
+import android.app.FragmentTransaction;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.CheckBox;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.yourrpg.activity.NewCharacterActivity;
+import com.example.yourrpg.character.CharacterFragment;
+import com.example.yourrpg.character.NewCharacterActivity;
 import com.example.yourrpg.model.Character;
-import com.example.yourrpg.model.Spellbook;
 import com.example.yourrpg.persistency.SharedPreferencesSaver;
 import com.example.yourrpg.retrofit.RetrofitAPI;
 import com.example.yourrpg.retrofit.RetrofitClient;
-import com.example.yourrpg.ui.character.CharacterFragment;
-import com.example.yourrpg.ui.spellbook.SpellbookFragment;
+import com.example.yourrpg.spellbook.SpellbookFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -26,6 +35,7 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.yourrpg.databinding.ActivityMainBinding;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import retrofit2.Call;
@@ -47,10 +57,81 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         initViews();
         initCharacterList();
+
         if (characterList.isEmpty()) {
             Intent intent = new Intent(MainActivity.this, NewCharacterActivity.class);
             startActivityForResult(intent, NEW_CHARACTER);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        getMenuInflater().inflate(R.menu.my_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case R.id.statistic:
+//                NotificationManager notif=(NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+//                Notification notify=new Notification.Builder
+//                        (getApplicationContext()).setContentTitle("cze").setContentText("czeeee").
+//                        setContentTitle("czesc").setSmallIcon(R.drawable.ic_heart).build();
+//
+//                notify.flags |= Notification.FLAG_AUTO_CANCEL;
+//                notif.notify(0, notify);
+
+
+//                getSupportFragmentManager().beginTransaction().detach(getVisibleFragment());
+//                ((AppCompatActivity)getApplicationContext()).getSupportFragmentManager().popBackStack("findThisFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE)
+//                FragmentManager fm = getSupportFragmentManager();
+//                for(int i = 0; i < fm.getBackStackEntryCount(); ++i) {
+//                    fm.popBackStack();
+//                }
+//                androidx.fragment.app.FragmentManager fm = getSupportFragmentManager();
+//                fm.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+//
+//                CharacterFragment nextFrag = new CharacterFragment();
+//                getSupportFragmentManager().beginTransaction()
+//                        .replace(R.id.scrollingLayout, nextFrag, "findThisFragment")
+//                        .addToBackStack(null)
+//                        .commit();
+//               getSupportFragmentManager().beginTransaction().replace(R.id.fragment_blank, new BlankFragment()).commit();
+//                FragmentManager manager = getFragmentManager();
+//                FragmentTransaction transaction = manager.beginTransaction();
+//                transaction.add(R.id.fragment_blank,BlankFragment,YOUR_FRAGMENT_STRING_TAG);
+//                transaction.addToBackStack(null);
+//                transaction.commit();
+                //super.onPostResume();
+//                getSupportFragmentManager().beginTransaction().remove(getVisibleFragment()).commit();
+//                FragmentManager fm = getSupportFragmentManager();
+//
+//                for (int i = 0; i < fm.getBackStackEntryCount(); i++) {
+//                    fm.popBackStack();
+//                }
+//                getSupportFragmentManager().beginTransaction()
+//                        .replace(android.R.id.content, new BlankFragment()).commit();
+
+                //().popBackStackImmediate();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public Fragment getVisibleFragment(){
+        FragmentManager fragmentManager = MainActivity.this.getSupportFragmentManager();
+        List<androidx.fragment.app.Fragment> fragments = fragmentManager.getFragments();
+        if(fragments != null){
+            for(androidx.fragment.app.Fragment fragment : fragments){
+                if(fragment != null && fragment.isVisible())
+                    return fragment;
+            }
+        }
+        return null;
     }
 
     private void initViews() {
@@ -84,7 +165,7 @@ public class MainActivity extends AppCompatActivity{
         ArrayList<Character> newCharacterList = SharedPreferencesSaver.loadFrom(getPreferences(MODE_PRIVATE), SharedPreferencesSaver.CHARACTER_PREF);
         if (newCharacterList  != null) {
             characterList = newCharacterList;
-            characterList.clear();
+            //characterList.clear();
             //strengthPoints.setText(String.valueOf(getCurrentCharacter().getStrength()));
         } else {
             characterList = new ArrayList<>();
@@ -102,7 +183,6 @@ public class MainActivity extends AppCompatActivity{
                     characterList.add(newCharacter);
                 }
             }
-
         }
 
         if (requestCode == QUEST_DONE) {

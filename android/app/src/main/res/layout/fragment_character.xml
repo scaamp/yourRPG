@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.character.CharacterFragment">
+    tools:context=".character.CharacterFragment">
 
     <nl.dionsegijn.konfetti.xml.KonfettiView
         android:id="@+id/konfettiView"
@@ -738,5 +738,10 @@
             android:textAppearance="?android:attr/textAppearanceSmall" />
     </RelativeLayout>
 
-
+<!--    <fragment-->
+<!--        android:id="@+id/characterFragment"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:name="com.example.yourrpg.character.CharacterFragment">-->
+<!--    </fragment>-->
 </androidx.constraintlayout.widget.ConstraintLayout>

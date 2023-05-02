@@ -690,7 +690,7 @@
 
     <ImageButton
         android:id="@+id/selectAvatarImageButton"
-        android:layout_width="103dp"
+        android:layout_width="111dp"
         android:layout_height="82dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="26dp"

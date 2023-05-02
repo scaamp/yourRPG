@@ -1,4 +1,4 @@
-package com.example.yourrpg.activity;
+package com.example.yourrpg.spellbook;
 
 import android.app.Activity;
 import android.app.AlertDialog;

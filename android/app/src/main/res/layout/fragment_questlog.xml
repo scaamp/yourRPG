@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.questlog.QuestlogFragment" >
+    android:id="@+id/fragment_questlog"
+    tools:context=".questlog.QuestlogFragment" >
 
     <LinearLayout
         android:layout_width="366dp"

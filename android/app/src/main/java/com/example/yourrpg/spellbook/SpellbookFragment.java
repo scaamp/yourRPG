@@ -1,4 +1,4 @@
-package com.example.yourrpg.ui.spellbook;
+package com.example.yourrpg.spellbook;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -13,15 +13,13 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.yourrpg.activity.NewCharacterActivity;
-import com.example.yourrpg.model.Character;
 import com.example.yourrpg.retrofit.RetrofitAPI;
 import com.example.yourrpg.retrofit.RetrofitClient;
-import com.example.yourrpg.activity.NewSpellActivity;
 import com.example.yourrpg.R;
 import com.example.yourrpg.spellbookAdapter.SpellbookRemover;
 import com.example.yourrpg.spellbookAdapter.SpellbookViewHolderAdaptable;
@@ -124,6 +122,10 @@ public class SpellbookFragment extends Fragment implements SpellbookRemover {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        FragmentManager fm = getChildFragmentManager();
+        for (int i = 0; i < fm.getBackStackEntryCount(); i++) {
+            fm.popBackStack();
+        }
         binding = null;
     }
 

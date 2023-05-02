@@ -1,4 +1,4 @@
-package com.example.yourrpg;
+package com.example.yourrpg.character;
 
 import android.content.Context;
 import android.content.res.TypedArray;

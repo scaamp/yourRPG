@@ -1,4 +1,4 @@
-package com.example.yourrpg.ui.spellbook;
+package com.example.yourrpg.spellbook;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
