@@ -1,10 +1,19 @@
 package com.example.yourrpg.questlog;
 
+import static java.lang.Thread.sleep;
+
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.text.method.ScrollingMovementMethod;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,6 +40,7 @@ import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.concurrent.TimeUnit;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -58,6 +68,7 @@ public class NewQuestActivity extends AppCompatActivity implements DatePickerDia
         setContentView(R.layout.activity_new_questlog);
         setTitle("New quest");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        createNotificationChannel();
 
         questDescEditText = (EditText) findViewById(R.id.questDescEditText);
         questStatSpinner = (Spinner) findViewById(R.id.questStatSpinner);
@@ -88,11 +99,7 @@ public class NewQuestActivity extends AppCompatActivity implements DatePickerDia
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(TimePicker tp, int sHour, int sMinute) {
-                                if (sMinute < 10)
-                                {
-                                    questDeadlineHourEditText.setText(sHour + ":0" + sMinute);
-                                }
-                                questDeadlineHourEditText.setText(sHour + ":" + sMinute);
+                                questDeadlineHourEditText.setText("" + checkDigit(sHour) + ":" + checkDigit(sMinute));
                             }
                         }, hour, minutes, true);
                 picker.show();
@@ -112,6 +119,13 @@ public class NewQuestActivity extends AppCompatActivity implements DatePickerDia
                 datePickerDialog.show();
             }
         });
+        questPropositionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                questProposition = getQuestProposition(questStatSpinner.getSelectedItem().toString());
+            }
+        });
+
         addQuestButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -119,6 +133,15 @@ public class NewQuestActivity extends AppCompatActivity implements DatePickerDia
                 Questlog questlog = new Questlog(1, questDescEditText.getText().toString(),
                         questStatSpinner.getSelectedItem().toString(), Integer.valueOf(questStatPointsSpinner.getSelectedItem().toString()), false, getDateEditTextDate());
                 //postData(1, textSpellbook.getText().toString(), trainerSpellbook.getText().toString(), spinnerSpellbookRank.getSelectedItem().toString());
+
+                Date date = new Date();
+                Calendar c = Calendar.getInstance();
+                Date dateTask;
+                c.setTime(questlog.getDate());
+                c.add(Calendar.DATE, -1);
+                dateTask = c.getTime();
+
+                showAlertNotification(questDescEditText.getText().toString(), getDateDiff(date, dateTask));
                 Intent intent = new Intent();
                 intent.putExtra(NEW_QUEST, questlog);
                 setResult(Activity.RESULT_OK, intent);
@@ -126,12 +149,7 @@ public class NewQuestActivity extends AppCompatActivity implements DatePickerDia
                 finish();
             }
         });
-        questPropositionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                questProposition = getQuestProposition(questStatSpinner.getSelectedItem().toString());
-            }
-        });
+
     }
 
     @Override
@@ -162,7 +180,7 @@ public class NewQuestActivity extends AppCompatActivity implements DatePickerDia
     {
         try
         {
-            return dateFormat.parse(questDeadlineHourEditText.getText().toString() + ":00, " + questDeadlineEditText.getText().toString());
+            return dateFormat.parse(questDeadlineEditText.getText().toString());
         } catch (ParseException e)
         {
             e.printStackTrace();
@@ -170,6 +188,10 @@ public class NewQuestActivity extends AppCompatActivity implements DatePickerDia
 
         dateFormat = DateFormat.getDateInstance();
         return new Date();
+    }
+
+    public String checkDigit(int number) {
+        return number <= 9 ? "0" + number : String.valueOf(number);
     }
 
     public String getQuestProposition(String category) {
@@ -189,5 +211,41 @@ public class NewQuestActivity extends AppCompatActivity implements DatePickerDia
             }
         });
         return questProposition;
+    }
+
+    public void createNotificationChannel()
+    {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+        {
+            CharSequence name = "XD";
+            String desc = "XDDD";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("notify", name, importance);
+            channel.setDescription(desc);
+
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
+
+    void showAlertNotification(String text, long time)
+    {
+        Intent intent = new Intent(this, ReminderQuestBroadcast.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("XD", text);
+        intent.putExtra("bundle", bundle);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + time, pendingIntent);
+    }
+
+    public static long getDateDiff(Date date1, Date date2, TimeUnit timeUnit) {
+        long diffInMillies = date2.getTime() - date1.getTime();
+        return timeUnit.convert(diffInMillies,TimeUnit.MILLISECONDS);
+    }
+
+    public static long getDateDiff(Date date1, Date date2) {
+        long diffInMillies = date2.getTime() - date1.getTime();
+        return diffInMillies;
     }
 }

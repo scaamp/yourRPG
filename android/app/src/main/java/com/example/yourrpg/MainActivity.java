@@ -1,6 +1,9 @@
 package com.example.yourrpg;
 
+import static java.lang.Thread.sleep;
+
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.FragmentTransaction;
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -8,7 +11,10 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -16,6 +22,7 @@ import android.widget.TextView;
 import com.example.yourrpg.character.CharacterFragment;
 import com.example.yourrpg.character.NewCharacterActivity;
 import com.example.yourrpg.model.Character;
+import com.example.yourrpg.model.Questlog;
 import com.example.yourrpg.persistency.SharedPreferencesSaver;
 import com.example.yourrpg.retrofit.RetrofitAPI;
 import com.example.yourrpg.retrofit.RetrofitClient;
@@ -35,19 +42,23 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.yourrpg.databinding.ActivityMainBinding;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity {
 
     public static final int NEW_CHARACTER = 111;
     public static final int QUEST_DONE = 444;
     private ActivityMainBinding binding;
     private ArrayList<Character> characterList;
+    private ArrayList<Questlog> questList;
     private TextView strengthPoints;
     private RetrofitClient retrofitClient;
     private static final String SPELLBOOK_PREF = "SPELLBOOK_PREF";
@@ -57,6 +68,8 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         initViews();
         initCharacterList();
+        //createNotificationChannel();
+        //checkTaskDate();
 
         if (characterList.isEmpty()) {
             Intent intent = new Intent(MainActivity.this, NewCharacterActivity.class);
@@ -116,9 +129,25 @@ public class MainActivity extends AppCompatActivity{
 //                        .replace(android.R.id.content, new BlankFragment()).commit();
 
                 //().popBackStackImmediate();
+
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public void createNotificationChannel()
+    {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+        {
+            CharSequence name = "XD";
+            String desc = "XDDD";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("notify", name, importance);
+            channel.setDescription(desc);
+
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
         }
     }
 
@@ -205,7 +234,6 @@ public class MainActivity extends AppCompatActivity{
         syncData();
     }
 
-
     protected void syncData()
     {
         retrofitClient = new RetrofitClient(RetrofitAPI.CHARACTER_URL);
@@ -225,5 +253,6 @@ public class MainActivity extends AppCompatActivity{
             }
         });
     }
+
 }
 

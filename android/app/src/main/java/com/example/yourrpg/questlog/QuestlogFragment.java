@@ -8,13 +8,11 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
@@ -25,8 +23,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.yourrpg.MainActivity;
 import com.example.yourrpg.R;
-import com.example.yourrpg.character.NewCharacterActivity;
-import com.example.yourrpg.retrofit.RetrofitClient;
 import com.example.yourrpg.databinding.FragmentQuestlogBinding;
 import com.example.yourrpg.model.Character;
 import com.example.yourrpg.model.Questlog;
@@ -35,7 +31,6 @@ import com.example.yourrpg.questlogAdapter.QuestlogAdapter;
 import com.example.yourrpg.questlogAdapter.QuestlogInterface;
 import com.example.yourrpg.questlogAdapter.QuestlogViewHolderAdaptable;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -49,7 +44,6 @@ public class QuestlogFragment extends Fragment implements QuestlogInterface {
     private Button goToAddQuestButton;
     public static final int NEW_QUEST = 333;
     private static ArrayList<Questlog> questList;
-    private RetrofitClient retrofitClient;
 
     private RecyclerView.LayoutManager historyLayoutManager;
     private ArrayList<QuestlogViewHolderAdaptable> allItems;
@@ -72,41 +66,32 @@ public class QuestlogFragment extends Fragment implements QuestlogInterface {
         });
         initQuestList();
         initRecyclerView();
-        checkTaskDate();
+        checkIfDeadlineGone();
         return root;
     }
 
-    private void checkTaskDate()
+
+    private void checkIfDeadlineGone()
     {
         Date date = new Date();
-        Calendar c = Calendar.getInstance();
-        Date dateTask;
         for (int i=0; i<questList.size(); i++) {
             if (date.after(questList.get(i).getDate()) && !questList.get(i).isDone()) {
-                showNotification("Task not completed", "You didn't complete your task :(");
-            }
-            c.setTime(questList.get(i).getDate());
-            c.add(Calendar.DATE, -1);
-            dateTask = c.getTime();
-
-            if (date.after(dateTask) && !questList.get(i).isDone()) {
-                showNotification("Hey! Hurry up...", "You have " + getDateDiff(dateTask, date, TimeUnit.HOURS) + " hours to complete your task: " + questList.get(i).getDesc());
+                showNotification("Task not completed", "You didn't complete your task: " + questList.get(i).getDesc());
             }
         }
     }
 
-    public static long getDateDiff(Date date1, Date date2, TimeUnit timeUnit) {
-        long diffInMillies = date2.getTime() - date1.getTime();
-        return timeUnit.convert(diffInMillies,TimeUnit.MILLISECONDS);
-    }
-
     private void initQuestList() {
-        ArrayList<Questlog> newQuestList = new ArrayList<>();
+        ArrayList<Questlog> newQuestList;
         //newQuestList.add(new Questlog(1,"XD",false));
         newQuestList = SharedPreferencesSaver.loadFrom(getActivity().getSharedPreferences("QUESTLOG_PREF", MODE_PRIVATE), SharedPreferencesSaver.QUESTLOG_PREF);
 
         if (newQuestList != null) {
             questList = newQuestList;
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("questListBundle", questList);
+            Intent intent = new Intent(getContext(), MainActivity.class);
+            intent.putExtra("questListIntent", questList);
             //questList.clear();
 //            nullSpellListTextView.setVisibility(View.INVISIBLE);
             //questTextView.setText(questList.get(0).getText());
@@ -215,6 +200,8 @@ public class QuestlogFragment extends Fragment implements QuestlogInterface {
     }
 
     void showNotification(String title, String message) {
+        int id = (int) System.currentTimeMillis();
+
         NotificationManager mNotificationManager =
                 (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
@@ -233,7 +220,6 @@ public class QuestlogFragment extends Fragment implements QuestlogInterface {
         Intent intent = new Intent(getContext(), MainActivity.class);
         PendingIntent pi = PendingIntent.getActivity(getContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         mBuilder.setContentIntent(pi);
-        mNotificationManager.notify(0, mBuilder.build());
+        mNotificationManager.notify(id, mBuilder.build());
     }
-
 }
