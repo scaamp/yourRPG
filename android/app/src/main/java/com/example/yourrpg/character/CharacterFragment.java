@@ -5,10 +5,14 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -80,32 +84,6 @@ public class CharacterFragment extends Fragment {
         return root;
     }
 
-//    @Override
-//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-//        //inflate menu
-//        inflater.inflate(R.menu.my_menu, menu);
-//        super.onCreateOptionsMenu(menu, inflater);
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        //handle menu item clicks
-//        int id = item.getItemId();
-//
-//        if (id == R.id.statistic) {
-//            //do your function here
-//            Toast.makeText(getActivity(), "Settings", Toast.LENGTH_SHORT).show();
-//
-//            Fragment frag = new BlankFragment();
-//            FragmentTransaction ft = getFragmentManager().beginTransaction();
-//            ft.replace(R.id.fragment_blank, frag);
-//            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-//            ft.addToBackStack(null);
-//            ft.commit();
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
-
     public void explode() {
         EmitterConfig emitterConfig = new Emitter(100L, TimeUnit.MILLISECONDS).max(100);
         konfettiView.start(
@@ -155,12 +133,6 @@ public class CharacterFragment extends Fragment {
         );
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
-    }
-
     public void setCharacter()
     {
         MainActivity mainActivity = (MainActivity) getActivity();
@@ -169,12 +141,11 @@ public class CharacterFragment extends Fragment {
         agilityPoints.setText(String.valueOf(character.getAgility()));
         level.setText(String.valueOf(character.getLevel()));
         nickName.setText(String.valueOf(character.getName()));
-        //nickName.setText("scamp");
         expTextView.setText(String.valueOf(character.getExp()));
         exp = character.getStrength() * 10;
         character.setExp(exp);
         mProgress.setProgress(exp%100);
-        if (exp >= 100 * character.getLevel() && exp != 0) {
+        if (exp >= 100 * character.getLevel() && exp != 0) { // level up
             parade();
             explode();
             rain();

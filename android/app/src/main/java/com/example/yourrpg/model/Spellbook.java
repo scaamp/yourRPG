@@ -6,7 +6,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 public class Spellbook implements Serializable, SpellbookViewHolderAdaptable {
@@ -95,4 +97,5 @@ public class Spellbook implements Serializable, SpellbookViewHolderAdaptable {
     public void setDate(Date date) {
         this.date = date;
     }
+
 }

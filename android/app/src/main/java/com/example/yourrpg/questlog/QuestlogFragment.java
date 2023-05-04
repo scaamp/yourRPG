@@ -44,14 +44,12 @@ public class QuestlogFragment extends Fragment implements QuestlogInterface {
     private QuestlogViewModel notificationsViewModel;
     private FragmentQuestlogBinding binding;
     private Button goToAddQuestButton;
-    public static final int NEW_QUEST = 333;
     private static ArrayList<Questlog> questList;
-
     private RecyclerView.LayoutManager historyLayoutManager;
     private ArrayList<QuestlogViewHolderAdaptable> allItems;
     private RecyclerView historyRecyclerView;
     private RecyclerView.Adapter questAdapter;
-
+    public static final int NEW_QUEST = 333;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         notificationsViewModel = new ViewModelProvider(this).get(QuestlogViewModel.class);
@@ -71,7 +69,6 @@ public class QuestlogFragment extends Fragment implements QuestlogInterface {
         checkIfDeadlineGone();
         return root;
     }
-
 
     private void checkIfDeadlineGone()
     {
@@ -104,7 +101,6 @@ public class QuestlogFragment extends Fragment implements QuestlogInterface {
 //            nullSpellListTextView.setText("Your quest is empty... \nPlease add your first quest");
         }
     }
-
 
     private void initRecyclerView() {
         historyLayoutManager = new LinearLayoutManager(getContext());

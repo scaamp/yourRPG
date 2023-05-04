@@ -103,46 +103,6 @@ public class NewCharacterActivity extends AppCompatActivity {
         });
     }
 
-    private void postData(UUID characterId, String name, int strength, int agility) {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://172.23.240.3:8090/characters/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
-        Character modal = new Character(characterId, name, strength, agility, 1);
-        Call<Character> call = retrofitAPI.addCharacter(modal);
-        call.enqueue(new Callback<Character>() {
-
-            @Override
-            public void onResponse(Call<Character> call, Response<
-                    Character> response) {
-                Character responseFromAPI = response.body();
-            }
-            @Override
-            public void onFailure(Call<Character> call, Throwable t) {
-                t.getMessage();
-            }
-        });
-    }
-
-
-//    private void postData(Character c) {
-//        retrofitClient = new RetrofitClient(RetrofitAPI.CHARACTER_URL);
-//        Call<Character> call = retrofitClient.getMyRetrofitAPI().addCharacter(c.getCharacterId(), c.getName(), c.getLevel(), c.getExp(), c.getStrength(), c.getAgility());
-//        call.enqueue(new Callback<Character>() {
-//
-//            @Override
-//            public void onResponse(Call<Character> call, Response<Character> response) {
-//                Character responseFromAPI = response.body();
-////                Toast.makeText(NewCharacterActivity.this,responseFromAPI.getName(), Toast.LENGTH_LONG).show();
-//            }
-//            @Override
-//            public void onFailure(Call<Character> call, Throwable t) {
-//                t.getMessage();
-//            }
-//        });
-//    }
-
     private void postData(Character character) {
         retrofitClient = new RetrofitClient(RetrofitAPI.CHARACTER_URL);
         Call<Character> call = retrofitClient.getMyRetrofitAPI().addCharacter(character);

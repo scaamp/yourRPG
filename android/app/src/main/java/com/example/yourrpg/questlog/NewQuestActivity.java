@@ -1,7 +1,5 @@
 package com.example.yourrpg.questlog;
 
-import static java.lang.Thread.sleep;
-
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.DatePickerDialog;
@@ -130,11 +128,9 @@ public class NewQuestActivity extends AppCompatActivity implements DatePickerDia
             @Override
             public void onClick(View view) {
                 Date todayDate = new Date();
-                if (todayDate.after(getDateEditTextDate()))
-                {
-                    Toast.makeText(NewQuestActivity.this, "You can't add a task from the past", Toast.LENGTH_LONG).show();
-                }
-                else {
+                if (todayDate.after(getDateEditTextDate())) {
+                    Toast.makeText(NewQuestActivity.this, "You can't add a quest from the past", Toast.LENGTH_LONG).show();
+                } else {
                     //Questlog questlog = new Questlog(1, "XD", true);
                     Questlog questlog = new Questlog(1, questDescEditText.getText().toString(),
                             questStatSpinner.getSelectedItem().toString(), Integer.valueOf(questStatPointsSpinner.getSelectedItem().toString()), false, getDateEditTextDate());
@@ -148,7 +144,7 @@ public class NewQuestActivity extends AppCompatActivity implements DatePickerDia
                         dateTask = c.getTime();
                         showAlertNotification(questlog.getDesc(), getDateDiff(todayDate, dateTask, TimeUnit.MILLISECONDS));
                     }
-                    
+
                     Intent intent = new Intent();
                     intent.putExtra(NEW_QUEST, questlog);
                     setResult(Activity.RESULT_OK, intent);
@@ -161,18 +157,15 @@ public class NewQuestActivity extends AppCompatActivity implements DatePickerDia
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        if(item.getItemId() == android.R.id.home){
-
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
             finish();
-
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private String getCurrentDate()
-    {
+    private String getCurrentDate() {
         dateFormat = DateFormat.getDateInstance();
         Date date = new Date();
         return dateFormat.format(date);
@@ -184,27 +177,34 @@ public class NewQuestActivity extends AppCompatActivity implements DatePickerDia
         questDeadlineEditText.setText(dateFormat.format(calendar.getTime()));
     }
 
-    private Date getDateEditTextDate()
-    {
+    private Date getDateEditTextDate() {
         String stringDate = questDeadlineEditText.getText().toString() + " " + questDeadlineHourEditText.getText().toString();
-        if (questDeadlineHourEditText.getText().toString().isEmpty()) stringDate = questDeadlineEditText.getText().toString() + " 23:59";
+        if (questDeadlineHourEditText.getText().toString().isEmpty())
+            stringDate = questDeadlineEditText.getText().toString() + " 23:59"; //setting hours to end of the day
         SimpleDateFormat format = new SimpleDateFormat("MMM dd, yyyy HH:mm");
         Date date;
-        try
-        {
+        try {
             return date = format.parse(stringDate);
-        } catch (ParseException e)
-        {
+        } catch (ParseException e) {
             e.printStackTrace();
         }
         return new Date();
+    }
+
+
+    public static long getDateDiff(Date date1, Date date2, TimeUnit timeUnit) {
+        long diffInMillies = date2.getTime() - date1.getTime();
+        return timeUnit.convert(diffInMillies, TimeUnit.MILLISECONDS);
     }
 
     public String checkDigit(int number) {
         return number <= 9 ? "0" + number : String.valueOf(number);
     }
 
-    public String getQuestProposition(String category) {
+    /**
+    * quest proposal from chatGPT
+    */
+    public String getQuestProposition(String category) { //
         retrofitClient = new RetrofitClient(RetrofitAPI.CHARACTER_URL + "quests/" + category + "/");
         Call<String> call = retrofitClient.getMyRetrofitAPI().getQuestsProposition(category);
 
@@ -223,10 +223,8 @@ public class NewQuestActivity extends AppCompatActivity implements DatePickerDia
         return questProposition;
     }
 
-    public void createNotificationChannel()
-    {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-        {
+    public void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = "XD";
             String desc = "XDDD";
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
@@ -238,8 +236,10 @@ public class NewQuestActivity extends AppCompatActivity implements DatePickerDia
         }
     }
 
-    void showAlertNotification(String text, long time)
-    {
+    /**
+     * method to show notification - alarm
+    */
+    void showAlertNotification(String text, long time) {
         Intent intent = new Intent(this, ReminderQuestBroadcast.class);
         Bundle bundle = new Bundle();
         bundle.putString("XD", text);
@@ -247,10 +247,5 @@ public class NewQuestActivity extends AppCompatActivity implements DatePickerDia
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + time, pendingIntent);
-    }
-
-    public static long getDateDiff(Date date1, Date date2, TimeUnit timeUnit) {
-        long diffInMillies = date2.getTime() - date1.getTime();
-        return timeUnit.convert(diffInMillies,TimeUnit.MILLISECONDS);
     }
 }

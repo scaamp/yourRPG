@@ -40,12 +40,6 @@ public class OracleFragment extends Fragment {
     private final String USER_KEY = "user";
     private final String BOT_KEY = "bot";
     private int iconPosition;
-
-    // creating a variable for
-    // our volley request queue.
-    private RequestQueue mRequestQueue;
-
-    // creating a variable for array list and adapter class.
     private ArrayList<MessageModal> messageModalArrayList;
     private MessageRVAdapter messageRVAdapter;
 
@@ -59,16 +53,7 @@ public class OracleFragment extends Fragment {
         chatsRV = root.findViewById(R.id.idRVChats);
         sendMsgIB = root.findViewById(R.id.idIBSend);
         userMsgEdt = root.findViewById(R.id.idEdtMessage);
-
-
-        // below line is to initialize our request queue.
-//        mRequestQueue = Volley.newRequestQueue(getContext());
-//        mRequestQueue.getCache().clear();
-
-        // creating a new array list
         messageModalArrayList = new ArrayList<>();
-
-        // adding on click listener for send message button.
         sendMsgIB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,7 +75,6 @@ public class OracleFragment extends Fragment {
         });
 
         messageRVAdapter = new MessageRVAdapter(messageModalArrayList, getContext());
-
         // below line we are creating a variable for our linear layout manager.
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
 
