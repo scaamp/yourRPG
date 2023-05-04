@@ -17,7 +17,8 @@ public class ReminderQuestBroadcast extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         //int id = (int) System.currentTimeMillis();
-                int id = (int) ThreadLocalRandom.current().nextInt();
+
+        int id = (int) ThreadLocalRandom.current().nextInt();
         Bundle bundle = intent.getBundleExtra("bundle");
         String text = (String)bundle.getString("XD");
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "notify").setSmallIcon(R.drawable.ic_heart)

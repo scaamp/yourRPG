@@ -37,6 +37,7 @@ import com.example.yourrpg.retrofit.RetrofitClient;
 
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -59,7 +60,6 @@ public class NewQuestActivity extends AppCompatActivity implements DatePickerDia
     private RetrofitClient retrofitClient;
     private TimePickerDialog picker;
     private String questProposition;
-    private String questProposition1;
     private TextView questPropositionTextView;
 
     @Override
@@ -129,24 +129,32 @@ public class NewQuestActivity extends AppCompatActivity implements DatePickerDia
         addQuestButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Questlog questlog = new Questlog(1, "XD", true);
-                Questlog questlog = new Questlog(1, questDescEditText.getText().toString(),
-                        questStatSpinner.getSelectedItem().toString(), Integer.valueOf(questStatPointsSpinner.getSelectedItem().toString()), false, getDateEditTextDate());
-                //postData(1, textSpellbook.getText().toString(), trainerSpellbook.getText().toString(), spinnerSpellbookRank.getSelectedItem().toString());
+                Date todayDate = new Date();
+                if (todayDate.after(getDateEditTextDate()))
+                {
+                    Toast.makeText(NewQuestActivity.this, "You can't add a task from the past", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    //Questlog questlog = new Questlog(1, "XD", true);
+                    Questlog questlog = new Questlog(1, questDescEditText.getText().toString(),
+                            questStatSpinner.getSelectedItem().toString(), Integer.valueOf(questStatPointsSpinner.getSelectedItem().toString()), false, getDateEditTextDate());
+                    //postData(1, textSpellbook.getText().toString(), trainerSpellbook.getText().toString(), spinnerSpellbookRank.getSelectedItem().toString());
 
-                Date date = new Date();
-                Calendar c = Calendar.getInstance();
-                Date dateTask;
-                c.setTime(questlog.getDate());
-                c.add(Calendar.DATE, -1);
-                dateTask = c.getTime();
-
-                showAlertNotification(questDescEditText.getText().toString(), getDateDiff(date, dateTask));
-                Intent intent = new Intent();
-                intent.putExtra(NEW_QUEST, questlog);
-                setResult(Activity.RESULT_OK, intent);
-                Toast.makeText(NewQuestActivity.this,"Quest added!", Toast.LENGTH_LONG).show();
-                finish();
+                    if (getDateDiff(todayDate, questlog.getDate(), TimeUnit.HOURS) > 24) {
+                        Date dateTask;
+                        Calendar c = Calendar.getInstance();
+                        c.setTime(questlog.getDate());
+                        c.add(Calendar.DATE, -1); // day before deadline
+                        dateTask = c.getTime();
+                        showAlertNotification(questlog.getDesc(), getDateDiff(todayDate, dateTask, TimeUnit.MILLISECONDS));
+                    }
+                    
+                    Intent intent = new Intent();
+                    intent.putExtra(NEW_QUEST, questlog);
+                    setResult(Activity.RESULT_OK, intent);
+                    Toast.makeText(NewQuestActivity.this, "Quest added!", Toast.LENGTH_LONG).show();
+                    finish();
+                }
             }
         });
 
@@ -178,15 +186,17 @@ public class NewQuestActivity extends AppCompatActivity implements DatePickerDia
 
     private Date getDateEditTextDate()
     {
+        String stringDate = questDeadlineEditText.getText().toString() + " " + questDeadlineHourEditText.getText().toString();
+        if (questDeadlineHourEditText.getText().toString().isEmpty()) stringDate = questDeadlineEditText.getText().toString() + " 23:59";
+        SimpleDateFormat format = new SimpleDateFormat("MMM dd, yyyy HH:mm");
+        Date date;
         try
         {
-            return dateFormat.parse(questDeadlineEditText.getText().toString());
+            return date = format.parse(stringDate);
         } catch (ParseException e)
         {
             e.printStackTrace();
         }
-
-        dateFormat = DateFormat.getDateInstance();
         return new Date();
     }
 
@@ -242,10 +252,5 @@ public class NewQuestActivity extends AppCompatActivity implements DatePickerDia
     public static long getDateDiff(Date date1, Date date2, TimeUnit timeUnit) {
         long diffInMillies = date2.getTime() - date1.getTime();
         return timeUnit.convert(diffInMillies,TimeUnit.MILLISECONDS);
-    }
-
-    public static long getDateDiff(Date date1, Date date2) {
-        long diffInMillies = date2.getTime() - date1.getTime();
-        return diffInMillies;
     }
 }

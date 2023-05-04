@@ -1,8 +1,10 @@
 package com.example.yourrpg.questlog;
 
+import static android.content.Context.ALARM_SERVICE;
 import static android.content.Context.MODE_PRIVATE;
 
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -184,6 +186,11 @@ public class QuestlogFragment extends Fragment implements QuestlogInterface {
 
             if (stat.equals("Strength")) character.setStrength(character.getStrength() + statPoints);
             if (stat.equals("Agility")) character.setAgility(character.getAgility() + statPoints);
+
+            Intent intent = new Intent(getContext(), ReminderQuestBroadcast.class);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(ALARM_SERVICE);
+            alarmManager.cancel(pendingIntent);
 
 //            Intent intent = new Intent(getContext(), MainActivity.class);
 //            intent.putExtra(QUEST_DONE, character);
