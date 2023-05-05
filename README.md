@@ -13,9 +13,9 @@ The app is built using Java programming language and Spring framework on the ser
 ![alt text](https://github.com/scaamp/yourRPG/blob/oracle/screenshot/new_spell.png?raw=true)  
 * Add tasks to your quest log  
 ![alt text](https://github.com/scaamp/yourRPG/blob/master/screenshot/new_quest.png?raw=true)  
-![alt text](https://github.com/scaamp/yourRPG/blob/master/screenshot/questlog.png?raw=true)  
+![alt text](https://github.com/scaamp/yourRPG/blob/oracle/screenshot/questlog.png?raw=true)  
 * Talk with oracle (integration with chatGPT)  
-![alt text](https://github.com/scaamp/yourRPG/blob/master/screenshot/oracle.png?raw=true)  
+![alt text](https://github.com/scaamp/yourRPG/blob/oracle/screenshot/oracle.png?raw=true)  
 * Track your progress in real-time
 * Export your data to csv file
 * Earn rewards and level up your character
