@@ -15,6 +15,8 @@ The app is built using Java programming language and Spring framework on the ser
 ![alt text](https://github.com/scaamp/yourRPG/blob/oracle/screenshot/new_quest.png?raw=true)   
 ![alt text](https://github.com/scaamp/yourRPG/blob/oracle/screenshot/new_quest_GPT.png?raw=true)    
 ![alt text](https://github.com/scaamp/yourRPG/blob/oracle/screenshot/questlog.png?raw=true)  
+* Receive a reminder when a quest is due   
+![alt text](https://github.com/scaamp/yourRPG/blob/oracle/screenshot/reminder.png?raw=true)  
 * Talk with oracle (integration with chatGPT)  
 ![alt text](https://github.com/scaamp/yourRPG/blob/oracle/screenshot/oracle.png?raw=true)  
 * Track your progress in real-time

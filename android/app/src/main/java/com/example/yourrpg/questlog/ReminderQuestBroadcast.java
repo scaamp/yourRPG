@@ -21,7 +21,7 @@ public class ReminderQuestBroadcast extends BroadcastReceiver {
         int id = (int) ThreadLocalRandom.current().nextInt();
         Bundle bundle = intent.getBundleExtra("bundle");
         String text = (String)bundle.getString("XD");
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "notify").setSmallIcon(R.drawable.ic_heart)
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "notify").setSmallIcon(R.drawable.deadline)
                 .setContentTitle("Hurry up!").setContentText("You have 1 day to complete your task: " + text).setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
         NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(context);
