@@ -11,8 +11,9 @@ The app is built using Java programming language and Spring framework on the ser
 ![alt text](https://github.com/scaamp/yourRPG/blob/oracle/screenshot/character_stat.png?raw=true)    
 * Save ideas and quotes to your spellbook (u can also generate random affirmation from external API)  
 ![alt text](https://github.com/scaamp/yourRPG/blob/oracle/screenshot/new_spell.png?raw=true)  
-* Add tasks to your quest log  
-![alt text](https://github.com/scaamp/yourRPG/blob/master/screenshot/new_quest.png?raw=true)  
+* Add tasks to your quest log  (if you have no idea you can get suggestion from chat GPT)
+![alt text](https://github.com/scaamp/yourRPG/blob/oracle/screenshot/new_quest.png?raw=true)  
+![alt text](https://github.com/scaamp/yourRPG/blob/oracle/screenshot/new_quest_GPT.png?raw=true)    
 ![alt text](https://github.com/scaamp/yourRPG/blob/oracle/screenshot/questlog.png?raw=true)  
 * Talk with oracle (integration with chatGPT)  
 ![alt text](https://github.com/scaamp/yourRPG/blob/oracle/screenshot/oracle.png?raw=true)  
