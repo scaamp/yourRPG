@@ -19,7 +19,8 @@ import retrofit2.http.Path;
 
 public interface RetrofitAPI {
     String AFFIRMATION_URL = "https://www.affirmations.dev";
-    String URL = "http://172.23.240.3:8090/api/";
+    //String URL = "http://172.23.240.3:8090/api/";
+    String URL = "http://192.168.33.11:8090/api/"; // dom
     //String URL = "http://192.168.0.11:8090/api/";
     String SPELLBOOK_URL = URL + "/spellbooks/";
     String CHARACTER_URL = URL + "/characters/";
