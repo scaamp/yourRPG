@@ -205,13 +205,11 @@ public class SpellbookFragment extends Fragment implements SpellbookRemover {
         }
         return listStrings;
     }
-    
+
     public void exportToCsv(List<String[]> strings) throws IOException {
         String csv = android.os.Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath() + "/spellbook.csv";
         CSVWriter writer = new CSVWriter(new FileWriter(csv));
         writer.writeAll(strings);
-
         writer.close();
-
     }
 }
