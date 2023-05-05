@@ -5,12 +5,17 @@
 The app is built using Java programming language and Spring framework on the server-side. The database used for storing user data is SQLServer. For the front-end development, we have used Android Studio. And finally, for building and managing the project, we have used Maven.
 
 ## Features
-* Create and customize your own character
-* Develop your physical, mental, character, and intellectual skills
+* Create and customize your own character  
+![alt text](https://github.com/scaamp/yourRPG/blob/oracle/screenshot/create_character.png?raw=true) 
+* Develop your physical, mental, character, and intellectual skills  
+![alt text](https://github.com/scaamp/yourRPG/blob/oracle/screenshot/character_stat.png?raw=true)    
 * Save ideas and quotes to your spellbook
+![alt text](https://github.com/scaamp/yourRPG/blob/oracle/screenshot/new_spell.png?raw=true)  
 * Add tasks to your quest log  
-![alt text](https://github.com/scaamp/yourRPG/blob/master/screenshot/new_quest.png?raw=true)    
+![alt text](https://github.com/scaamp/yourRPG/blob/master/screenshot/new_quest.png?raw=true)  
+![alt text](https://github.com/scaamp/yourRPG/blob/master/screenshot/questlog.png?raw=true)  
 * Track your progress in real-time
+* Export your data to csv file
 * Earn rewards and level up your character
 * Interact with other players in the community
 
