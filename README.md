@@ -32,7 +32,7 @@ The app is built using Java programming language and Spring framework on the ser
 
 ## Usage
 * Create a new character by entering your name, age, gender, and other details
-* Choose the skills you want to focus on, such as physical fitness, mental agility, emotionalintelligence, or intellectual curiosity
+* Choose the skills you want to focus on, such as physical fitness, mental agility, emotional, intelligence or intellectual curiosity
 * Add tasks to your quest log and complete them to earn rewards and experience points
 * Save ideas and quotes to your spellbook for future reference
 * Track your progress and level up your character as you gain more experience points
