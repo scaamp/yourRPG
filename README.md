@@ -21,8 +21,8 @@ The app is built using Java programming language and Spring framework on the ser
 ![alt text](https://github.com/scaamp/yourRPG/blob/oracle/screenshot/oracle.png?raw=true)  
 * Track your progress in real-time
 * Export your data to csv file
-* Earn rewards and level up your character
-* Interact with other players in the community
+* Earn rewards and level up your character (TODO)
+* Interact with other players in the community (TODO)
 
 ## Installation
 * Clone the repository to your local machine
