@@ -75,18 +75,11 @@ public class Character implements Serializable {
         this.determination = determination;
     }
 
-    public Character(UUID characterId, String name,int level, int exp, int strength, int agility) {
+    public Character(UUID characterId, String name, int level, int exp,  int strength, int agility, int iconPosition) {
         this.characterId = characterId;
         this.name = name;
         this.level = level;
         this.exp = exp;
-        this.strength = strength;
-        this.agility = agility;
-    }
-
-    public Character(UUID characterId, String name, int strength, int agility, int iconPosition) {
-        this.characterId = characterId;
-        this.name = name;
         this.strength = strength;
         this.agility = agility;
         this.iconPosition = iconPosition;

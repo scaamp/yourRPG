@@ -52,6 +52,8 @@ public class CharacterFragment extends Fragment {
     private Handler handler = new Handler();
     private TextView progressTextView;
     private int exp = 0;
+    private int progress;
+    private double ratio = 0;
     private KonfettiView konfettiView = null;
     private Shape.DrawableShape drawableShape = null;
 
@@ -137,21 +139,31 @@ public class CharacterFragment extends Fragment {
     {
         MainActivity mainActivity = (MainActivity) getActivity();
         Character character = mainActivity.getCurrentCharacter();
+
         strengthPoints.setText(String.valueOf(character.getStrength()));
         agilityPoints.setText(String.valueOf(character.getAgility()));
         level.setText(String.valueOf(character.getLevel()));
         nickName.setText(String.valueOf(character.getName()));
-        expTextView.setText(String.valueOf(character.getExp()));
+
+        ratio = 100 * character.getLevel() * 0.34;
         exp = character.getStrength() * 10;
+        expTextView.setText(String.valueOf(exp));
         character.setExp(exp);
-        mProgress.setProgress(exp%100);
-        if (exp >= 100 * character.getLevel() && exp != 0) { // level up
+        progress = (int) (exp%ratio);
+        mProgress.setProgress(progress);
+        if (exp >= ratio * character.getLevel() && exp != 0) { // level up
             parade();
             explode();
             rain();
             character.setLevel(character.getLevel()+1);
+            level.setText(String.valueOf(character.getLevel()));
         }
-        progressTextView.setText(String.valueOf(exp%100) + "%");
+        progressTextView.setText(String.valueOf(progress) + "%");
+    }
+
+    public void levelUp()
+    {
+
     }
 
     @Override

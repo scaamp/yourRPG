@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
         if (characterList.size() != 0) {
             return (Character) characterList.get(0);
         }
-        return new Character(UUID.randomUUID(), "", 0, 0, 1);
+        return new Character(UUID.randomUUID(), "", 1, 0, 0, 0, 1);
     }
 
     private void initCharacterList() {

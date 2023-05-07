@@ -103,6 +103,7 @@ public class NewQuestActivity extends AppCompatActivity implements DatePickerDia
                 picker.show();
             }
         });
+
         questDeadlineEditText.setText(getCurrentDate());
         questDeadlineEditText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,6 +118,7 @@ public class NewQuestActivity extends AppCompatActivity implements DatePickerDia
                 datePickerDialog.show();
             }
         });
+
         questPropositionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -136,14 +138,14 @@ public class NewQuestActivity extends AppCompatActivity implements DatePickerDia
                             questStatSpinner.getSelectedItem().toString(), Integer.valueOf(questStatPointsSpinner.getSelectedItem().toString()), false, getDateEditTextDate());
                     //postData(1, textSpellbook.getText().toString(), trainerSpellbook.getText().toString(), spinnerSpellbookRank.getSelectedItem().toString());
 
-                   // if (getDateDiff(todayDate, questlog.getDate(), TimeUnit.HOURS) > 24) {
+                    if (getDateDiff(todayDate, questlog.getDate(), TimeUnit.HOURS) > 24) {
                         Date dateTask;
                         Calendar c = Calendar.getInstance();
                         c.setTime(questlog.getDate());
                         c.add(Calendar.DATE, -1); // day before deadline
                         dateTask = c.getTime();
                         showAlertNotification(questlog.getDesc(), getDateDiff(todayDate, dateTask, TimeUnit.MILLISECONDS));
-                   // }
+                    }
 
                     Intent intent = new Intent();
                     intent.putExtra(NEW_QUEST, questlog);
@@ -246,6 +248,6 @@ public class NewQuestActivity extends AppCompatActivity implements DatePickerDia
         intent.putExtra("bundle", bundle);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, 1000, pendingIntent);
+        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + time, pendingIntent);
     }
 }

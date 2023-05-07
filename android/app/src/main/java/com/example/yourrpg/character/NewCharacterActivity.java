@@ -70,7 +70,7 @@ public class NewCharacterActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (!nicknameEditText.getText().toString().isEmpty()) {
                     //Character character = new Character(1, "XD", Integer.parseInt(strengthPoints.getText().toString()), Integer.parseInt(agilityPoints.getText().toString()));
-                    Character character = new Character(UUID.randomUUID(), nicknameEditText.getText().toString(), Integer.parseInt(strengthPoints.getText().toString()), Integer.parseInt(agilityPoints.getText().toString()), iconPosition);
+                    Character character = new Character(UUID.randomUUID(), nicknameEditText.getText().toString(),1,0,  Integer.parseInt(strengthPoints.getText().toString()), Integer.parseInt(agilityPoints.getText().toString()), iconPosition);
                     //postData(1, "scamp", 1, 0, Integer.parseInt(strengthPoints.getText().toString()), Integer.parseInt(agilityPoints.getText().toString()));
 
                     postData(character);
