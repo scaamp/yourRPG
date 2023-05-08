@@ -60,8 +60,12 @@ public class QuestlogFragment extends Fragment implements QuestlogInterface {
         goToAddQuestButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                assert getParentFragment() != null;
-                startActivityForResult(new Intent(getContext(), NewQuestActivity.class), NEW_QUEST);
+//                assert getParentFragment() != null;
+//                startActivityForResult(new Intent(getContext(), NewQuestActivity.class), NEW_QUEST);
+                MainActivity mainActivity = (MainActivity) getActivity();
+                Character character = mainActivity.getCurrentCharacter();
+                character.setStrength(character.getStrength()+3);
+
             }
         });
         initQuestList();

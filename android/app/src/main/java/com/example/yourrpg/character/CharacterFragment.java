@@ -51,11 +51,14 @@ public class CharacterFragment extends Fragment {
     private ProgressBar mProgress;
     private Handler handler = new Handler();
     private TextView progressTextView;
-    private int exp = 0;
-    private int progress;
-    private double ratio = 0;
     private KonfettiView konfettiView = null;
     private Shape.DrawableShape drawableShape = null;
+
+    private int exp = 0;
+    private int expToCompare = 0;
+    private float progress;
+    private double expNeededToLevelUp = 34;
+    private boolean leveled = false;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -144,26 +147,32 @@ public class CharacterFragment extends Fragment {
         agilityPoints.setText(String.valueOf(character.getAgility()));
         level.setText(String.valueOf(character.getLevel()));
         nickName.setText(String.valueOf(character.getName()));
+        levelUp(character);
 
-        ratio = 100 * character.getLevel() * 0.34;
+    }
+
+    public void levelUp(Character character)
+    {
         exp = character.getStrength() * 10;
         expTextView.setText(String.valueOf(exp));
         character.setExp(exp);
-        progress = (int) (exp%ratio);
-        mProgress.setProgress(progress);
-        if (exp >= ratio * character.getLevel() && exp != 0) { // level up
+        progress = (float) ((exp/expNeededToLevelUp) * 100);
+        mProgress.setProgress((int) progress%100);
+        if (expToCompare != exp) leveled = false;
+        else leveled = true;
+        if (exp >= expNeededToLevelUp && exp != 0 && !leveled) {
+            expToCompare = exp;
+            expNeededToLevelUp = exp + expNeededToLevelUp * character.getLevel();
+            progress = (float) ((exp/expNeededToLevelUp) * 100);
+            character.setLevel(character.getLevel()+1);
+            leveled = true;
+            level.setText(String.valueOf(character.getLevel()));
+
             parade();
             explode();
             rain();
-            character.setLevel(character.getLevel()+1);
-            level.setText(String.valueOf(character.getLevel()));
         }
-        progressTextView.setText(String.valueOf(progress) + "%");
-    }
-
-    public void levelUp()
-    {
-
+        progressTextView.setText(String.valueOf(Math.round(progress%100)) + "%");
     }
 
     @Override
