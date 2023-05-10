@@ -6,24 +6,32 @@ The app is built using Java programming language and Spring framework on the ser
 
 ## Features
 * Create and customize your own character  
-![alt text](https://github.com/scaamp/yourRPG/blob/oracle/screenshot/create_character.png?raw=true) 
 * Develop your physical, mental, character, and intellectual skills  
-![alt text](https://github.com/scaamp/yourRPG/blob/oracle/screenshot/character_stat.png?raw=true)    
 * Save ideas and quotes to your spellbook (u can also generate random affirmation from external API)  
-![alt text](https://github.com/scaamp/yourRPG/blob/oracle/screenshot/new_spell.png?raw=true)  
 * Add tasks to your quest log  (if you have no idea you can get suggestion from chat GPT)
-![alt text](https://github.com/scaamp/yourRPG/blob/oracle/screenshot/new_quest.png?raw=true)   
-![alt text](https://github.com/scaamp/yourRPG/blob/oracle/screenshot/new_quest_GPT.png?raw=true)    
-![alt text](https://github.com/scaamp/yourRPG/blob/oracle/screenshot/questlog.png?raw=true)  
-* Receive a reminder when a quest is due   
-![alt text](https://github.com/scaamp/yourRPG/blob/oracle/screenshot/reminder.PNG?raw=true)  
+* Receive a reminder when a quest is due    
 * Talk with oracle (integration with chatGPT)  
-![alt text](https://github.com/scaamp/yourRPG/blob/oracle/screenshot/oracle.png?raw=true)  
 * Track your progress in real-time
 * Export your data to csv file
 * Earn rewards and level up your character (TODO)
 * Interact with other players in the community (TODO)
 
+## Screenshots
+Create your character      |
+:-------------------------:|
+![alt text](https://github.com/scaamp/yourRPG/blob/oracle/screenshot/create_character.png?raw=true)
+Develop skills             |               
+![alt text](https://github.com/scaamp/yourRPG/blob/oracle/screenshot/character_stat.png?raw=true) | ![alt text](https://github.com/scaamp/yourRPG/blob/oracle/screenshot/new_spell.png?raw=true) 
+Questlog                   |
+![alt text](https://github.com/scaamp/yourRPG/blob/oracle/screenshot/new_quest.png?raw=true) |
+![alt text](https://github.com/scaamp/yourRPG/blob/oracle/screenshot/new_quest_GPT.png?raw=true) |    
+![alt text](https://github.com/scaamp/yourRPG/blob/oracle/screenshot/questlog.png?raw=true)
+Spellbook |
+![alt text](https://github.com/scaamp/yourRPG/blob/oracle/screenshot/new_spell.png?raw=true)
+Oracle |
+![alt text](https://github.com/scaamp/yourRPG/blob/oracle/screenshot/oracle.png?raw=true)  
+Reminder |
+![alt text](https://github.com/scaamp/yourRPG/blob/oracle/screenshot/reminder.PNG?raw=true) 
 ## Installation
 * Clone the repository to your local machine
 * Import the project into Android Studio

@@ -12,9 +12,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
@@ -25,6 +29,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.yourrpg.MainActivity;
 import com.example.yourrpg.R;
+import com.example.yourrpg.StepCounter;
 import com.example.yourrpg.databinding.FragmentQuestlogBinding;
 import com.example.yourrpg.model.Character;
 import com.example.yourrpg.model.Questlog;
@@ -33,6 +38,7 @@ import com.example.yourrpg.questlogAdapter.QuestlogAdapter;
 import com.example.yourrpg.questlogAdapter.QuestlogInterface;
 import com.example.yourrpg.questlogAdapter.QuestlogViewHolderAdaptable;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -55,6 +61,7 @@ public class QuestlogFragment extends Fragment implements QuestlogInterface {
         notificationsViewModel = new ViewModelProvider(this).get(QuestlogViewModel.class);
         binding = FragmentQuestlogBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+        setHasOptionsMenu(true);
         goToAddQuestButton = (Button) root.findViewById(R.id.goToAddQuestButton);
         historyRecyclerView = (RecyclerView) root.findViewById(R.id.questRecyclerView);
         goToAddQuestButton.setOnClickListener(new View.OnClickListener() {
@@ -72,6 +79,28 @@ public class QuestlogFragment extends Fragment implements QuestlogInterface {
         initRecyclerView();
         checkIfDeadlineGone();
         return root;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        //inflate menu
+        inflater.inflate(R.menu.questlog_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        //handle menu item clicks
+        int id = item.getItemId();
+
+        if (id == R.id.journey) {
+            //do your function here
+            Intent myIntent = new Intent(getContext(), StepCounter.class);
+            myIntent.putExtra("key", "XD"); //Optional parameters
+            startActivity(myIntent);
+            Toast.makeText(getActivity(), "Journey", Toast.LENGTH_SHORT).show();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void checkIfDeadlineGone()
